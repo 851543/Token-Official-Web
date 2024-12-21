@@ -1,0 +1,127 @@
+#carder{
+    text-align: center;
+    /* margin-bottom: 10px; */
+}
+#carder > a >img{
+    display: inline-block;
+    width:320px;
+    height:200px;
+    border-radius:20px;
+    float:left;
+   
+}
+/* .details{
+    overflow: hidden;
+} */
+.details > h1{
+    text-align:left;
+    font-family:'barlow';
+    margin-left:370px;
+    font-weight: 500;
+}
+.details > h3{
+    text-align:left;
+    font-family:'barlow';
+    margin-left:370px;
+    font-weight: 300;
+}
+.details > h5{
+    text-align:left;
+    font-family:'barlow';
+    margin-left:370px;
+    font-weight: 100;
+    /* margin-left:150px; */
+    /* margin-top:-50px; */
+    /* margin-bottom:70px; */
+}
+.creator  > img{
+    display: inline-block;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    /* float:right; */
+    /* float:right; */
+}
+.creator{
+    text-align:left;
+    font-family:'barlow';
+    margin-left:370px;
+}
+.navbar{
+    padding-left:150px;
+}
+/* ------------------Loader---------------- */
+.loader {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #FFBA01; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin: auto auto;
+    /* margin-top: 200px; */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.loader-wrapper{
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icons {
+    display: block !important;
+}
+
+@media screen and (max-width: 768px){
+    #carder > a >img{
+        width:255px;
+        height:160px;
+        margin-bottom:20px;
+       
+    }
+    .navbar{
+        padding-left:30px;
+    }
+    #carder{
+        margin-top:35px;
+    }
+    .details > h1{
+        /* margin-top:100px; */
+        text-align:left;
+        font-family:'barlow';
+        margin-left:0px;
+        font-weight: 500;
+        font-size: 30px;
+    }
+    .details > h3{
+        text-align:left;
+        font-family:'barlow';
+        margin-left:0px;
+        font-weight: 300;
+    }
+    .details > h5{
+        display:inline-block;
+        text-align:left;
+        font-family:'barlow';
+        margin-left:0px;
+        margin-top:10px;
+        margin-bottom:85px;
+        font-weight: 100;
+    }
+    .details > img{
+        display: inline-block;
+        width:60px;
+        height:60px;
+        border-radius:50%;
+    }
+    .creator{
+        margin-left:0px;
+        margin-bottom:30px;
+    }
+}
