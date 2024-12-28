@@ -1,0 +1,44 @@
+{
+  "board": [
+    {
+      "name": "阿俊",
+      "role": "项目经理",
+      "img": "/src/assets/images/board/dang.png",
+      "in": true
+    },
+    {
+      "name": "彭总",
+      "role": "CEO",
+      "img": "/src/assets/images/board/pe.png",
+      "in": true
+    },
+    {
+      "name": "梁总",
+      "role": "CEO",
+      "img": "/src/assets/images/board/liang.png",
+      "in": true
+    },
+    {
+      "name": "伟哥",
+      "role": "CEO",
+      "img": "/src/assets/images/board/wei.png",
+      "in": true
+    },
+    {
+      "name": "朱哥",
+      "role": "经理",
+      "img": "/src/assets/images/board/zhu.png",
+      "in": true
+    }
+  ],
+  "technical": [
+   
+  ],
+  "management": [
+  
+  ],
+  "design": [
+   
+  ]
+}
+

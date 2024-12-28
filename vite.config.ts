@@ -19,6 +19,7 @@ export default defineConfig(({ mode, command }) => {
         '~': path.resolve(__dirname, './'),
         // 设置别名
         '@': path.resolve(__dirname, './src'),
+        '@data': path.resolve(__dirname, './src/data')
       },
       // https://cn.vitejs.dev/config/#resolve-extensions
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
@@ -46,5 +47,8 @@ export default defineConfig(({ mode, command }) => {
         ],
       },
     },
+    // 添加静态资源处理
+    publicDir: 'public',
+    assetsInclude: ['**/*.jpg', '**/*.png', '**/*.svg', '**/*.json']
   }
 })
