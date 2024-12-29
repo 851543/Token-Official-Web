@@ -157,8 +157,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
-
-  <div class="footer container-main container-main-last"></div>
+  <div class="container-main  container-main-last" />
 </template>
 <style scoped>
 .main-image{

@@ -27,6 +27,7 @@ const toggleMenu = () => {
 }
 </script>
 <template>
+
   <div>
     <div class="main-menu" :style="{ display: isMenuVisible ? 'block' : 'none' }">
       <div class="main-menu-item-holder">
