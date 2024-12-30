@@ -14,7 +14,7 @@ onMounted(() => {
   <div class="main" id="home-scroll">
     <div class="main-text-holder">
       <div class="main-text-holder-heading">
-        <img data-aos="fade-up" src="@/assets/images/logo-12.png" class="logo" alt="GDSC VIT" />
+        <img data-aos="fade-up" src="@/assets/images/test.png" class="logo" alt="GDSC VIT" />
       </div>
       <p data-aos="fade-up" class="barlow-extralight continous-text">
         在
