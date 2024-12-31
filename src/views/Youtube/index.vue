@@ -59,15 +59,15 @@ onMounted(() => {
 // 添加新的响应式数据
 const sections = [
   {
-    title: '写作',
-    subtitle: ['让创作', '更有灵感'],
-    description: '像搭建积木一样构建你的内容，让创意自由流动。AI 助手帮你突破创作瓶颈，激发更多灵感。',
+    title: '创作',
+    subtitle: ['让灵感', '自由流动'],
+    description: 'TOKEN 为创作者提供智能创作工具，让你的想法得到完美呈现。AI 助手帮你突破创作瓶颈，激发更多创意可能。',
     image: '/src/assets/images/logo.png'
   },
   {
-    title: '绘画',
-    subtitle: ['让表达', '更加生动'],
-    description: '无限画布，自由创作。让你的想法通过图形完美呈现，AI 辅助让创作更加轻松。',
+    title: '管理',
+    subtitle: ['让知识', '成就价值'],
+    description: 'TOKEN 帮你构建个性化知识体系，让知识管理更加高效。智能分类、快速检索，让知识创造更多价值。',
     image: '/src/assets/images/test.png'
   }
 ]
@@ -95,6 +95,27 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleSectionScroll)
 })
+
+// 添加合作伙伴数据
+const partners = [
+  { src: '/src/assets/images/partners/google.svg', alt: 'Google' },
+  { src: '/src/assets/images/partners/tiktok.svg', alt: 'TikTok' },
+  { src: '/src/assets/images/partners/microsoft.svg', alt: 'Microsoft' },
+  { src: '/src/assets/images/partners/amazon.svg', alt: 'Amazon' },
+  { src: '/src/assets/images/partners/meta.svg', alt: 'Meta' },
+  { src: '/src/assets/images/partners/ibm.svg', alt: 'IBM' },
+  { src: '/src/assets/images/partners/cloud303.svg', alt: 'Cloud303' },
+  { src: '/src/assets/images/partners/sap.svg', alt: 'SAP' },
+  { src: '/src/assets/images/partners/shopify.svg', alt: 'Shopify' },
+  { src: '/src/assets/images/partners/apache.svg', alt: 'Apache' }
+]
+
+onMounted(() => {
+  const marquee = document.querySelector('.partner-marquee')
+  if (marquee) {
+    marquee.innerHTML += marquee.innerHTML
+  }
+})
 </script>
 
 <template>
@@ -103,16 +124,16 @@ onUnmounted(() => {
       <!-- 标题部分 -->
       <div class="hero" :style="{ opacity: 1 - scrollProgress * 1.5 }">
         <h1>
-          写作, 绘画, <span class="highlight">✓</span> 规划,
-          <br>一次性搞定. <span class="accent">AI 助力.</span>
+          创新思维，智慧创作 &nbsp;<span class="highlight">✓</span>
+          <br>创作更简单. <span class="accent">TOKEN.</span>
         </h1>
         
         <p class="subtitle">
-          在 TOKEN，我们的目标是学习和教学、开发者、设计师和管理者齐聚一堂，
-          共同创建一个激励大家进步的团队。加入我们！
+          在 TOKEN，我们致力于打造一个激发创意的平台。让开发者、设计师和创作者
+          能够更轻松地进行创作与知识管理，共同构建充满活力的创作团队。
         </p>
         
-        <button class="btn">立即开始</button>
+        <button class="btn">开始创作</button>
       </div>
 
       <!-- 视频部分 -->
@@ -132,95 +153,87 @@ onUnmounted(() => {
     <!-- 添加合作伙伴部分 -->
     <div class="partners-section">
       <h2 class="partners-title">
-        值得信赖的合作伙伴<br>
-        从初创企业到行业领军者
+        TOKEN 生态伙伴<br>
+        携手共建创新未来
       </h2>
       
-      <div class="partners-grid">
-        <!-- 第一行 -->
-        <div class="partner-row">
-          <img src="@/assets/images/partners/google.svg" alt="Google">
-          <img src="@/assets/images/partners/microsoft.svg" alt="Microsoft">
-          <img src="@/assets/images/partners/amazon.svg" alt="Amazon">
-          <img src="@/assets/images/partners/meta.svg" alt="Meta">
-          <img src="@/assets/images/partners/ibm.svg" alt="IBM">
-        </div>
-        
-        <!-- 第二行 -->
-        <div class="partner-row">
-          <img src="@/assets/images/partners/tiktok.svg" alt="TikTok">
-          <img src="@/assets/images/partners/shopify.svg" alt="Shopify">
-          <img src="@/assets/images/partners/apache.svg" alt="Apache">
-          <img src="@/assets/images/partners/cloud303.svg" alt="Cloud303">
-          <img src="@/assets/images/partners/sap.svg" alt="SAP">
-        </div>
-        
-        <!-- 第三行 -->
-        <div class="partner-row">
-          <img src="@/assets/images/partners/michigan.svg" alt="University of Michigan">
-          <img src="@/assets/images/partners/arqcap.svg" alt="ArqCap">
-          <img src="@/assets/images/partners/neuc.svg" alt="Neuc">
-          <img src="@/assets/images/partners/keyman.svg" alt="Keyman">
-          <img src="@/assets/images/partners/bonfire.svg" alt="Bonfire Leads">
+      <div class="partners-container">
+        <div class="partner-track">
+          <div class="partner-marquee">
+            <div class="partner-row">
+              <img
+                v-for="partner in partners"
+                :key="partner.alt"
+                :src="partner.src"
+                :alt="partner.alt"
+                class="partner-logo"
+              >
+            </div>
+          </div>
         </div>
       </div>
+
+      <p class="partners-subtitle" data-aos="fade-up">
+        全球顶尖科技公司深度合作，为创作者提供更优质的服务
+      </p>
     </div>
 
     <!-- 新功能区域 -->
     <div class="features-section">
       <div class="feature-icons">
-        <div class="icon-item">
-          <div class="icon">
+        <div class="icon-item" data-aos="fade-up">
+          <div class="icon icon-note">
             <svg viewBox="0 0 24 24" class="icon-svg">
               <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
               <path d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/>
             </svg>
           </div>
-          <span>灵感板</span>
+          <span>创意笔记</span>
         </div>
 
-        <div class="icon-item">
-          <div class="icon">
+        <div class="icon-item" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon icon-knowledge">
             <svg viewBox="0 0 24 24" class="icon-svg">
-              <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+              <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5M16 13H8v-2h8v2zm0 4H8v-2h8v2z"/>
             </svg>
           </div>
-          <span>文档与知识库</span>
+          <span>知识管理</span>
         </div>
 
-        <div class="icon-item">
-          <div class="icon">
+        <div class="icon-item" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon icon-tools">
             <svg viewBox="0 0 24 24" class="icon-svg">
               <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
             </svg>
           </div>
-          <span>故事板</span>
+          <span>创作工具</span>
         </div>
 
-        <div class="icon-item">
-          <div class="icon">
+        <div class="icon-item" data-aos="fade-up" data-aos-delay="300">
+          <div class="icon icon-team">
             <svg viewBox="0 0 24 24" class="icon-svg">
               <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
               <path d="M18 9l-1.4-1.4-6.6 6.6-2.6-2.6L6 13l4 4z"/>
             </svg>
           </div>
-          <span>项目任务</span>
+          <span>团队协作</span>
         </div>
 
-        <div class="icon-item">
-          <div class="icon">
+        <div class="icon-item" data-aos="fade-up" data-aos-delay="400">
+          <div class="icon icon-ai">
             <svg viewBox="0 0 24 24" class="icon-svg">
-              <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"/>
-              <path d="M12 12c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3zm0-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm6 8.58c0-2.5-3.97-3.58-6-3.58s-6 1.08-6 3.58V18h12v-1.42zM8.48 16c.74-.51 2.23-1 3.52-1s2.78.49 3.52 1H8.48z"/>
+              <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+              <path d="M12 12c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3zm0-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm6 8.58c0-2.5-3.97-3.58-6-3.58s-6 1.08-6 3.58V18h12v-1.42z"/>
             </svg>
           </div>
-          <span>思维导图</span>
+          <span>智能助手</span>
         </div>
       </div>
 
-      <div class="feature-content">
-        <h2>专注创作，释放无限创意</h2>
-        <p>一站式知识管理系统，让写作、绘画和规划变得轻松自如，激发你的创作灵感。</p>
+      <div class="feature-content" data-aos="fade-up">
+        <h2>让创作更简单，让知识更有价值</h2>
+        <p>TOKEN 为创作者打造一站式创作与知识管理平台，让灵感自由流动，让创意不断涌现。</p>
       </div>
     </div>
 
@@ -236,10 +249,16 @@ onUnmounted(() => {
         >
           <div class="text-content" :class="{ 'is-active': currentSection === index }">
             <div class="title-wrapper">
-              <h2 class="main-title">
-                {{ section.title }}<span class="cursor">|</span>
+              <h2 class="main-title" :class="{ 
+                'title-create': section.title === '创作',
+                'title-manage': section.title === '管理'
+              }">
+                {{ section.title }}<span :class="{'cursor':section.title === '管理'}"></span>
               </h2>
-              <h3 class="sub-title">
+              <h3 class="sub-title" :class="{
+                'subtitle-create': section.title === '创作',
+                'subtitle-manage': section.title === '管理'
+              }">
                 {{ section.subtitle[0] }}<br>
                 {{ section.subtitle[1] }}
               </h3>
@@ -272,15 +291,15 @@ onUnmounted(() => {
     <div class="ai-partner-section">
       <div class="ai-content">
         <div class="ai-title">
-          <span class="ai-highlight">AI</span> 助手让你的创作<br>
-          写作、绘画、规划更出色
+          <span class="ai-highlight">TOKEN</span> 智能助手<br>
+          让创作更轻松，让知识更有价值
         </div>
         <div class="ai-subtitle">
-          让思维更开阔，创作更快速，工作更智能<br>
-          随时随地，激发灵感
+          智能创作辅助，知识管理专家<br>
+          让每一次创作都充满可能
         </div>
         <button class="learn-more-btn">
-          了解更多 <span class="arrow">+</span>
+          开始体验 <span class="arrow">+</span>
         </button>
       </div>
     </div>
@@ -302,7 +321,7 @@ onUnmounted(() => {
 
 .hero {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 100px auto;
   transition: opacity 0.3s;
 }
 
@@ -373,12 +392,12 @@ video {
 /* 暗色模式 */
 :root {
   --bg-gradient: rgba(255,255,255,0.9);
-  --bg-image: url('@/assets/images/after-landing.svg');
+  --bg-image: url('/src/assets/images/after-landing.svg');
 }
 
 .dark {
   --bg-gradient: rgba(32,32,32,0.9);
-  --bg-image: url('@/assets/images/after-landing-dark.svg');
+  --bg-image: url('/src/assets/images/after-landing-dark.svg');
 }
 
 .container {
@@ -388,61 +407,135 @@ video {
 }
 
 .partners-section {
-  padding: 100px 0;
+  padding: 80px 0;
   text-align: center;
+  background: #fff;
 }
 
 .partners-title {
-  font-size: 2.5rem;
-  font-weight: 500;
-  color: #333;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.3;
   margin-bottom: 60px;
-  line-height: 1.4;
+  color: #1a1a1a;
 }
 
-.partners-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-  max-width: 1200px;
+.partners-subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-top: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.partners-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+  position: relative;
+}
+
+.partner-track {
+  width: 50%;
   margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.partner-track::before,
+.partner-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  z-index: 2;
+}
+
+.partner-track::before {
+  left: 0;
+  background: linear-gradient(to right, 
+    rgb(255, 255, 255) 0%,
+    rgba(255, 255, 255, 0.9) 20%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.partner-track::after {
+  right: 0;
+  background: linear-gradient(to left, 
+    rgb(255, 255, 255) 0%,
+    rgba(255, 255, 255, 0.9) 20%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.partner-marquee {
+  display: flex;
+  animation: scroll 30s linear infinite;
 }
 
 .partner-row {
   display: flex;
-  justify-content: space-around;
+  gap: 80px;
+  padding: 0 40px;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 40px;
 }
 
-.partner-row img {
+.partner-logo {
   height: 40px;
-  object-fit: contain;
-  filter: grayscale(100%);
   opacity: 0.7;
   transition: all 0.3s ease;
 }
 
-.partner-row img:hover {
-  filter: grayscale(0%);
+.partner-logo:hover {
   opacity: 1;
+  transform: translateY(-2px);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .partners-title {
-    font-size: 1.8rem;
-    padding: 0 20px;
+.partner-track:hover .partner-logo {
+  opacity: 0.85;
+}
+
+.partner-track:hover .partner-logo:hover {
+  opacity: 1;
+  transform: translateY(-2px) scale(1.05);
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
   }
-  
-  .partner-row {
-    gap: 30px;
+  100% {
+    transform: translateX(-50%);
   }
-  
-  .partner-row img {
-    height: 30px;
-  }
+}
+
+.partner-track:hover .partner-marquee {
+  animation-play-state: paused;
+}
+
+/* 渐变遮罩效果 */
+.partners-container::before,
+.partners-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  z-index: 2;
+}
+
+.partners-container::before {
+  left: 15%;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.partners-container::after {
+  right: 15%;
+  background: linear-gradient(to left, #fff, transparent);
 }
 
 .features-section {
@@ -455,48 +548,94 @@ video {
 .feature-icons {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 40px;
+  margin: 40px 0;
   flex-wrap: wrap;
-  margin-bottom: 40px;
 }
 
 .icon-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 16px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: all 0.3s ease;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .icon-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
 }
 
 .icon {
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background: #f5f5f5;
+  transition: all 0.3s ease;
 }
 
 .icon-svg {
-  width: 24px;
-  height: 24px;
-  fill: #666;
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+/* 图标颜色和背景 */
+.icon-note {
+  background: rgba(64, 158, 255, 0.1);
+  color: #409EFF;
+}
+
+.icon-knowledge {
+  background: rgba(103, 194, 58, 0.1);
+  color: #67C23A;
+}
+
+.icon-tools {
+  background: rgba(230, 162, 60, 0.1);
+  color: #E6A23C;
+}
+
+.icon-team {
+  background: rgba(144, 147, 153, 0.1);
+  color: #909399;
+}
+
+.icon-ai {
+  background: rgba(245, 108, 108, 0.1);
+  color: #F56C6C;
+}
+
+/* 悬停效果 */
+.icon-item:hover .icon {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.icon-item:hover .icon-note {
+  background: rgba(64, 158, 255, 0.2);
+}
+
+.icon-item:hover .icon-knowledge {
+  background: rgba(103, 194, 58, 0.2);
+}
+
+.icon-item:hover .icon-tools {
+  background: rgba(230, 162, 60, 0.2);
+}
+
+.icon-item:hover .icon-team {
+  background: rgba(144, 147, 153, 0.2);
+}
+
+.icon-item:hover .icon-ai {
+  background: rgba(245, 108, 108, 0.2);
 }
 
 .icon-item span {
   font-size: 14px;
-  color: #666;
-  font-weight: 500;
+  color: #606266;
 }
 
 .feature-content {
@@ -586,6 +725,7 @@ video {
 }
 
 .highlight {
+  top: 20px;
   position: relative;
   display: inline-block;
 }
@@ -623,16 +763,6 @@ video {
   margin: 0;
   margin-top: 32px;
 }
-
-.cursor {
-  display: inline-block;
-  width: 3px;
-  height: 64px;
-  background-color: #0091ff;
-  margin-left: 4px;
-  animation: blink 1s step-end infinite;
-}
-
 .image-content {
   flex: 1;
   max-width: 600px;
@@ -817,8 +947,9 @@ video {
 }
 
 .cursor {
+  margin-top: 10px;
   display: inline-block;
-  width: 3px;
+  width: 5px;
   height: 64px;
   background-color: #0091ff;
   margin-left: 4px;
@@ -1033,4 +1164,74 @@ video {
     font-size: 16px;
   }
 }
+
+/* 创作部分样式 */
+.title-create {
+  font-family: 'Comic Sans MS', cursive;
+  font-style: italic;
+  position: relative;
+}
+
+.title-create::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: -5px;
+  right: -5px;
+  height: 12px;
+  background: rgba(0, 157, 255, 0.2);
+  z-index: -1;
+  border-radius: 6px;
+}
+
+.subtitle-create {
+  position: relative;
+  display: inline-block;
+}
+
+.subtitle-create::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: -2px;
+  right: -2px;
+  height: 8px;
+  background: rgba(0, 157, 255, 0.15);
+  z-index: -1;
+  border-radius: 4px;
+}
+
+/* 管理部分样式 */
+.title-manage {
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.subtitle-manage {
+  font-size: 64px;
+  line-height: 1.2;
+  margin-top: 20px;
+}
+
+.subtitle-manage br:first-child {
+  margin-bottom: 10px;
+}
+
+.subtitle-manage br + * {
+  font-weight: 900;
+  font-size: 72px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .title-manage {
+    font-size: 48px;
+  }
+  
+  .subtitle-manage {
+    font-size: 42px;
+  }
+}
+
 </style>
