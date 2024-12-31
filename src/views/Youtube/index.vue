@@ -123,17 +123,17 @@ onMounted(() => {
     <div class="content">
       <!-- 标题部分 -->
       <div class="hero" :style="{ opacity: 1 - scrollProgress * 1.5 }">
-        <h1>
+        <h1 data-aos="fade-up">
           创新思维，智慧创作 &nbsp;<span class="highlight">✓</span>
           <br>创作更简单. <span class="accent">TOKEN.</span>
         </h1>
         
-        <p class="subtitle">
+        <p data-aos="fade-up" class="subtitle">
           在 TOKEN，我们致力于打造一个激发创意的平台。让开发者、设计师和创作者
           能够更轻松地进行创作与知识管理，共同构建充满活力的创作团队。
         </p>
         
-        <button class="btn">开始创作</button>
+        <button data-aos="fade-up" class="btn">开始创作</button>
       </div>
 
       <!-- 视频部分 -->
@@ -147,12 +147,31 @@ onMounted(() => {
           playsinline
           loop
         />
+        
+        <!-- 添加机器人头像，放在视频后面 -->
+        <div class="robot-avatar">
+          <svg viewBox="0 0 200 200" class="robot-head">
+            <!-- 机器人头部 - 深蓝紫色背景 -->
+            <circle cx="100" cy="100" r="90" fill="#6366F1" />
+            
+            <!-- 机器人眼睛 - 白色外圈 -->
+            <circle cx="65" cy="85" r="25" fill="#fff" />
+            <circle cx="135" cy="85" r="25" fill="#fff" />
+            
+            <!-- 机器人眼睛 - 蓝色瞳孔 -->
+            <circle cx="65" cy="85" r="15" fill="#06B6D4" />
+            <circle cx="135" cy="85" r="15" fill="#06B6D4" />
+            
+            <!-- 机器人嘴巴 - 白色微笑 -->
+            <path d="M70 130 Q100 160 130 130" stroke="#fff" stroke-width="8" fill="none" />
+          </svg>
+        </div>
       </div>
     </div>
 
     <!-- 添加合作伙伴部分 -->
     <div class="partners-section">
-      <h2 class="partners-title">
+      <h2 data-aos="fade-up" class="partners-title">
         TOKEN 生态伙伴<br>
         携手共建创新未来
       </h2>
@@ -246,6 +265,7 @@ onMounted(() => {
           :key="index"
           :ref="el => { if (el) sectionRefs[index] = el as HTMLElement }"
           class="slide-section"
+          data-aos="fade-up"
         >
           <div class="text-content" :class="{ 'is-active': currentSection === index }">
             <div class="title-wrapper">
@@ -290,15 +310,15 @@ onMounted(() => {
     <!-- 在 slide-sections 后添加新的部分 -->
     <div class="ai-partner-section">
       <div class="ai-content">
-        <div class="ai-title">
+        <div class="ai-title" data-aos="fade-up">
           <span class="ai-highlight">TOKEN</span> 智能助手<br>
           让创作更轻松，让知识更有价值
         </div>
-        <div class="ai-subtitle">
+        <div class="ai-subtitle" data-aos="fade-up">
           智能创作辅助，知识管理专家<br>
           让每一次创作都充满可能
         </div>
-        <button class="learn-more-btn">
+        <button class="learn-more-btn" data-aos="fade-up">
           开始体验 <span class="arrow">+</span>
         </button>
       </div>
@@ -373,12 +393,12 @@ h1 {
 }
 
 .video-wrapper {
+  position: relative;
   width: 100%;
-  max-width: 1200px;
-  margin: 48px auto 0;
   border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
   overflow: hidden;
+  margin: 48px auto 0;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
   transition: transform 0.3s;
 }
 
@@ -1231,6 +1251,33 @@ video {
   
   .subtitle-manage {
     font-size: 42px;
+  }
+}
+
+/* 添加机器人头像样式 */
+.robot-avatar {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  z-index: 2;
+  transform: rotate(-15deg);
+}
+
+.robot-head {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
   }
 }
 
