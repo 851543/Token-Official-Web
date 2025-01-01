@@ -6,8 +6,8 @@ import tips from '@/assets/live2d/waifu-tips.json?raw'
 import type { WaifuTips } from '@/types/live2d'
 
 // API配置
-const API_KEY = 'C9sjpaDH80jh9CFaxDCfExXZ'
-const SECRET_KEY = 'czHcoOPdsAAo0RRa4KPZJSdgZKr3mV73'
+const API_KEY = ''
+const SECRET_KEY = ''
 
 /**
  * 获取百度API访问令牌
