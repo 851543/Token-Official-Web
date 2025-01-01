@@ -29,6 +29,18 @@ export default defineConfig(({ mode, command }) => {
       port: 85,
       host: true,
       open: true,
+      proxy: {
+        '/oauth': {
+          target: 'https://aip.baidubce.com',
+          changeOrigin: true,
+          secure: false
+        },
+        '/rpc': {
+          target: 'https://aip.baidubce.com',
+          changeOrigin: true,
+          secure: false
+        }
+      }
     },
     //fix:error:stdin>:7356:1: warning: "@charset" must be the first rule in the file
     css: {

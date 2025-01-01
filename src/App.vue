@@ -1,8 +1,6 @@
 <template>
-  <RouterView />
-  <DailyGoal />
+  <div class="app">
+    <RouterView />
+    <Live2d />
+  </div>
 </template>
-
-<script setup lang="ts">
-import DailyGoal from './components/DailyGoal/index.vue'
-</script>
