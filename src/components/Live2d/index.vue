@@ -1,13 +1,53 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onUnmounted } from 'vue'
 import axios from 'axios'
 // @ts-ignore
 import tips from '@/assets/live2d/waifu-tips.json?raw'
 import type { WaifuTips } from '@/types/live2d'
 
-// API配置
-const API_KEY = 'C9sjpaDH80jh9CFaxDCfExXZ'
-const SECRET_KEY = 'czHcoOPdsAAo0RRa4KPZJSdgZKr3mV73'
+
+// 从环境变量获取API密钥
+const API_KEY = import.meta.env.VITE_BAIDU_API_KEY
+const SECRET_KEY = import.meta.env.VITE_BAIDU_SECRET_KEY
+
+// 当前正在输出的文本
+const currentText = ref('')
+// 完整的响应文本
+const fullText = ref('')
+// 打字机效果的定时器
+let typewriterTimer: number | null = null
+
+/**
+ * 实现打字机效果
+ * @param text 要显示的完整文本
+ */
+function typewriterEffect(text: string) {
+  // 清除之前的定时器
+  if (typewriterTimer) {
+    clearInterval(typewriterTimer)
+  }
+  
+  // 重置当前文本
+  currentText.value = ''
+  fullText.value = text
+  let index = 0
+  
+  // 设置打字机效果的定时器
+  typewriterTimer = window.setInterval(() => {
+    if (index < text.length) {
+      currentText.value += text[index]
+      // 更新显示
+      showTips(currentText.value)
+      index++
+    } else {
+      // 完成输出后清除定时器
+      if (typewriterTimer) {
+        clearInterval(typewriterTimer)
+        typewriterTimer = null
+      }
+    }
+  }, 50) // 每50ms输出一个字符
+}
 
 /**
  * 获取百度API访问令牌
@@ -36,13 +76,14 @@ async function getAccessToken() {
 async function chatWithERNIE(message: string) {
   try {
     const accessToken = await getAccessToken()
-    const options = {
+    const url = `https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-tiny-8k?access_token=${accessToken}`
+    
+    const response = await fetch(url, {
       method: 'POST',
-      url: `/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-tiny-8k?access_token=${accessToken}`,
       headers: {
         'Content-Type': 'application/json'
       },
-      data: {
+      body: JSON.stringify({
         messages: [
           {
             role: 'user',
@@ -51,23 +92,81 @@ async function chatWithERNIE(message: string) {
         ],
         temperature: 0.95,
         top_p: 0.7,
-        penalty_score: 1
-      }
-    }
+        penalty_score: 1,
+        stream: true
+      })
+    })
 
-    const response = await axios(options)
-    const data = response.data
-    
-    if (data.error_code) {
-      // 如果是token过期，重新获取token并重试
-      if (data.error_code === 111 || data.error_code === 100) {
+    if (!response.ok) {
+      const errorData = await response.json()
+      if (errorData.error_code === 111 || errorData.error_code === 100) {
         await getAccessToken()
         return chatWithERNIE(message)
       }
-      throw new Error(data.error_msg)
+      throw new Error(errorData.error_msg || '请求失败')
     }
 
-    return data.result || '抱歉，我现在有点累，待会再聊吧~'
+    const reader = response.body?.getReader()
+    if (!reader) throw new Error('无法获取响应流')
+    
+    let fullResponse = ''
+    let currentIndex = 0
+    let isTyping = false
+
+    // 清除之前的定时器
+    if (typewriterTimer) {
+      clearInterval(typewriterTimer)
+      typewriterTimer = null
+    }
+
+    // 打字机效果函数
+    const typeNextChar = () => {
+      if (currentIndex < fullResponse.length) {
+        showTips(fullResponse.slice(0, currentIndex + 1))
+        currentIndex++
+      } else {
+        isTyping = false
+      }
+    }
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+
+      // 解码二进制数据为文本
+      const chunk = new TextDecoder().decode(value)
+      const lines = chunk.split('\n')
+
+      // 处理每一行数据
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const jsonStr = line.slice(6)
+          if (jsonStr === '[DONE]') continue
+
+          try {
+            const data = JSON.parse(jsonStr)
+            if (data.result) {
+              fullResponse = data.result
+              
+              // 如果还没有开始打字效果，启动它
+              if (!isTyping) {
+                isTyping = true
+                typewriterTimer = window.setInterval(typeNextChar, 50)
+              }
+            }
+          } catch (e) {
+            console.error('解析响应数据失败:', e)
+          }
+        }
+      }
+    }
+
+    // 等待打字效果完成
+    while (isTyping) {
+      await new Promise(resolve => setTimeout(resolve, 50))
+    }
+
+    return fullResponse || '抱歉，我现在有点累，待会再聊吧~'
   } catch (error) {
     console.error('调用ERNIE API失败:', error)
     throw error
@@ -280,6 +379,14 @@ onMounted(async () => {
   window.addEventListener('scroll', calculateScrollProgress)
   // 初始计算滚动进度
   calculateScrollProgress()
+})
+
+// 组件卸载时清理定时器
+onUnmounted(() => {
+  if (typewriterTimer) {
+    clearInterval(typewriterTimer)
+    typewriterTimer = null
+  }
 })
 </script>
 
