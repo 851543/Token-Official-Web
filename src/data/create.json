@@ -3,7 +3,7 @@
     {
       "title": "创作",
       "subtitle": ["让灵感", "自由流动"],
-      "description": "Token 为创作者提供智能创作工具，让你的想法得到完美呈现。AI 助手帮你突破创作瓶颈，激发更多创意可能。",
+      "description": "Token 为创作者提供智能创作工具，让你的想法得到完美呈现。我们帮你突破创作瓶颈，激发更多创意可能。",
       "image": "/src/assets/images/logo.png"
     },
     {
@@ -15,44 +15,44 @@
   ],
   "partners": [
     {
-      "src": "/src/assets/images/partners/google.svg",
-      "alt": "Google"
+      "src": "/src/assets/images/partners/apple.svg",
+      "alt": "Apple"
     },
     {
-      "src": "/src/assets/images/partners/tiktok.svg",
-      "alt": "TikTok"
+      "src": "/src/assets/images/partners/google.svg",
+      "alt": "Google"
     },
     {
       "src": "/src/assets/images/partners/microsoft.svg",
       "alt": "Microsoft"
     },
     {
-      "src": "/src/assets/images/partners/amazon.svg",
-      "alt": "Amazon"
-    },
-    {
       "src": "/src/assets/images/partners/meta.svg",
       "alt": "Meta"
     },
     {
-      "src": "/src/assets/images/partners/ibm.svg",
-      "alt": "IBM"
+      "src": "/src/assets/images/partners/amazon.svg",
+      "alt": "Amazon"
     },
     {
-      "src": "/src/assets/images/partners/cloud303.svg",
-      "alt": "Cloud303"
+      "src": "/src/assets/images/partners/nvidia.svg",
+      "alt": "NVIDIA"
     },
     {
-      "src": "/src/assets/images/partners/sap.svg",
-      "alt": "SAP"
+      "src": "/src/assets/images/partners/intel.svg",
+      "alt": "Intel"
     },
     {
-      "src": "/src/assets/images/partners/shopify.svg",
-      "alt": "Shopify"
+      "src": "/src/assets/images/partners/oracle.svg",
+      "alt": "Oracle"
     },
     {
-      "src": "/src/assets/images/partners/apache.svg",
-      "alt": "Apache"
+      "src": "/src/assets/images/partners/salesforce.svg",
+      "alt": "Salesforce"
+    },
+    {
+      "src": "/src/assets/images/partners/adobe.svg",
+      "alt": "Adobe"
     }
   ],
   "features": [

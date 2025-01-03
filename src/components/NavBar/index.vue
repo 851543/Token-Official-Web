@@ -24,7 +24,7 @@ watch(() => route.path, (newPath) => {
 
 const menuItems: MenuItem[] = [
   { id: 'home', text: '首页', link: '/' },
-  { id: 'trend', text: '趋势', link: '/trend' },
+  { id: 'create', text: '创作', link: '/create' },
   { id: 'team', text: '团队', link: '/team' },
   { id: 'links', text: '动态', link: '/morelinks' },
   { id: 'blogs', text: '博客', link: '/blogs' },

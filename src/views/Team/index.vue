@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useDown } from '@/composables/useDown'
-import axios from 'axios'
+import { getTeamData } from '@/api/team'
+
 const downArrow = ref<HTMLElement | null>(null)
 const { setDownArrow } = useDown()
 
@@ -9,7 +10,22 @@ onMounted(() => {
   setDownArrow(downArrow.value)
 })
 
-import { getTeamData } from '@/api/team'
+// 定义社交媒体类型
+interface SocialLink {
+  url: string;
+  icon: string;
+  alt: string;
+}
+
+interface TeamMember {
+  name: string;
+  role: string;
+  img: string;
+  in: boolean;
+  links?: {
+    [key: string]: SocialLink;
+  };
+}
 
 // 团队数据处理函数
 const insertTeamData = (data: any) => {
@@ -17,15 +33,32 @@ const insertTeamData = (data: any) => {
     const container = document.querySelector(`#${section}`)
     if (!container) return
 
-    data[section].forEach((person: any) => {
+    data[section].forEach((person: TeamMember) => {
       if (person.in && person.img) {
         const div = document.createElement('div')
         div.className = 'circle-icon-holder'
+        
+        // 构建社交媒体链接HTML
+        const socialLinksHtml: string[] = []
+        if (person.links && Object.keys(person.links).length > 0) {
+          Object.values(person.links).forEach((link) => {
+            // 使用新的彩色SVG图标
+            socialLinksHtml.push(`
+                <a href="${link.url}" target="_blank" class="social-link" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin: 0 8px;">
+                  <img src="${link.icon}" alt="${link.alt}" class="social-icon" style="width: 24px; height: 24px;">
+                </a>
+            `)
+          })
+        }
+
         div.innerHTML = `
           <img class="circle-icon" src="${person.img}" alt="${person.name}">
           <div class="circle-icon-caption">
             <h3 class="text-center barlow-thin">${person.name}</h3>
-            <p class="text-center barlow-medium">${person.role}</p>
+            <p class="text-center barlow-medium" style="margin-bottom: 10px;">${person.role}</p>
+            <div class="social-links" style="display: flex; justify-content: center; align-items: center; gap: 15px; height: 32px;">
+              ${socialLinksHtml.length > 0 ? socialLinksHtml.join('') : ''}
+            </div>
           </div>
         `
         container.appendChild(div)
@@ -180,7 +213,7 @@ onMounted(() => {
 }
 
 .icons{
-    max-height: 300px;
+    max-height: 350px;
     overflow: hidden;
     margin-bottom: 20px;
     transition: all .6s ease;
@@ -198,8 +231,104 @@ onMounted(() => {
     justify-items: center;
 }
 
-.circle-icon-holder{
-    min-height: 300px;
+.circle-icon-holder {
+  min-height: 300px;
+  height: 350px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.circle-icon-holder:hover {
+  transform: translateY(-5px);
+}
+
+.circle-icon {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.circle-icon-caption {
+  margin-top: 15px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.circle-icon-caption h3 {
+  font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.circle-icon-caption p {
+  font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #666;
+  letter-spacing: 0.5px;
+  margin: 0 0 15px 0;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  padding: 6px;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.social-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
+}
+
+.social-link:hover .social-icon {
+  opacity: 1;
+}
+
+/* 暗色模式适配 */
+.dark .social-link {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .social-link:hover {
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
 /* Portrait tablets and small desktops */
@@ -280,6 +409,161 @@ onMounted(() => {
         max-height: unset;
     }
 
+}
+
+.main-text-holder h1 {
+  font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+  font-weight: 300;
+  font-size: 3.5rem;
+  letter-spacing: 2px;
+  background: linear-gradient(120deg, #ff6b6b, #4ecdc4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient 8s ease infinite;
+  background-size: 200% 200%;
+}
+
+.main-text-holder h2 {
+  font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  background: linear-gradient(120deg, #4ecdc4, #45b7af);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient 8s ease infinite;
+  background-size: 200% 200%;
+  animation-delay: 0.5s;
+}
+
+.container-main h1 {
+  font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;
+  letter-spacing: 1.5px;
+  background: linear-gradient(120deg, #ff6b6b, #4ecdc4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.container-main h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    #ff6b6b 30%,
+    #4ecdc4 70%,
+    transparent 100%
+  );
+  border-radius: 4px;
+  opacity: 0.8;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.container-main h1::before {
+  display: none;
+}
+
+.container-main h1:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes textShine {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-link {
+  color: #666;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  color: #4ecdc4;
+  transform: translateY(-2px);
+}
+
+.csdn-icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover .csdn-icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* 响应式字体大小调整 */
+@media (max-width: 768px) {
+  .main-text-holder h1 {
+    font-size: 2.8rem;
+  }
+  
+  .main-text-holder h2 {
+    font-size: 1.8rem;
+  }
+  
+  .container-main h1 {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-text-holder h1 {
+    font-size: 2.4rem;
+  }
+  
+  .main-text-holder h2 {
+    font-size: 1.6rem;
+  }
+  
+  .container-main h1 {
+    font-size: 2rem;
+  }
 }
 
 </style>

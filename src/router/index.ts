@@ -19,11 +19,11 @@ const router = createRouter({
           },
         },
         {
-          path: '/trend',
-          name: 'Trend',
-          component: () => import('@/views/Trend/index.vue'),
+          path: '/create',
+          name: 'Create',
+          component: () => import('@/views/Create/index.vue'),
           meta: {
-            title: '趋势',
+            title: '创作',
             keepAlive: true,
           },
         },

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import { getTrendData } from '@/api/trend'
-import type { Section, Partner, Feature } from '@/types/trend'
+import { getCreateData } from '@/api/create'
+import type { Section, Partner, Feature } from '@/types/create'
 
 const scrollProgress = ref(0)
 const videoRef = ref<HTMLVideoElement | null>(null)
@@ -20,7 +20,7 @@ const images = ref<string[]>([])
 // 获取数据的函数
 const fetchData = async () => {
   try {
-    const data = await getTrendData()
+    const data = await getCreateData()
     sections.value = data.sections
     partners.value = data.partners
     features.value = data.features
@@ -208,8 +208,8 @@ onUnmounted(() => {
       </div>
 
       <div class="feature-content" data-aos="fade-up">
-        <h2>让创作更简单，让知识更有价值</h2>
-        <p>Token 为创作者打造一站式创作与知识管理平台，让灵感自由流动，让创意不断涌现。</p>
+        <h2>让创意更自由，让协作更高效</h2>
+        <p>Token团队致力于打造一个激发灵感的平台。让开发者、设计师和创作者，能够更自由地表达创意，共同创造精彩作品。</p>
       </div>
     </div>
 
@@ -268,14 +268,14 @@ onUnmounted(() => {
     <div class="ai-partner-section">
       <div class="ai-content">
         <div class="ai-title" data-aos="fade-up">
-          <span class="ai-highlight">Token</span> 智能助手<br>
+          <span class="ai-highlight">Token</span> 团队<br>
           让创作更轻松，让知识更有价值
         </div>
         <div class="ai-subtitle" data-aos="fade-up">
           智能创作辅助，知识管理专家<br>
           让每一次创作都充满可能
         </div>
-        <button class="learn-more-btn" data-aos="fade-up">
+        <button class="learn-more-btn" data-aos="fade-up" @click="openQQFriend">
           开始体验 <span class="arrow">+</span>
         </button>
       </div>

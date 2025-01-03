@@ -17,7 +17,7 @@ export interface Feature {
   color: string
 }
 
-export interface TrendData {
+export interface CreateData {
   sections: Section[]
   partners: Partner[]
   features: Feature[]
