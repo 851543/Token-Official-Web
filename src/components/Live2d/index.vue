@@ -323,7 +323,10 @@ function calculateScrollProgress() {
 /**
  * 滚动到页面顶部
  */
-function scrollToTop() {
+/**
+ * 滚动到页面顶部
+ */
+ function scrollToTop() {
   const duration = 1000; // 动画持续时间（毫秒）
   const start = window.pageYOffset;
   const startTime = performance.now();
@@ -344,7 +347,7 @@ function scrollToTop() {
   }
 
   requestAnimationFrame(animate);
-  showTips('坐稳了，我们要起飞啦！🚀');
+  showTips('坐稳了，我们要起飞啦！🚀')
 }
 
 // 组件挂载后的初始化
@@ -600,44 +603,18 @@ onUnmounted(() => {
 }
 
 .scroll-indicator {
-  position: fixed;
-  right: 50px;
-  bottom: 50px;
-  width: 40px;
-  height: 40px;
+  position: absolute;
+  right: -45px;
+  bottom: 30px;
+  width: 35px;
+  height: 35px;
   cursor: pointer;
-  z-index: 999;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(255, 253, 248, .9);
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(224, 186, 140, .62);
+  z-index: 4;
+  transition: transform 0.3s;
 }
 
 .scroll-indicator:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.scroll-indicator:active {
-  transform: translateY(-2px);
-}
-
-.rocket-icon {
-  font-size: 20px;
-  transform: rotate(-45deg);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scroll-indicator:hover .rocket-icon {
-  transform: rotate(-45deg) translateY(-2px);
-}
-
-.scroll-indicator:active .rocket-icon {
-  transform: rotate(-45deg) translateY(0);
+  transform: translateY(-3px);
 }
 
 .progress-circle {

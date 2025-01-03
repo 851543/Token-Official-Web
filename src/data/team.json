@@ -2,7 +2,7 @@
     "board": [
         {
             "name": "阿俊",
-            "role": "负责人",
+            "role": "团队负责人",
             "img": "/src/assets/images/board/ajun.png",
             "in": true,
             "links": {
@@ -10,12 +10,17 @@
                     "url": "https://github.com/851543",
                     "icon": "/src/assets/images/team/github.svg",
                     "alt": "GitHub"
-                }
+                },
+                "csdn": {
+                  "url": "https://github.com/851543",
+                  "icon": "/src/assets/images/team/csdn.svg",
+                  "alt": "CSDN"
+              }
             }
         },
         {
             "name": "彭小文",
-            "role": "经理",
+            "role": "团队经理",
             "img": "/src/assets/images/board/pe.png",
             "in": true
         },

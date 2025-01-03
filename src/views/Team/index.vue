@@ -52,7 +52,9 @@ const insertTeamData = (data: any) => {
         }
 
         div.innerHTML = `
-          <img class="circle-icon" src="${person.img}" alt="${person.name}">
+          <div class="circle-icon-wrapper">
+            <img class="circle-icon" src="${person.img}" alt="${person.name}">
+          </div>
           <div class="circle-icon-caption">
             <h3 class="text-center barlow-thin">${person.name}</h3>
             <p class="text-center barlow-medium" style="margin-bottom: 10px;">${person.role}</p>
@@ -198,14 +200,18 @@ onMounted(() => {
     min-width: 200px;
 }
 
-.container-main{
-    background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)), url('../images/after-landing.svg') center center fixed;
-    background-size:cover;
+.container-main {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+    url('@/assets/images/after-landing.svg') center center fixed;
+  background-size: cover;
 }
 
-.dark .container-main{
-    background: linear-gradient(rgba(32,32,32,.9), rgba(32,32,32,.9)), url('../images/after-landing-dark.svg') center center fixed;
-    background-size:cover;
+.dark .container-main {
+  background:
+    linear-gradient(rgba(32, 32, 32, 0.9), rgba(32, 32, 32, 0.9)),
+    url('@/assets/images/after-landing-dark.svg') center center fixed;
+  background-size: cover;
 }
 
 .navbar-dsc-logo{
@@ -231,6 +237,7 @@ onMounted(() => {
     justify-items: center;
 }
 
+
 .circle-icon-holder {
   min-height: 300px;
   height: 350px;
@@ -244,16 +251,6 @@ onMounted(() => {
 
 .circle-icon-holder:hover {
   transform: translateY(-5px);
-}
-
-.circle-icon {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
 }
 
 .circle-icon-caption {
