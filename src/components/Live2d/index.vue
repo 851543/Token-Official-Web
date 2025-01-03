@@ -56,13 +56,13 @@ async function getAccessToken() {
   try {
     const options = {
       method: 'POST',
-      url: `/oauth/2.0/Token?grant_type=client_credentials&client_id=${API_KEY}&client_secret=${SECRET_KEY}`,
+      url: `/oauth/2.0/token?grant_type=client_credentials&client_id=${API_KEY}&client_secret=${SECRET_KEY}`,
     }
     const response = await axios(options)
-    if (response.data.access_Token) {
-      return response.data.access_Token
+    if (response.data.access_token) {
+      return response.data.access_token
     }
-    throw new Error('Failed to get access Token')
+    throw new Error('Failed to get access token')
   } catch (error) {
     console.error('获取访问令牌失败:', error)
     throw error
@@ -76,7 +76,7 @@ async function getAccessToken() {
 async function chatWithERNIE(message: string) {
   try {
     const accessToken = await getAccessToken()
-    const url = `https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-tiny-8k?access_Token=${accessToken}`
+    const url = `https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-tiny-8k?access_token=${accessToken}`
     
     const response = await fetch(url, {
       method: 'POST',
@@ -324,11 +324,27 @@ function calculateScrollProgress() {
  * 滚动到页面顶部
  */
 function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  })
-  showTips('坐稳了，我们要起飞啦！🚀')
+  const duration = 1000; // 动画持续时间（毫秒）
+  const start = window.pageYOffset;
+  const startTime = performance.now();
+
+  function easeInOutCubic(t: number): number {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function animate(currentTime: number) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    window.scrollTo(0, start * (1 - easeInOutCubic(progress)));
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  }
+
+  requestAnimationFrame(animate);
+  showTips('坐稳了，我们要起飞啦！🚀');
 }
 
 // 组件挂载后的初始化
@@ -584,18 +600,44 @@ onUnmounted(() => {
 }
 
 .scroll-indicator {
-  position: absolute;
-  right: -45px;
-  bottom: 30px;
-  width: 35px;
-  height: 35px;
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  z-index: 4;
-  transition: transform 0.3s;
+  z-index: 999;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 253, 248, .9);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(224, 186, 140, .62);
 }
 
 .scroll-indicator:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-indicator:active {
+  transform: translateY(-2px);
+}
+
+.rocket-icon {
+  font-size: 20px;
+  transform: rotate(-45deg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-indicator:hover .rocket-icon {
+  transform: rotate(-45deg) translateY(-2px);
+}
+
+.scroll-indicator:active .rocket-icon {
+  transform: rotate(-45deg) translateY(0);
 }
 
 .progress-circle {
