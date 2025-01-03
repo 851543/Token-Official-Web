@@ -1,3 +1,31 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import type { Category, FeaturedArticle, TechTopic, Author } from '@/types/blogs'
+import { getBlogsData } from '@/api/blogs'
+
+// 数据状态
+const categories = ref<Category[]>([])
+const featuredArticles = ref<FeaturedArticle[]>([])
+const techTopics = ref<TechTopic[]>([])
+const authors = ref<Author[]>([])
+
+// 获取数据
+const fetchData = async () => {
+  try {
+    const data = await getBlogsData()
+    categories.value = data.categories
+    featuredArticles.value = data.featuredArticles
+    techTopics.value = data.techTopics
+    authors.value = data.authors
+  } catch (error) {
+    console.error('Failed to fetch blog data:', error)
+  }
+}
+
+onMounted(() => {
+  fetchData()
+})
+</script>
 <template>
   <div class="blogs-container">
     <!-- 头部区域 -->
@@ -18,7 +46,9 @@
       <div class="categories-grid">
         <div class="category-card" v-for="category in categories" :key="category.id">
           <div class="category-icon" :style="{ background: category.gradient }">
-            <svg viewBox="0 0 24 24" v-html="category.icon"></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path :d="category.icon"/>
+            </svg>
           </div>
           <div class="category-content">
             <h3>{{ category.title }}</h3>
@@ -35,10 +65,14 @@
       <div class="featured-grid">
         <article class="featured-card" v-for="article in featuredArticles" :key="article.id">
           <div class="article-image">
-            <div class="svg-icon" v-html="article.icon"></div>
+            <div class="svg-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path :d="article.icon"/>
+              </svg>
+            </div>
             <div class="article-meta">
-              <span class="article-date">{{ article.date }}</span>
-              <span class="article-author">{{ article.author }}</span>
+              <div class="article-author">{{ article.author }}</div>
+              <div class="article-date" style="margin-top: 10px;">{{ article.date }}</div>
             </div>
           </div>
           <div class="article-content">
@@ -86,7 +120,7 @@
       <div class="authors-grid">
         <div class="author-card" v-for="author in authors" :key="author.id">
           <div class="author-avatar">
-            <div class="avatar-icon" v-html="author.icon"></div>
+            <img :src="author.avatar" :alt="author.name" class="avatar-img">
           </div>
           <div class="author-info">
             <h3>{{ author.name }}</h3>
@@ -106,207 +140,8 @@
         </div>
       </div>
     </section>
-
-    <!-- 最新动态 -->
-    <section class="updates-section">
-      <h2 class="section-title">最新动态</h2>
-      <div class="timeline">
-        <div class="timeline-item" v-for="update in updates" :key="update.id">
-          <div class="timeline-date">{{ update.date }}</div>
-          <div class="timeline-content">
-            <h3>{{ update.title }}</h3>
-            <p>{{ update.content }}</p>
-            <div class="timeline-tags">
-              <span class="tag" v-for="tag in update.tags" :key="tag">{{ tag }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
-
-<script setup lang="ts">
-// 分类数据
-const categories = [
-  {
-    id: 1,
-    title: 'AI 技术创新',
-    count: 156,
-    description: '探索人工智能前沿技术与应用实践',
-    gradient: 'linear-gradient(135deg, #6366F1, #818CF8)',
-    icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>'
-  },
-  {
-    id: 2,
-    title: '知识管理',
-    count: 98,
-    description: '构建高效的个人与团队知识体系',
-    gradient: 'linear-gradient(135deg, #10B981, #34D399)',
-    icon: '<path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>'
-  },
-  {
-    id: 3,
-    title: '创作效能',
-    count: 127,
-    description: '提升内容创作效率与质量的方法论',
-    gradient: 'linear-gradient(135deg, #F59E0B, #FBBF24)',
-    icon: '<path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>'
-  },
-  {
-    id: 4,
-    title: '团队协作',
-    count: 84,
-    description: '打造高效团队与协作最佳实践',
-    gradient: 'linear-gradient(135deg, #EC4899, #F472B6)',
-    icon: '<path d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm18 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-12-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/>'
-  }
-]
-
-// 精选文章
-const featuredArticles = [
-  {
-    id: 1,
-    title: '深入理解 Token 平台的 AI 辅助创作功能',
-    excerpt: '探索如何利用 AI 助手提升创作效率，从创意发想到内容优化的全流程实践指南...',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14c-2.67 0-8-1.34-8-4 0-2.67 5.33-4 8-4s8 1.33 8 4c0 2.67-5.33 4-8 4z"/>
-    </svg>`,
-    date: '2024-01-28',
-    author: 'Token 技术团队',
-    tags: ['AI 助手', '创作效率', '最佳实践']
-  },
-  {
-    id: 2,
-    title: '构建个人知识管理体系的实践之路',
-    excerpt: '分享如何利用 Token 平台构建个性化的知识管理系统，提升学习效率与知识复用...',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
-    </svg>`,
-    date: '2024-01-25',
-    author: '知识管理专家',
-    tags: ['知识管理', '学习方法', '效率提升']
-  },
-  {
-    id: 3,
-    title: 'AI 驱动的团队协作新模式',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm18 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-12-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"/>
-    </svg>`,
-    excerpt: '探讨如何将 AI 技术融入团队协作流程，提升沟通效率和创意激发...',
-    date: '2024-01-22',
-    author: '产品经理',
-    tags: ['团队协作', 'AI 应用', '效率工具']
-  }
-]
-
-// 技术专题
-const techTopics = [
-  {
-    id: 1,
-    title: 'AI 模型应用实践',
-    icon: '🤖',
-    gradient: 'linear-gradient(135deg, #6366F1, #818CF8)',
-    description: '深入探讨 AI 模型在实际场景中的应用与优化',
-    articles: [
-      {
-        id: 101,
-        title: 'Transformer 模型在文本生成中的应用',
-        date: '2024-01-20'
-      },
-      {
-        id: 102,
-        title: '如何优化 AI 模型的推理性能',
-        date: '2024-01-18'
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: '知识管理最佳实践',
-    icon: '📚',
-    gradient: 'linear-gradient(135deg, #10B981, #34D399)',
-    description: '探索高效的知识管理方法和工具',
-    articles: [
-      {
-        id: 201,
-        title: '构建个人知识管理系统的方法论',
-        date: '2024-01-15'
-      },
-      {
-        id: 202,
-        title: '团队知识库的搭建与维护',
-        date: '2024-01-12'
-      }
-    ]
-  }
-]
-
-// 作者信息
-const authors = [
-  {
-    id: 1,
-    name: '张明',
-    title: 'AI 研究员',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="8" r="5"/>
-      <path d="M3 21v-2c0-2.2 3.6-4 8-4s8 1.8 8 4v2"/>
-    </svg>`,
-    description: '专注于 AI 模型优化与应用研究',
-    articles: 45,
-    views: 120
-  },
-  {
-    id: 2,
-    name: '李华',
-    title: '知识管理专家',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="8" r="5"/>
-      <path d="M3 21v-2c0-2.2 3.6-4 8-4s8 1.8 8 4v2"/>
-    </svg>`,
-    description: '致力于知识管理体系的研究与实践',
-    articles: 38,
-    views: 95
-  },
-  {
-    id: 3,
-    name: '王芳',
-    title: '产品经理',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="8" r="5"/>
-      <path d="M3 21v-2c0-2.2 3.6-4 8-4s8 1.8 8 4v2"/>
-    </svg>`,
-    description: '关注产品创新与用户体验优化',
-    articles: 42,
-    views: 108
-  }
-]
-
-// 最新动态
-const updates = [
-  {
-    id: 1,
-    date: '2024-01-30',
-    title: 'Token AI 助手重大更新',
-    content: '新版本支持多模态创作，提供更智能的写作建议...',
-    tags: ['产品更新', 'AI 助手']
-  },
-  {
-    id: 2,
-    date: '2024-01-28',
-    title: '知识管理工具升级',
-    content: '新增智能标签系统，支持更精准的知识关联...',
-    tags: ['功能优化', '知识管理']
-  },
-  {
-    id: 3,
-    date: '2024-01-25',
-    title: '团队协作新特性',
-    content: '引入实时协作编辑功能，支持多人同时创作...',
-    tags: ['协作功能', '团队效率']
-  }
-]
-</script>
 
 <style scoped>
 /* 调整整体容器和模块间距 */
@@ -327,8 +162,7 @@ const updates = [
 .categories-section,
 .featured-section,
 .topics-section,
-.authors-section,
-.updates-section {
+.authors-section {
   margin-bottom: 200px;  /* 增加区块之间的间距 */
   position: relative;
 }
@@ -414,8 +248,7 @@ const updates = [
   .categories-section,
   .featured-section,
   .topics-section,
-  .authors-section,
-  .updates-section {
+  .authors-section {
     margin-bottom: 160px;
   }
 
@@ -717,21 +550,23 @@ const updates = [
 }
 
 .author-avatar {
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   margin: 0 auto 20px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6366F1, #818CF8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
+  background: #f3f4f6;
 }
 
-.avatar-icon {
-  width: 60px;
-  height: 60px;
-  color: rgba(255, 255, 255, 0.9);
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.author-card:hover .avatar-img {
+  transform: scale(1.1);
 }
 
 .author-info h3 {
@@ -778,69 +613,6 @@ const updates = [
   font-size: 0.95em;
   color: #4A5568;
   font-weight: 500;
-}
-
-/* 最新动态 */
-.timeline {
-  margin-top: 60px;
-  position: relative;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(99, 102, 241, 0.1), rgba(129, 140, 248, 0.1));
-}
-
-.timeline-item {
-  margin-bottom: 80px;
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 40px;
-}
-
-.timeline-date {
-  text-align: right;
-  padding-right: 40px;
-  color: #666;
-  font-size: 1.1em;
-  font-weight: 500;
-}
-
-.timeline-content {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(99, 102, 241, 0.1);
-  padding: 30px;
-  border-radius: 20px;
-}
-
-/* 暗色模式 */
-.dark .blogs-container {
-  background: linear-gradient(to bottom, #111, #1a1a1a);
-}
-
-.dark .category-card,
-.dark .featured-card,
-.dark .topic-card,
-.dark .author-card,
-.dark .timeline-content {
-  background: rgba(31, 31, 31, 0.9);
-  border-color: rgba(255, 255, 255, 0.05);
-}
-
-.dark .page-description,
-.dark .timeline-date {
-  color: #999;
-}
-
-.dark .topic-articles a {
-  color: #fff;
 }
 
 /* 动画效果 */
@@ -1088,8 +860,7 @@ const updates = [
 .section-title,
 .categories-grid,
 .featured-grid,
-.authors-grid,
-.timeline {
+.authors-grid {
   animation: fadeIn 0.8s ease-out forwards;
 }
 
