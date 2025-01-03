@@ -10,7 +10,7 @@
     </div>
 
     <section class="why-us-section">
-      <h2 class="section-title">为什么选择 TOKEN</h2>
+      <h2 class="section-title">为什么选择 Token</h2>
       <div class="card-grid">
         <div class="feature-card">
           <div class="card-icon ai-icon">
@@ -118,7 +118,7 @@
               <svg viewBox="0 0 24 24" class="info-icon">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
               </svg>
-              <span>business@token.com</span>
+              <span>business@Token.com</span>
             </div>
             <div class="info-item">
               <svg viewBox="0 0 24 24" class="info-icon">
@@ -134,7 +134,7 @@
               <svg viewBox="0 0 24 24" class="info-icon">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
               </svg>
-              <span>support@token.com</span>
+              <span>support@Token.com</span>
             </div>
             <div class="info-item">
               <svg viewBox="0 0 24 24" class="info-icon">
@@ -305,7 +305,7 @@ const submitForm = () => {
 const faqs = [
   {
     id: 1,
-    question: "如何开始使用 TOKEN 平台？",
+    question: "如何开始使用 Token 平台？",
     answer: "注册账号后即可使用基础功能，升级到专业版可解锁更多高级特性..."
   },
   // 更多FAQ

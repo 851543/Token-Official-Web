@@ -2,7 +2,7 @@
   <div class="blogs-container">
     <!-- 头部区域 -->
     <div class="hero-section">
-      <h1 class="page-title">TOKEN 博客</h1>
+      <h1 class="page-title">Token 博客</h1>
       <p class="page-description">
         探索 AI 创新与知识管理的前沿
         <span class="highlight">·</span>
@@ -167,19 +167,19 @@ const categories = [
 const featuredArticles = [
   {
     id: 1,
-    title: '深入理解 TOKEN 平台的 AI 辅助创作功能',
+    title: '深入理解 Token 平台的 AI 辅助创作功能',
     excerpt: '探索如何利用 AI 助手提升创作效率，从创意发想到内容优化的全流程实践指南...',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14c-2.67 0-8-1.34-8-4 0-2.67 5.33-4 8-4s8 1.33 8 4c0 2.67-5.33 4-8 4z"/>
     </svg>`,
     date: '2024-01-28',
-    author: 'TOKEN 技术团队',
+    author: 'Token 技术团队',
     tags: ['AI 助手', '创作效率', '最佳实践']
   },
   {
     id: 2,
     title: '构建个人知识管理体系的实践之路',
-    excerpt: '分享如何利用 TOKEN 平台构建个性化的知识管理系统，提升学习效率与知识复用...',
+    excerpt: '分享如何利用 Token 平台构建个性化的知识管理系统，提升学习效率与知识复用...',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
     </svg>`,
@@ -287,7 +287,7 @@ const updates = [
   {
     id: 1,
     date: '2024-01-30',
-    title: 'TOKEN AI 助手重大更新',
+    title: 'Token AI 助手重大更新',
     content: '新版本支持多模态创作，提供更智能的写作建议...',
     tags: ['产品更新', 'AI 助手']
   },

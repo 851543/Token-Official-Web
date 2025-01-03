@@ -14,7 +14,7 @@
 
 🚀 基于 Vue 3 + TypeScript + Vite 构建的现代化网站 | 为 Token 团队打造的展示平台
 
-[English](./README.en.md) · 简体中文 · [在线预览](https://token-web.example.com) · [报告问题](https://github.com/851543/Token-Official-Web/issues)
+[English](./README.en.md) · 简体中文 · [在线预览](https://Token-web.example.com) · [报告问题](https://github.com/851543/Token-Official-Web/issues)
 
 </div>
 
@@ -78,7 +78,7 @@
 git clone https://github.com/851543/Token-Official-Web.git
 
 # 进入项目目录
-cd token-official-web
+cd Token-official-web
 
 # 安装依赖
 yarn install
@@ -100,7 +100,7 @@ yarn preview
 ## 📖 项目结构
 
 ```
-token-official-web/
+Token-official-web/
 ├── 📂 public/          # 静态资源
 ├── 📂 src/
 │   ├── 🎨 assets/     # 项目资源
@@ -171,7 +171,7 @@ token-official-web/
   <a href="https://github.com/851543/Token-Official-Web">
     <img src="https://img.shields.io/badge/Github-Token%20Team-181717?logo=github&style=for-the-badge" alt="Github"/>
   </a>
-  <a href="mailto:token@example.com">
+  <a href="mailto:Token@example.com">
     <img src="https://img.shields.io/badge/Email-Contact%20Us-blue?logo=gmail&style=for-the-badge" alt="Email"/>
   </a>
 </p>

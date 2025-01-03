@@ -19,11 +19,11 @@ const router = createRouter({
           },
         },
         {
-          path: '/youtube',
-          name: 'Youtube',
-          component: () => import('@/views/Youtube/index.vue'),
+          path: '/trend',
+          name: 'Trend',
+          component: () => import('@/views/Trend/index.vue'),
           meta: {
-            title: '视频',
+            title: '趋势',
             keepAlive: true,
           },
         },
@@ -95,7 +95,7 @@ const router = createRouter({
 // 路由守卫
 router.beforeEach((to, from, next) => {
   // 设置页面标题
-  document.title = to.meta.title ? `${to.meta.title} - TOKEN` : 'TOKEN'
+  document.title = to.meta.title ? `${to.meta.title} - Token` : 'Token'
 
   // 这里可以添加其他路由守卫逻辑，比如：
   // - 权限验证

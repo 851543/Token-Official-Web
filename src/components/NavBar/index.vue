@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import type { MenuItem } from '@/types/navbar'
 import { useScroll } from '@/composables/useScroll'
 import { useRoute } from 'vue-router'
@@ -11,13 +11,20 @@ const activeItem = ref('')
 
 const { setNavbar } = useScroll()
 
+const route = useRoute()
+
 onMounted(() => {
   setNavbar(navbarRef.value)
+  setActiveItem(route.path)
+})
+
+watch(() => route.path, (newPath) => {
+  setActiveItem(newPath)
 })
 
 const menuItems: MenuItem[] = [
   { id: 'home', text: '首页', link: '/' },
-  { id: 'videos', text: '视频', link: '/youtube' },
+  { id: 'trend', text: '趋势', link: '/trend' },
   { id: 'team', text: '团队', link: '/team' },
   { id: 'links', text: '动态', link: '/morelinks' },
   { id: 'blogs', text: '博客', link: '/blogs' },
@@ -53,10 +60,10 @@ const setActiveItem = (path: string) => {
       <div class="navbar-dsc-logo">
         <img
           data-aos="fade-up"
-          src="@/assets/images/logo.png"
+          src="@/assets/images/logo.svg"
           :class="['logo-nav', { 'logo-nav-light': !isDark }]"
-          alt="GDSC VIT"
-          style="margin-right: 45px; margin-left: -20px"
+          alt="Token"
+          style="height: 40px; margin-right: 45px; margin-left: -20px"
         />
       </div>
       <nav class="menu barlow-extralight">

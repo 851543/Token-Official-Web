@@ -18,7 +18,7 @@ onMounted(() => {
       </div>
       <p data-aos="fade-up" class="barlow-extralight continous-text">
         在
-        TOKEN，我们的目标是学习和教学。开发者、设计师和管理者齐聚一堂，共同创建一个激励大家进步的团队与。加入我们！
+        Token，我们的目标是学习和教学。开发者、设计师和管理者齐聚一堂，共同创建一个激励大家进步的团队与。加入我们！
       </p>
     </div>
 
@@ -65,11 +65,11 @@ onMounted(() => {
       我们拥有一支强大的团队，由热爱咖啡的开发者、热爱渐变的设计师和工作效率超高的管理者组成。
     </p>
 
-    <a href="javascript:void(0)">
+    <router-link to="/team">
       <div data-aos="fade-up" class="button-maker">
         <div class="barlow-thin button-text">团队介绍</div>
       </div>
-    </a>
+    </router-link>
   </div>
 
   <div class="container-main holded-container" id="updates-scroll">
@@ -78,11 +78,11 @@ onMounted(() => {
       我们正在积极开展活动，同时通过开发高质量项目为开源做出贡献。
     </p>
     <div data-aos="fade-up" class="buttons">
-      <a href="javascript:void(0)" target="_blank" rel="noopener">
+      <router-link to="/Morelinks">
         <div class="button-maker" id="projects-button">
           <div class="barlow-thin button-text">项目展示</div>
         </div>
-      </a>
+      </router-link>
     </div>
   </div>
 
@@ -93,11 +93,11 @@ onMounted(() => {
     </p>
 
     <div data-aos="fade-up" class="buttons">
-      <a href="javascript:void(0)">
+        <router-link to="/blogs">
         <div class="button-maker" id="projects-button">
           <div class="barlow-thin button-text">查看博客</div>
         </div>
-      </a>
+      </router-link>
     </div>
   </div>
   <div class="container-main holded-container" id="contact-scroll">
@@ -106,7 +106,7 @@ onMounted(() => {
       我们在社交媒体上非常活跃。
     </p>
     <div data-aos="fade-up" class="icons small-icons">
-      <a href="javascript:void(0)" target="_blank" rel="noopener">
+      <a href="https://github.com/851543" target="_blank" rel="noopener"> 
         <img src="@/assets/images/Github.svg" class="circle-icon spc" alt="GDSC VIT GitHub" />
       </a>
     </div>
@@ -116,7 +116,7 @@ onMounted(() => {
     <p data-aos="fade-up" class="barlow-extralight text-center extra-break">
       实现你的创意想法？何不让我们帮你将它变为现实。
     </p>
-    <a href="javascript:void(0)" target="_blank" rel="noopener">
+    <a href="https://qm.qq.com/cgi-bin/qm/qr?k=6IYFpyE-HdWRVPAJBEjU_mpGBGwbfIGE&jump_from=webapi&authKey=Yw5QXvXNBBB8DQMO5LgXHHNxRBMGjLR3b9FUhw2XlE5xtloyXGhL5VdSlXG5H5Zz" target="_blank" rel="noopener">
       <div data-aos="fade-up" class="button-maker">
         <div class="barlow-thin button-text">提交创意</div>
       </div>

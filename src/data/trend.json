@@ -1,0 +1,94 @@
+{
+  "sections": [
+    {
+      "title": "创作",
+      "subtitle": ["让灵感", "自由流动"],
+      "description": "Token 为创作者提供智能创作工具，让你的想法得到完美呈现。AI 助手帮你突破创作瓶颈，激发更多创意可能。",
+      "image": "/src/assets/images/logo.png"
+    },
+    {
+      "title": "管理",
+      "subtitle": ["让知识", "成就价值"],
+      "description": "Token 帮你构建个性化知识体系，让知识管理更加高效。智能分类、快速检索，让知识创造更多价值。",
+      "image": "/src/assets/images/test.png"
+    }
+  ],
+  "partners": [
+    {
+      "src": "/src/assets/images/partners/google.svg",
+      "alt": "Google"
+    },
+    {
+      "src": "/src/assets/images/partners/tiktok.svg",
+      "alt": "TikTok"
+    },
+    {
+      "src": "/src/assets/images/partners/microsoft.svg",
+      "alt": "Microsoft"
+    },
+    {
+      "src": "/src/assets/images/partners/amazon.svg",
+      "alt": "Amazon"
+    },
+    {
+      "src": "/src/assets/images/partners/meta.svg",
+      "alt": "Meta"
+    },
+    {
+      "src": "/src/assets/images/partners/ibm.svg",
+      "alt": "IBM"
+    },
+    {
+      "src": "/src/assets/images/partners/cloud303.svg",
+      "alt": "Cloud303"
+    },
+    {
+      "src": "/src/assets/images/partners/sap.svg",
+      "alt": "SAP"
+    },
+    {
+      "src": "/src/assets/images/partners/shopify.svg",
+      "alt": "Shopify"
+    },
+    {
+      "src": "/src/assets/images/partners/apache.svg",
+      "alt": "Apache"
+    }
+  ],
+  "features": [
+    {
+      "icon": "note",
+      "title": "创意笔记",
+      "background": "rgba(64, 158, 255, 0.1)",
+      "color": "#409EFF"
+    },
+    {
+      "icon": "knowledge",
+      "title": "知识管理",
+      "background": "rgba(103, 194, 58, 0.1)",
+      "color": "#67C23A"
+    },
+    {
+      "icon": "tools",
+      "title": "创作工具",
+      "background": "rgba(230, 162, 60, 0.1)",
+      "color": "#E6A23C"
+    },
+    {
+      "icon": "team",
+      "title": "团队协作",
+      "background": "rgba(144, 147, 153, 0.1)",
+      "color": "#909399"
+    },
+    {
+      "icon": "ai",
+      "title": "智能助手",
+      "background": "rgba(245, 108, 108, 0.1)",
+      "color": "#F56C6C"
+    }
+  ],
+  "images": [
+    "/src/assets/images/logo.png",
+    "/src/assets/images/test.png"
+  ]
+} 

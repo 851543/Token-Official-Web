@@ -1,9 +1,34 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
+import { getTrendData } from '@/api/trend'
+import type { Section, Partner, Feature } from '@/types/trend'
 
 const scrollProgress = ref(0)
 const videoRef = ref<HTMLVideoElement | null>(null)
 
+// 添加打开QQ好友请求的方法
+const openQQFriend = () => {
+  window.open('tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=851543')
+}
+
+// 添加响应式数据
+const sections = ref<Section[]>([])
+const partners = ref<Partner[]>([])
+const features = ref<Feature[]>([])
+const images = ref<string[]>([])
+
+// 获取数据的函数
+const fetchData = async () => {
+  try {
+    const data = await getTrendData()
+    sections.value = data.sections
+    partners.value = data.partners
+    features.value = data.features
+    images.value = data.images
+  } catch (error) {
+    console.error('Failed to fetch trend data:', error)
+  }
+}
 
 // 添加这个函数到 script setup 中
 const isElementInViewport = (el: HTMLElement) => {
@@ -15,7 +40,6 @@ const isElementInViewport = (el: HTMLElement) => {
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   )
 }
-
 
 // 处理滚动事件
 const handleScroll = () => {
@@ -36,48 +60,13 @@ const handleScroll = () => {
   }
 }
 
-// 生命周期钩子
-onMounted(() => window.addEventListener('scroll', handleScroll))
-onUnmounted(() => window.removeEventListener('scroll', handleScroll))
-
-// 添加新的响应式数据
-const images = [
-  '/src/assets/images/logo.png',
-  '/src/assets/images/test.png',
-]
-const currentImageIndex = ref(0)
-
 // 添加图片切换逻辑
 const switchImage = () => {
-  currentImageIndex.value = (currentImageIndex.value + 1) % images.length
+  currentImageIndex.value = (currentImageIndex.value + 1) % images.value.length
 }
-
-onMounted(() => {
-  setInterval(switchImage, 3000)
-})
-
-// 添加新的响应式数据
-const sections = [
-  {
-    title: '创作',
-    subtitle: ['让灵感', '自由流动'],
-    description: 'TOKEN 为创作者提供智能创作工具，让你的想法得到完美呈现。AI 助手帮你突破创作瓶颈，激发更多创意可能。',
-    image: '/src/assets/images/logo.png'
-  },
-  {
-    title: '管理',
-    subtitle: ['让知识', '成就价值'],
-    description: 'TOKEN 帮你构建个性化知识体系，让知识管理更加高效。智能分类、快速检索，让知识创造更多价值。',
-    image: '/src/assets/images/test.png'
-  }
-]
-
-const currentSection = ref(0)
-const sectionRefs = ref<HTMLElement[]>([])
 
 // 添加滚动处理函数
 const handleSectionScroll = () => {
-  const scrollPosition = window.scrollY
   const windowHeight = window.innerHeight
   
   sectionRefs.value.forEach((section, index) => {
@@ -88,33 +77,32 @@ const handleSectionScroll = () => {
   })
 }
 
-onMounted(() => {
+const currentImageIndex = ref(0)
+const currentSection = ref(0)
+const sectionRefs = ref<HTMLElement[]>([])
+
+// 生命周期钩子
+onMounted(async () => {
+  // 添加事件监听器
+  window.addEventListener('scroll', handleScroll)
   window.addEventListener('scroll', handleSectionScroll)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleSectionScroll)
-})
-
-// 添加合作伙伴数据
-const partners = [
-  { src: '/src/assets/images/partners/google.svg', alt: 'Google' },
-  { src: '/src/assets/images/partners/tiktok.svg', alt: 'TikTok' },
-  { src: '/src/assets/images/partners/microsoft.svg', alt: 'Microsoft' },
-  { src: '/src/assets/images/partners/amazon.svg', alt: 'Amazon' },
-  { src: '/src/assets/images/partners/meta.svg', alt: 'Meta' },
-  { src: '/src/assets/images/partners/ibm.svg', alt: 'IBM' },
-  { src: '/src/assets/images/partners/cloud303.svg', alt: 'Cloud303' },
-  { src: '/src/assets/images/partners/sap.svg', alt: 'SAP' },
-  { src: '/src/assets/images/partners/shopify.svg', alt: 'Shopify' },
-  { src: '/src/assets/images/partners/apache.svg', alt: 'Apache' }
-]
-
-onMounted(() => {
+  
+  // 获取数据
+  await fetchData()
+  
+  // 设置图片切换定时器
+  setInterval(switchImage, 3000)
+  
+  // 处理合作伙伴滚动
   const marquee = document.querySelector('.partner-marquee')
   if (marquee) {
     marquee.innerHTML += marquee.innerHTML
   }
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('scroll', handleSectionScroll)
 })
 </script>
 
@@ -125,15 +113,15 @@ onMounted(() => {
       <div class="hero" :style="{ opacity: 1 - scrollProgress * 1.5 }">
         <h1 data-aos="fade-up">
           创新思维，智慧创作 &nbsp;<span class="highlight">✓</span>
-          <br>创作更简单. <span class="accent">TOKEN.</span>
+          <br>创作更简单. <span class="accent">Token.</span>
         </h1>
         
         <p data-aos="fade-up" class="subtitle">
-          在 TOKEN，我们致力于打造一个激发创意的平台。让开发者、设计师和创作者
+          在 Token，我们致力于打造一个激发创意的平台。让开发者、设计师和创作者
           能够更轻松地进行创作与知识管理，共同构建充满活力的创作团队。
         </p>
         
-        <button data-aos="fade-up" class="btn">开始创作</button>
+        <button data-aos="fade-up" class="btn" @click="openQQFriend">开始创作</button>
       </div>
 
       <!-- 视频部分 -->
@@ -142,7 +130,7 @@ onMounted(() => {
       }">
         <video 
           ref="videoRef" 
-          src="@/video/hero-cover.mp4"
+          src="@/assets/video/hero-cover.mp4"
           muted
           playsinline
           loop
@@ -172,7 +160,7 @@ onMounted(() => {
     <!-- 添加合作伙伴部分 -->
     <div class="partners-section">
       <h2 data-aos="fade-up" class="partners-title">
-        TOKEN 生态伙伴<br>
+        Token 生态伙伴<br>
         携手共建创新未来
       </h2>
       
@@ -200,59 +188,28 @@ onMounted(() => {
     <!-- 新功能区域 -->
     <div class="features-section">
       <div class="feature-icons">
-        <div class="icon-item" data-aos="fade-up">
-          <div class="icon icon-note">
+        <div 
+          v-for="feature in features" 
+          :key="feature.title" 
+          class="icon-item" 
+          data-aos="fade-up"
+        >
+          <div class="icon" :class="`icon-${feature.icon}`" :style="{
+            background: feature.background,
+            color: feature.color
+          }">
             <svg viewBox="0 0 24 24" class="icon-svg">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
               <path d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/>
             </svg>
           </div>
-          <span>创意笔记</span>
-        </div>
-
-        <div class="icon-item" data-aos="fade-up" data-aos-delay="100">
-          <div class="icon icon-knowledge">
-            <svg viewBox="0 0 24 24" class="icon-svg">
-              <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"/>
-              <path d="M14 3v5h5M16 13H8v-2h8v2zm0 4H8v-2h8v2z"/>
-            </svg>
-          </div>
-          <span>知识管理</span>
-        </div>
-
-        <div class="icon-item" data-aos="fade-up" data-aos-delay="200">
-          <div class="icon icon-tools">
-            <svg viewBox="0 0 24 24" class="icon-svg">
-              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-            </svg>
-          </div>
-          <span>创作工具</span>
-        </div>
-
-        <div class="icon-item" data-aos="fade-up" data-aos-delay="300">
-          <div class="icon icon-team">
-            <svg viewBox="0 0 24 24" class="icon-svg">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
-              <path d="M18 9l-1.4-1.4-6.6 6.6-2.6-2.6L6 13l4 4z"/>
-            </svg>
-          </div>
-          <span>团队协作</span>
-        </div>
-
-        <div class="icon-item" data-aos="fade-up" data-aos-delay="400">
-          <div class="icon icon-ai">
-            <svg viewBox="0 0 24 24" class="icon-svg">
-              <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-              <path d="M12 12c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3zm0-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm6 8.58c0-2.5-3.97-3.58-6-3.58s-6 1.08-6 3.58V18h12v-1.42z"/>
-            </svg>
-          </div>
-          <span>智能助手</span>
+          <span>{{ feature.title }}</span>
         </div>
       </div>
 
       <div class="feature-content" data-aos="fade-up">
         <h2>让创作更简单，让知识更有价值</h2>
-        <p>TOKEN 为创作者打造一站式创作与知识管理平台，让灵感自由流动，让创意不断涌现。</p>
+        <p>Token 为创作者打造一站式创作与知识管理平台，让灵感自由流动，让创意不断涌现。</p>
       </div>
     </div>
 
@@ -311,7 +268,7 @@ onMounted(() => {
     <div class="ai-partner-section">
       <div class="ai-content">
         <div class="ai-title" data-aos="fade-up">
-          <span class="ai-highlight">TOKEN</span> 智能助手<br>
+          <span class="ai-highlight">Token</span> 智能助手<br>
           让创作更轻松，让知识更有价值
         </div>
         <div class="ai-subtitle" data-aos="fade-up">

@@ -398,11 +398,23 @@ body {
   width: 30px;
   height: auto;
   position: absolute;
-  bottom: 3vh;
-  display: block;
+  bottom: 5vh;
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0px);
+  }
 }
 
 .container-main {

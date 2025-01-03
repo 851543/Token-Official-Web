@@ -56,13 +56,13 @@ async function getAccessToken() {
   try {
     const options = {
       method: 'POST',
-      url: `/oauth/2.0/token?grant_type=client_credentials&client_id=${API_KEY}&client_secret=${SECRET_KEY}`,
+      url: `/oauth/2.0/Token?grant_type=client_credentials&client_id=${API_KEY}&client_secret=${SECRET_KEY}`,
     }
     const response = await axios(options)
-    if (response.data.access_token) {
-      return response.data.access_token
+    if (response.data.access_Token) {
+      return response.data.access_Token
     }
-    throw new Error('Failed to get access token')
+    throw new Error('Failed to get access Token')
   } catch (error) {
     console.error('获取访问令牌失败:', error)
     throw error
@@ -76,7 +76,7 @@ async function getAccessToken() {
 async function chatWithERNIE(message: string) {
   try {
     const accessToken = await getAccessToken()
-    const url = `https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-tiny-8k?access_token=${accessToken}`
+    const url = `https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-tiny-8k?access_Token=${accessToken}`
     
     const response = await fetch(url, {
       method: 'POST',
