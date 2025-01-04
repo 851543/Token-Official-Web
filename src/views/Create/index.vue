@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { getCreateData } from '@/api/create'
+import { useLangStore } from '@/stores/lang'
 import type { Section, Partner, Feature } from '@/types/create'
 
 const scrollProgress = ref(0)
 const videoRef = ref<HTMLVideoElement | null>(null)
+const langStore = useLangStore()
 
 // 添加打开QQ好友请求的方法
 const openQQFriend = () => {
@@ -20,7 +22,7 @@ const images = ref<string[]>([])
 // 获取数据的函数
 const fetchData = async () => {
   try {
-    const data = await getCreateData()
+    const data = await getCreateData(langStore.currentLang)
     sections.value = data.sections
     partners.value = data.partners
     features.value = data.features
@@ -29,6 +31,11 @@ const fetchData = async () => {
     console.error('Failed to fetch trend data:', error)
   }
 }
+
+// 监听语言变化
+watch(() => langStore.currentLang, () => {
+  fetchData()
+})
 
 // 添加这个函数到 script setup 中
 const isElementInViewport = (el: HTMLElement) => {
@@ -112,16 +119,15 @@ onUnmounted(() => {
       <!-- 标题部分 -->
       <div class="hero" :style="{ opacity: 1 - scrollProgress * 1.5 }">
         <h1 data-aos="fade-up">
-          创新思维，智慧创作 &nbsp;<span class="highlight">✓</span>
-          <br>创作更简单. <span class="accent">Token.</span>
+          {{ $t('create.hero.title') }} &nbsp;<span class="highlight">✓</span>
+          <br>{{ $t('create.hero.subtitle') }}. <span class="accent">Token.</span>
         </h1>
         
         <p data-aos="fade-up" class="subtitle">
-          在 Token，我们致力于打造一个激发创意的平台。让开发者、设计师和创作者
-          能够更轻松地进行创作与知识管理，共同构建充满活力的创作团队。
+          {{ $t('create.hero.description') }}
         </p>
         
-        <button data-aos="fade-up" class="btn" @click="openQQFriend">开始创作</button>
+        <button data-aos="fade-up" class="btn" @click="openQQFriend">{{ $t('create.hero.startButton') }}</button>
       </div>
 
       <!-- 视频部分 -->
@@ -160,8 +166,8 @@ onUnmounted(() => {
     <!-- 添加合作伙伴部分 -->
     <div class="partners-section">
       <h2 data-aos="fade-up" class="partners-title">
-        Token 生态伙伴<br>
-        携手共建创新未来
+        {{ $t('create.partners.title') }}<br>
+        {{ $t('create.partners.subtitle') }}
       </h2>
       
       <div class="partners-container">
@@ -181,7 +187,7 @@ onUnmounted(() => {
       </div>
 
       <p class="partners-subtitle" data-aos="fade-up">
-        全球顶尖科技公司深度合作，为创作者提供更优质的服务
+        {{ $t('create.partners.description') }}
       </p>
     </div>
 
@@ -208,8 +214,8 @@ onUnmounted(() => {
       </div>
 
       <div class="feature-content" data-aos="fade-up">
-        <h2>让创意更自由，让协作更高效</h2>
-        <p>Token团队致力于打造一个激发灵感的平台。让开发者、设计师和创作者，能够更自由地表达创意，共同创造精彩作品。</p>
+        <h2>{{ $t('create.features.title') }}</h2>
+        <p>{{ $t('create.features.description') }}</p>
       </div>
     </div>
 
@@ -227,20 +233,23 @@ onUnmounted(() => {
           <div class="text-content" :class="{ 'is-active': currentSection === index }">
             <div class="title-wrapper">
               <h2 class="main-title" :class="{ 
-                'title-create': section.title === '创作',
-                'title-manage': section.title === '管理'
+                'title-create': section.title === sections[0].title,
+                'title-manage': section.title === sections[1].title
               }">
-                {{ section.title }}<span :class="{'cursor':section.title === '管理'}"></span>
+                {{ section.title === sections[0].title ? $t('create.sections.create.title') : $t('create.sections.manage.title') }}
+                <span :class="{'cursor': section.title === sections[1].title}"></span>
               </h2>
               <h3 class="sub-title" :class="{
-                'subtitle-create': section.title === '创作',
-                'subtitle-manage': section.title === '管理'
+                'subtitle-create': section.title === sections[0].title,
+                'subtitle-manage': section.title === sections[1].title
               }">
-                {{ section.subtitle[0] }}<br>
-                {{ section.subtitle[1] }}
+                {{ section.title === sections[0].title ? $t('create.sections.create.subtitle[0]') : $t('create.sections.manage.subtitle[0]') }}<br>
+                {{ section.title === sections[0].title ? $t('create.sections.create.subtitle[1]') : $t('create.sections.manage.subtitle[1]') }}
               </h3>
             </div>
-            <p class="description">{{ section.description }}</p>
+            <p class="description">
+              {{ section.title === sections[0].title ? $t('create.sections.create.description') : $t('create.sections.manage.description') }}
+            </p>
           </div>
         </div>
       </div>
@@ -248,36 +257,12 @@ onUnmounted(() => {
       <!-- 右侧固定图片区域 -->
       <div class="sticky-wrapper">
         <div class="image-container">
-          <div 
-            v-for="(section, index) in sections" 
-            :key="index"
-            class="image-wrapper"
-            :class="{ 'is-active': currentSection === index }"
+          <img 
+            :src="images[currentImageIndex]" 
+            alt="Feature Image"
+            class="feature-image"
           >
-            <img 
-              :src="section.image" 
-              :alt="section.title"
-              class="section-image"
-            >
-          </div>
         </div>
-      </div>
-    </div>
-
-    <!-- 在 slide-sections 后添加新的部分 -->
-    <div class="ai-partner-section">
-      <div class="ai-content">
-        <div class="ai-title" data-aos="fade-up">
-          <span class="ai-highlight">Token</span> 团队<br>
-          让创作更轻松，让知识更有价值
-        </div>
-        <div class="ai-subtitle" data-aos="fade-up">
-          智能创作辅助，知识管理专家<br>
-          让每一次创作都充满可能
-        </div>
-        <button class="learn-more-btn" data-aos="fade-up" @click="openQQFriend">
-          开始体验 <span class="arrow">+</span>
-        </button>
       </div>
     </div>
   </div>

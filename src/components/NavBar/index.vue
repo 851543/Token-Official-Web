@@ -4,6 +4,11 @@ import type { MenuItem } from '@/types/navbar'
 import { useScroll } from '@/composables/useScroll'
 import { useRoute } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
+import { useI18n } from 'vue-i18n'
+import { useLangStore } from '@/stores/lang'
+import type { Language } from '@/types/i18n'
+import logoZh from '@/assets/images/logo.svg'
+import logoEn from '@/assets/images/logo-en.svg'
 
 interface ExtendedHTMLElement extends HTMLElement {
   clickOutsideEvent?: (event: Event) => void
@@ -26,13 +31,17 @@ const vClickOutside = {
 }
 
 const themeStore = useThemeStore()
+const langStore = useLangStore()
+const i18n = useI18n()
+
 const isDark = computed(() => themeStore.isDark)
 const isMenuVisible = ref(false)
 const navbarRef = ref<HTMLElement | null>(null)
 const activeItem = ref('')
 const isLangHovered = ref(false)
 const isLangMenuOpen = ref(false)
-const currentLang = ref('简体')
+const currentLangText = computed(() => langStore.currentLang === 'zh-CN' ? '中文' : 'English')
+const currentLogo = computed(() => langStore.currentLang === 'zh-CN' ? logoZh : logoEn)
 
 const { setNavbar } = useScroll()
 
@@ -42,21 +51,22 @@ onMounted(() => {
   setNavbar(navbarRef.value)
   setActiveItem(route.path)
   themeStore.initTheme()
+  i18n.locale.value = langStore.currentLang
 })
 
 watch(() => route.path, (newPath) => {
   setActiveItem(newPath)
 })
 
-const menuItems: MenuItem[] = [
-  { id: 'home', text: '首页', link: '/' },
-  { id: 'create', text: '创作', link: '/create' },
-  { id: 'team', text: '团队', link: '/team' },
-  { id: 'blogs', text: '博客', link: '/blogs' },
-  { id: 'links', text: '动态', link: '/morelinks' },
-  { id: 'message', text: '留言板', link: '/message' },
-  { id: 'contact', text: '联系我们', link: '/contact' },
-]
+const menuItems = computed(() => [
+  { id: 'home', text: i18n.t('nav.home'), link: '/' },
+  { id: 'create', text: i18n.t('nav.create'), link: '/create' },
+  { id: 'team', text: i18n.t('nav.team'), link: '/team' },
+  { id: 'blogs', text: i18n.t('nav.blogs'), link: '/blogs' },
+  { id: 'links', text: i18n.t('nav.moreLinks'), link: '/morelinks' },
+  { id: 'message', text: i18n.t('nav.message'), link: '/message' },
+  { id: 'contact', text: i18n.t('nav.contact'), link: '/contact' },
+])
 
 const toggleMenu = () => {
   isMenuVisible.value = !isMenuVisible.value
@@ -74,11 +84,13 @@ const toggleLangMenu = () => {
   isLangMenuOpen.value = !isLangMenuOpen.value
 }
 
-const selectLang = (lang: string) => {
-  currentLang.value = lang
+const selectLang = (lang: Language) => {
+  langStore.setLang(lang)
+  i18n.locale.value = lang
   isLangMenuOpen.value = false
 }
 </script>
+
 <template>
   <div>
     <div class="main-menu" :style="{ display: isMenuVisible ? 'block' : 'none' }">
@@ -99,9 +111,9 @@ const selectLang = (lang: string) => {
       <div class="navbar-dsc-logo">
         <img
           data-aos="fade-up"
-          src="@/assets/images/logo.svg"
+          :src="currentLogo"
           :class="['logo-nav', { 'logo-nav-light': !isDark }]"
-          alt="Token"
+          :alt="langStore.currentLang === 'zh-CN' ? 'Token 中文' : 'Token English'"
           style="height: 40px; margin-right: 45px; margin-left: -20px"
         />
       </div>
@@ -154,33 +166,25 @@ const selectLang = (lang: string) => {
             <path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
           </svg>
           <transition name="slide-fade">
-            <span v-if="isLangHovered || isLangMenuOpen" class="lang-text">{{ currentLang }}</span>
+            <span v-if="isLangHovered || isLangMenuOpen" class="lang-text">{{ currentLangText }}</span>
           </transition>
         </div>
       </div>
       <transition name="menu-fade">
         <div v-if="isLangMenuOpen" class="lang-menu">
           <div class="lang-option" 
-               :class="{ 'selected': currentLang === 'English' }"
-               @click="selectLang('English')">
+               :class="{ 'selected': langStore.currentLang === 'zh-CN' }"
+               @click="selectLang('zh-CN')">
+            <span>中文</span>
+            <svg v-if="langStore.currentLang === 'zh-CN'" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+          </div>
+          <div class="lang-option" 
+               :class="{ 'selected': langStore.currentLang === 'en-US' }"
+               @click="selectLang('en-US')">
             <span>English</span>
-            <svg v-if="currentLang === 'English'" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-            </svg>
-          </div>
-          <div class="lang-option" 
-               :class="{ 'selected': currentLang === '简体' }"
-               @click="selectLang('简体')">
-            <span>简体</span>
-            <svg v-if="currentLang === '简体'" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-            </svg>
-          </div>
-          <div class="lang-option" 
-               :class="{ 'selected': currentLang === '繁體' }"
-               @click="selectLang('繁體')">
-            <span>繁體</span>
-            <svg v-if="currentLang === '繁體'" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <svg v-if="langStore.currentLang === 'en-US'" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
             </svg>
           </div>

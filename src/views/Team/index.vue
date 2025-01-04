@@ -1,117 +1,110 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useDown } from '@/composables/useDown'
 import { getTeamData } from '@/api/team'
+import { useI18n } from 'vue-i18n'
+import { useLangStore } from '@/stores/lang'
+import type { TeamMember, TeamData } from '@/types/team'
 
+const i18n = useI18n()
+const langStore = useLangStore()
 const downArrow = ref<HTMLElement | null>(null)
 const { setDownArrow } = useDown()
 
-onMounted(() => {
-  setDownArrow(downArrow.value)
-})
-
-// 定义社交媒体类型
-interface SocialLink {
-  url: string;
-  icon: string;
-  alt: string;
-}
-
-interface TeamMember {
-  name: string;
-  role: string;
-  img: string;
-  in: boolean;
-  links?: {
-    [key: string]: SocialLink;
-  };
-}
-
 // 团队数据处理函数
-const insertTeamData = (data: any) => {
-  Object.keys(data).forEach((section) => {
-    const container = document.querySelector(`#${section}`)
-    if (!container) return
-
-    data[section].forEach((person: TeamMember) => {
-      if (person.in && person.img) {
-        const div = document.createElement('div')
-        div.className = 'circle-icon-holder'
-        
-        // 构建社交媒体链接HTML
-        const socialLinksHtml: string[] = []
-        if (person.links && Object.keys(person.links).length > 0) {
-          Object.values(person.links).forEach((link) => {
-            // 使用新的彩色SVG图标
-            socialLinksHtml.push(`
-                <a href="${link.url}" target="_blank" class="social-link" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin: 0 8px;">
-                  <img src="${link.icon}" alt="${link.alt}" class="social-icon" style="width: 24px; height: 24px;">
-                </a>
-            `)
-          })
-        }
-
-        div.innerHTML = `
-          <div class="circle-icon-wrapper">
-            <img class="circle-icon" src="${person.img}" alt="${person.name}">
-          </div>
-          <div class="circle-icon-caption">
-            <h3 class="text-center barlow-thin">${person.name}</h3>
-            <p class="text-center barlow-medium" style="margin-bottom: 10px;">${person.role}</p>
-            <div class="social-links" style="display: flex; justify-content: center; align-items: center; gap: 15px; height: 32px;">
-              ${socialLinksHtml.length > 0 ? socialLinksHtml.join('') : ''}
-            </div>
-          </div>
-        `
-        container.appendChild(div)
-      }
-    })
-  })
-}
-
-// 加载团队数据
-const fetchTeamData = async () => {
+const insertTeamData = async () => {
   try {
-    const data = await getTeamData()
-    insertTeamData(data)
+    const data = await getTeamData(langStore.currentLang)
+    const sections: (keyof TeamData)[] = ['board', 'technical', 'management', 'design']
+    
+    sections.forEach((section) => {
+      const container = document.querySelector(`#${section}`)
+      if (!container) return
+
+      // 清空现有内容
+      container.innerHTML = ''
+
+      data[section].forEach((person: TeamMember) => {
+        if (person.in && person.img) {
+          const div = document.createElement('div')
+          div.className = 'circle-icon-holder'
+          
+          // 构建社交媒体链接HTML
+          const socialLinksHtml: string[] = []
+          if (person.links && Object.keys(person.links).length > 0) {
+            Object.values(person.links).forEach((link) => {
+              socialLinksHtml.push(`
+                  <a href="${link.url}" target="_blank" class="social-link" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin: 0 8px;">
+                    <img src="${link.icon}" alt="${link.alt}" class="social-icon" style="width: 24px; height: 24px;">
+                  </a>
+              `)
+            })
+          }
+
+          div.innerHTML = `
+            <div class="circle-icon-wrapper">
+              <img class="circle-icon" src="${person.img}" alt="${person.name}">
+            </div>
+            <div class="circle-icon-caption">
+              <h3 class="text-center barlow-thin">${person.name}</h3>
+              <p class="text-center barlow-medium" style="margin-bottom: 10px;">${person.role}</p>
+              <div class="social-links" style="display: flex; justify-content: center; align-items: center; gap: 15px; height: 32px;">
+                ${socialLinksHtml.length > 0 ? socialLinksHtml.join('') : ''}
+              </div>
+            </div>
+          `
+          container.appendChild(div)
+        }
+      })
+    })
   } catch (error) {
-    console.error('Error loading team data:', error)
+    console.error('Failed to insert team data:', error)
   }
 }
 
+// 监听语言变化
+watch(() => langStore.currentLang, () => {
+  insertTeamData()
+})
+
 // 展开/收起按钮处理
-const handleExpander = (sectionId: string) => {
-  const section = document.querySelector(`#${sectionId}`)
-  const expander = document.querySelector(`#${sectionId}-expander`)
+const handleExpander = (id: string) => {
+  const section = document.querySelector(`#${id}`)
+  const expander = document.querySelector(`#${id}-expander`)
   const button = expander?.querySelector('.button-text')
+  
+  if (section && button) {
+    if (!section.classList.contains('icons-expanded')) {
+      section.classList.add('icons-expanded')
+      button.textContent = i18n.t('team.collapse')
+    } else {
+      section.classList.remove('icons-expanded')
+      button.textContent = i18n.t('team.expand')
+    }
 
-    if (section && button) {
-      if (!section.classList.contains('icons-expanded')) {
-        section.classList.add('icons-expanded')
-        button.textContent = '收起'
-      } else {
-        section.classList.remove('icons-expanded')
-        button.textContent = '查看全部'
-      }
-
+    // 滚动到展开的部分
+    if (section.classList.contains('icons-expanded')) {
       section.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   }
+}
 
 onMounted(() => {
-  fetchTeamData(),
-    // 添加展开/收起事件监听
-    ['board', 'technical', 'management', 'design'].forEach((id) => {
+  setDownArrow(downArrow.value)
+  insertTeamData()
+  // 添加展开/收起事件监听
+  ;['board', 'technical', 'management', 'design'].forEach((id) => {
     document.querySelector(`#${id}-expander`)?.addEventListener('click', () => handleExpander(id))
   })
 })
 </script>
+
 <template>
   <div class="main" id="home-scroll">
     <div class="main-text-holder">
-      <h1 data-aos="fade-up" class="barlow-extralight">团队介绍</h1>
-
-      <h2 data-aos="fade-up" class="barlow-medium">2024-2025 年度核心团队</h2>
+      <h1 data-aos="fade-up" class="barlow-extralight">{{ $t('team.title') }}</h1>
+      <p data-aos="fade-up" class="barlow-medium description">{{ $t('team.description') }}</p>
+      <h2 data-aos="fade-up" class="barlow-medium">2024-2025 {{ $t('team.annualTeam') }}</h2>
     </div>
 
     <div class="main-down-arrow" id="down-arrow" ref="downArrow">
@@ -142,58 +135,51 @@ onMounted(() => {
       </svg>
     </div>
 
-    <img src="@/assets/images/team.svg" class="main-image" alt="团队成员" />
+    <img src="@/assets/images/team.svg" class="main-image" :alt="$t('team.teamMembers')" />
   </div>
 
   <div class="container-main holded-container container-main-last" id="our-work-scroll">
-    <h1 class="barlow-medium text-center" style="padding-bottom: 90px">核心成员</h1>
-
+    <h1 class="barlow-medium text-center" style="padding-bottom: 90px">{{ $t('team.coreMembers') }}</h1>
     <div class="icons" id="board"></div>
-
     <div id="board-expander">
       <div class="button-maker">
-        <div class="barlow-thin button-text">查看全部</div>
+        <div class="barlow-thin button-text">{{ $t('team.expand') }}</div>
       </div>
     </div>
   </div>
 
   <div class="container-main holded-container container-main-last" id="our-work-scroll">
-    <h1 class="barlow-medium text-center" style="padding-bottom: 90px">技术团队</h1>
-
+    <h1 class="barlow-medium text-center" style="padding-bottom: 90px">{{ $t('team.technicalTeam') }}</h1>
     <div class="icons" id="technical"></div>
-
     <div id="technical-expander">
       <div class="button-maker">
-        <div class="barlow-thin button-text">查看全部</div>
+        <div class="barlow-thin button-text">{{ $t('team.expand') }}</div>
       </div>
     </div>
   </div>
 
   <div class="container-main holded-container container-main-last" id="our-work-scroll">
-    <h1 class="barlow-medium text-center" style="padding-bottom: 90px">运营团队</h1>
-
+    <h1 class="barlow-medium text-center" style="padding-bottom: 90px">{{ $t('team.operationTeam') }}</h1>
     <div class="icons" id="management"></div>
-
     <div id="management-expander">
       <div class="button-maker">
-        <div class="barlow-thin button-text">查看全部</div>
+        <div class="barlow-thin button-text">{{ $t('team.expand') }}</div>
       </div>
     </div>
   </div>
 
   <div class="container-main holded-container" id="our-work-scroll">
-    <h1 class="barlow-medium text-center" style="padding-bottom: 90px">设计团队</h1>
-
+    <h1 class="barlow-medium text-center" style="padding-bottom: 90px">{{ $t('team.designTeam') }}</h1>
     <div class="icons" id="design"></div>
-
     <div id="design-expander">
       <div class="button-maker">
-        <div class="barlow-thin button-text">查看全部</div>
+        <div class="barlow-thin button-text">{{ $t('team.expand') }}</div>
       </div>
     </div>
   </div>
-  <div class="container-main  container-main-last" />
+  <div class="container-main container-main-last" />
 </template>
+
 <style scoped>
 .main-image{
     width: 30vw;

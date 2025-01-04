@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import components from '@/components'
 import AOS from 'aos'
+import i18n from '@/locales'
 import 'aos/dist/aos.css'
 import './assets/css/googleapis_fonts.css'
 import './styles/index.css'
@@ -18,6 +19,7 @@ AOS.init()
 app.use(components)
 app.use(pinia)
 app.use(router)
+app.use(i18n)
 
 // Print Token Logo
 console.log(`

@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import type { Category, FeaturedArticle, TechTopic, Author } from '@/types/blogs'
 import { getBlogsData } from '@/api/blogs'
+import { useLangStore } from '@/stores/lang'
+
+const langStore = useLangStore()
 
 // 数据状态
 const categories = ref<Category[]>([])
@@ -12,7 +15,7 @@ const authors = ref<Author[]>([])
 // 获取数据
 const fetchData = async () => {
   try {
-    const data = await getBlogsData()
+    const data = await getBlogsData(langStore.currentLang)
     categories.value = data.categories
     featuredArticles.value = data.featuredArticles
     techTopics.value = data.techTopics
@@ -22,6 +25,11 @@ const fetchData = async () => {
   }
 }
 
+// 监听语言变化
+watch(() => langStore.currentLang, () => {
+  fetchData()
+})
+
 onMounted(() => {
   fetchData()
 })
@@ -30,19 +38,15 @@ onMounted(() => {
   <div class="blogs-container">
     <!-- 头部区域 -->
     <div class="hero-section">
-      <h1 class="page-title">博客</h1>
+      <h1 class="page-title">{{ $t('blogs.title') }}</h1>
       <p class="page-description">
-        探索 Token 团队的技术创新
-        <span class="highlight">·</span>
-        分享研发实践
-        <span class="highlight">·</span>
-        共建开源生态
+        {{ $t('blogs.description') }}
       </p>
     </div>
 
     <!-- 热门分类 -->
     <section class="categories-section">
-      <h2 class="section-title">探索领域</h2>
+      <h2 class="section-title">{{ $t('blogs.categories') }}</h2>
       <div class="categories-grid">
         <div class="category-card" v-for="category in categories" :key="category.id">
           <div class="category-icon" :style="{ background: category.gradient }">
@@ -52,7 +56,7 @@ onMounted(() => {
           </div>
           <div class="category-content">
             <h3>{{ category.title }}</h3>
-            <p class="category-count">{{ category.count }} 篇文章</p>
+            <p class="category-count">{{ category.count }} {{ $t('blogs.articles') }}</p>
             <p class="category-desc">{{ category.description }}</p>
           </div>
         </div>
@@ -61,7 +65,7 @@ onMounted(() => {
 
     <!-- 精选文章 -->
     <section class="featured-section">
-      <h2 class="section-title">精选专栏</h2>
+      <h2 class="section-title">{{ $t('blogs.featured') }}</h2>
       <div class="featured-grid">
         <article class="featured-card" v-for="article in featuredArticles" :key="article.id">
           <div class="article-image">
@@ -82,19 +86,19 @@ onMounted(() => {
             <h3>{{ article.title }}</h3>
             <p>{{ article.excerpt }}</p>
             <router-link :to="`/blog/${article.id}`" class="read-more">
-              阅读全文
+              {{ $t('blogs.readMore') }}
               <svg viewBox="0 0 24 24">
                 <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
               </svg>
             </router-link>
-        </div>
-      </article>
-    </div>
+          </div>
+        </article>
+      </div>
     </section>
 
     <!-- 技术专题 -->
     <section class="topics-section">
-      <h2 class="section-title">技术专题</h2>
+      <h2 class="section-title">{{ $t('blogs.topics') }}</h2>
       <div class="topics-grid">
         <div class="topic-card" v-for="topic in techTopics" :key="topic.id">
           <div class="topic-header" :style="{ background: topic.gradient }">
@@ -116,7 +120,7 @@ onMounted(() => {
 
     <!-- 作者专栏 -->
     <section class="authors-section">
-      <h2 class="section-title">团队专栏</h2>
+      <h2 class="section-title">{{ $t('blogs.authors') }}</h2>
       <div class="authors-grid">
         <div class="author-card" v-for="author in authors" :key="author.id">
           <div class="author-avatar">
@@ -129,11 +133,11 @@ onMounted(() => {
             <div class="author-stats">
               <div class="stat">
                 <span class="stat-number">{{ author.articles }}</span>
-                <span class="stat-label">文章</span>
+                <span class="stat-label">{{ $t('blogs.articleCount') }}</span>
               </div>
               <div class="stat">
                 <span class="stat-number">{{ author.views }}k</span>
-                <span class="stat-label">阅读</span>
+                <span class="stat-label">{{  $t('blogs.viewCount') }}</span>
               </div>
             </div>
           </div>

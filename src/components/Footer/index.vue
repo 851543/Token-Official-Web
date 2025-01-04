@@ -3,17 +3,17 @@
     <div class="gradient-border">
       <div class="footer">
         <div class="footer-content">
-          <div class="copyright">版权所有 © 2024 - {{ currentYear }} Token. 保留所有权利</div>
+          <div class="copyright">{{ t('footer.copyright', { year: currentYear }) }}</div>
           <div class="powered-by">
-            由
+            {{ t('footer.poweredBy') }}
             <a href="javascript:void(0)" rel="noopener">VUE3</a>
-            驱动 &
-            <a href="javascript:void(0)" rel="noopener">TOEKN</a>
-            主题
+            {{ t('footer.and') }}
+            <a href="javascript:void(0)" rel="noopener">TOKEN</a>
+            {{ t('footer.theme') }}
           </div>
           <div class="stats">
-            <span>浏览次数：{{ visitCount }}</span>
-            <span>建站天数：{{ daysSinceCreation }}</span>
+            <span>{{ t('footer.visitCount', { count: visitCount }) }}</span>
+            <span>{{ t('footer.daysSinceCreation', { days: daysSinceCreation }) }}</span>
           </div>
         </div>
       </div>
@@ -23,7 +23,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const currentYear = new Date().getFullYear()
 
 // 计算建站天数

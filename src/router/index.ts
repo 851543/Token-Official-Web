@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import i18n from '@/locales'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,7 +15,7 @@ const router = createRouter({
           name: 'Home',
           component: () => import('@/views/Home/index.vue'),
           meta: {
-            title: '首页',
+            title: 'nav.home',
             keepAlive: true,
           },
         },
@@ -23,7 +24,7 @@ const router = createRouter({
           name: 'Create',
           component: () => import('@/views/Create/index.vue'),
           meta: {
-            title: '创作',
+            title: 'nav.create',
             keepAlive: true,
           },
         },
@@ -32,7 +33,7 @@ const router = createRouter({
           name: 'Blogs',
           component: () => import('@/views/Blogs/index.vue'),
           meta: {
-            title: '博客',
+            title: 'nav.blogs',
             keepAlive: true,
           },
         },
@@ -41,7 +42,7 @@ const router = createRouter({
           name: 'Team',
           component: () => import('@/views/Team/index.vue'),
           meta: {
-            title: '团队',
+            title: 'nav.team',
             keepAlive: true,
           },
         },
@@ -50,7 +51,7 @@ const router = createRouter({
           name: 'MoreLinks',
           component: () => import('@/views/Morelinks/index.vue'),
           meta: {
-            title: '动态',
+            title: 'nav.moreLinks',
             keepAlive: true,
           },
         },
@@ -59,7 +60,7 @@ const router = createRouter({
           name: 'Message',
           component: () => import('@/views/Message/index.vue'),
           meta: {
-            title: '留言板',
+            title: 'nav.message',
             keepAlive: true,
           },
         },
@@ -68,7 +69,7 @@ const router = createRouter({
           name: 'Contact',
           component: () => import('@/views/Contact/index.vue'),
           meta: {
-            title: '联系我们',
+            title: 'nav.contact',
             keepAlive: true,
           },
         },
@@ -80,7 +81,7 @@ const router = createRouter({
       name: 'NotFound',
       component: () => import('@/views/Link/index.vue'),
       meta: {
-        title: '页面未找到',
+        title: 'common.notFound',
       },
     },
   ],
@@ -104,7 +105,7 @@ const router = createRouter({
 // 路由守卫
 router.beforeEach((to, from, next) => {
   // 设置页面标题
-  document.title = to.meta.title ? `${to.meta.title} - Token` : 'Token'
+  document.title = to.meta.title ? `${i18n.global.t(to.meta.title as string)} - Token` : 'Token'
 
   // 这里可以添加其他路由守卫逻辑，比如：
   // - 权限验证

@@ -1,0 +1,134 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "title": "Technical R&D",
+      "count": 156,
+      "description": "Share cutting-edge technical R&D experience and architectural design insights",
+      "gradient": "linear-gradient(135deg, #6366F1, #818CF8)",
+      "icon": "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+    },
+    {
+      "id": 2,
+      "title": "Open Source",
+      "count": 98,
+      "description": "Share development journey and technical practices of open source projects",
+      "gradient": "linear-gradient(135deg, #10B981, #34D399)",
+      "icon": "M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"
+    },
+    {
+      "id": 3,
+      "title": "Engineering Efficiency",
+      "count": 127,
+      "description": "Development process optimization and engineering efficiency improvement practices",
+      "gradient": "linear-gradient(135deg, #F59E0B, #FBBF24)",
+      "icon": "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+    },
+    {
+      "id": 4,
+      "title": "Team Building",
+      "count": 84,
+      "description": "Technical team management and culture building insights",
+      "gradient": "linear-gradient(135deg, #EC4899, #F472B6)",
+      "icon": "M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm18 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-12-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"
+    }
+  ],
+  "featuredArticles": [
+    {
+      "id": 1,
+      "title": "Our Microservice Architecture Evolution Journey",
+      "excerpt": "From monolithic to microservices architecture, sharing our team's experience and insights in architecture evolution, including service splitting strategies and technology selection considerations.",
+      "icon": "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14c-2.67 0-8-1.34-8-4 0-2.67 5.33-4 8-4s8 1.33 8 4c0 2.67-5.33 4-8 4z",
+      "date": "Jan 28, 2024",
+      "author": "Architecture Team - Yu",
+      "tags": ["Architecture", "Microservices", "Tech Stack", "System Optimization", "Best Practices"]
+    },
+    {
+      "id": 2,
+      "title": "Token-CLI Development Practice",
+      "excerpt": "Sharing the technology selection, architecture design, and implementation details of our internal tool Token-CLI, discussing how to create effective development tools.",
+      "icon": "M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z",
+      "date": "Jan 25, 2024",
+      "author": "Tools Team - Wei Dong",
+      "tags": ["Open Source", "CLI Tools", "Engineering", "Node.js", "Efficiency Tools"]
+    },
+    {
+      "id": 3,
+      "title": "Development Process Optimization and Efficiency Improvement",
+      "excerpt": "Summarizing practices of improving team development efficiency through automation tools and CI/CD optimization, sharing how to build efficient development processes.",
+      "icon": "M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm18 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-12-2c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z",
+      "date": "Jan 22, 2024",
+      "author": "Efficiency Team - A-Jun",
+      "tags": ["Efficiency", "Automation", "DevOps", "CI/CD", "Development Process"]
+    }
+  ],
+  "techTopics": [
+    {
+      "id": 1,
+      "title": "Architecture Design Series",
+      "icon": "🏗️",
+      "gradient": "linear-gradient(135deg, #6366F1, #818CF8)",
+      "description": "In-depth discussion of system architecture design principles and practical experience",
+      "articles": [
+        {
+          "id": 101,
+          "title": "Distributed System Design Practice: From Theory to Implementation",
+          "date": "Jan 20, 2024"
+        },
+        {
+          "id": 102,
+          "title": "High Availability Architecture Design Principles and Best Practices",
+          "date": "Jan 18, 2024"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Engineering Efficiency Series",
+      "icon": "⚡",
+      "gradient": "linear-gradient(135deg, #10B981, #34D399)",
+      "description": "Exploring ways to improve development efficiency and sharing engineering practices",
+      "articles": [
+        {
+          "id": 201,
+          "title": "Building Automated Testing Systems: Practice and Insights",
+          "date": "Jan 15, 2024"
+        },
+        {
+          "id": 202,
+          "title": "Continuous Integration Best Practices: Experience Summary",
+          "date": "Jan 12, 2024"
+        }
+      ]
+    }
+  ],
+  "authors": [
+    {
+      "id": 1,
+      "name": "Yu",
+      "title": "Senior Architect",
+      "avatar": "/src/assets/images/board/yuge.png",
+      "description": "Focused on distributed system architecture design with over 10 years of internet architecture experience, passionate about technical innovation and sharing.",
+      "articles": 45,
+      "views": 120
+    },
+    {
+      "id": 2,
+      "name": "Wei Dong",
+      "title": "Technical Expert",
+      "avatar": "/src/assets/images/board/weidong.png",
+      "description": "Full-stack developer with deep research in engineering efficiency and developer experience, dedicated to improving team development efficiency.",
+      "articles": 38,
+      "views": 95
+    },
+    {
+      "id": 3,
+      "name": "A-Jun",
+      "title": "Technical Director",
+      "avatar": "/src/assets/images/board/ajun.png",
+      "description": "Focused on technical team building and culture development, skilled in technical management and team motivation, advocates agile development and continuous improvement.",
+      "articles": 42,
+      "views": 108
+    }
+  ]
+} 

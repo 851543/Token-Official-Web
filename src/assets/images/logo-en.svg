@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="40" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="titleGradient" x1="0" y1="0" x2="100%" y2="0">
+      <stop offset="0%" stop-color="#4F46E5">
+        <animate attributeName="stop-color" 
+          values="#4F46E5; #06B6D4; #4F46E5"
+          dur="3s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#06B6D4">
+        <animate attributeName="stop-color" 
+          values="#06B6D4; #4F46E5; #06B6D4"
+          dur="3s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Token 主标题 -->
+  <text x="10" y="25" font-family="Inter, Google Sans, Arial, sans-serif" font-size="22" font-weight="600" fill="url(#titleGradient)">
+    Token
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+  </text>
+
+  <!-- 分隔线 -->
+  <line x1="90" y1="5" x2="90" y2="35" stroke="#DADCE0" stroke-width="1">
+    <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- 右侧英文说明 -->
+  <g>
+    <text x="105" y="17" font-family="Inter, Google Sans, Arial, sans-serif" font-size="14" font-weight="500" fill="#5F6368">
+      Token Team
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
+    </text>
+    <text x="105" y="33" font-family="Inter, Google Sans, Arial, sans-serif" font-size="12" font-weight="400" fill="#5F6368">
+      Learn · Develop · Create
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+    </text>
+  </g>
+
+  <!-- 装饰性元素 -->
+  <circle cx="280" cy="20" r="3" fill="#4F46E5">
+    <animate attributeName="r" values="2;3;2" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#4F46E5;#06B6D4;#4F46E5" dur="3s" repeatCount="indefinite"/>
+  </circle>
+</svg> 

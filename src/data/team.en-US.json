@@ -1,0 +1,113 @@
+{
+    "board": [
+        {
+            "name": "A-Jun",
+            "role": "Team Leader",
+            "img": "/src/assets/images/board/ajun.png",
+            "in": true,
+            "links": {
+                "github": {
+                    "url": "https://github.com/851543",
+                    "icon": "/src/assets/images/team/github.svg",
+                    "alt": "GitHub"
+                },
+                "csdn": {
+                    "url": "https://blog.csdn.net/weixin_67623295?type=lately",
+                    "icon": "/src/assets/images/team/csdn.svg",
+                    "alt": "CSDN"
+                }
+            }
+        },
+        {
+            "name": "Peng",
+            "role": "Team Manager",
+            "img": "/src/assets/images/board/pe.png",
+            "in": true
+        },
+        {
+            "name": "Yu",
+            "role": "Director",
+            "img": "/src/assets/images/board/yuge.png",
+            "in": true
+        },
+        {
+            "name": "Wei Dong",
+            "role": "Technical Director",
+            "img": "/src/assets/images/board/weidong.png",
+            "in": true
+        },
+        {
+            "name": "Zhu",
+            "role": "Technical Director",
+            "img": "/src/assets/images/board/zhubb.png",
+            "in": true
+        },
+        {
+            "name": "Hao",
+            "role": "Design Director",
+            "img": "/src/assets/images/board/haoge.png",
+            "in": true
+        }
+    ],
+    "technical": [
+        {
+            "name": "A-Jun",
+            "role": "Project Manager",
+            "img": "/src/assets/images/board/ajun.png",
+            "in": true,
+            "links": {
+                "github": {
+                    "url": "https://github.com/851543",
+                    "icon": "/src/assets/images/team/github.svg",
+                    "alt": "GitHub"
+                }
+            }
+        },
+        {
+            "name": "Peng",
+            "role": "Planning Manager",
+            "img": "/src/assets/images/board/pe.png",
+            "in": true
+        },
+        {
+            "name": "Yu",
+            "role": "Full Stack Engineer",
+            "img": "/src/assets/images/board/yuge.png",
+            "in": true
+        },
+        {
+            "name": "Wei Dong",
+            "role": "Full Stack Engineer",
+            "img": "/src/assets/images/board/weidong.png",
+            "in": true
+        },
+        {
+            "name": "Zhu",
+            "role": "Java Engineer",
+            "img": "/src/assets/images/board/zhubb.png",
+            "in": true
+        }
+    ],
+    "management": [
+        {
+            "name": "Peng",
+            "role": "Operations Director",
+            "img": "/src/assets/images/board/pe.png",
+            "in": true
+        },
+        {
+            "name": "Tian",
+            "role": "Operations Director",
+            "img": "/src/assets/images/management/tian.png",
+            "in": true
+        }
+    ],
+    "design": [
+        {
+            "name": "Hao",
+            "role": "Design Director",
+            "img": "/src/assets/images/board/haoge.png",
+            "in": true
+        }
+    ]
+} 
