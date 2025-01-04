@@ -30,13 +30,13 @@ onMounted(() => {
   <div class="blogs-container">
     <!-- 头部区域 -->
     <div class="hero-section">
-      <h1 class="page-title">Token 博客</h1>
+      <h1 class="page-title">博客</h1>
       <p class="page-description">
-        探索 AI 创新与知识管理的前沿
+        探索 Token 团队的技术创新
         <span class="highlight">·</span>
-        分享技术见解
+        分享研发实践
         <span class="highlight">·</span>
-        激发创作灵感
+        共建开源生态
       </p>
     </div>
 

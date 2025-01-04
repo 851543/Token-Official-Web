@@ -1,0 +1,35 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "name": "Token团队",
+      "content": "欢迎来到Token留言板！",
+      "date": "2024-01-20",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
+      "likes": 5,
+      "isOfficial": true,
+      "tag": "公告"
+    },
+    {
+      "id": 2,
+      "name": "访客",
+      "content": "期待Token的未来发展！",
+      "date": "2024-01-20",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
+      "likes": 3,
+      "tag": "建议"
+    }
+  ],
+  "tags": [
+    { "name": "建议", "count": 45 },
+    { "name": "反馈", "count": 32 },
+    { "name": "提问", "count": 28 },
+    { "name": "分享", "count": 25 },
+    { "name": "交流", "count": 20 }
+  ],
+  "stats": {
+    "total": 156,
+    "today": 12,
+    "week": 89
+  }
+} 

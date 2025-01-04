@@ -28,6 +28,7 @@ const menuItems: MenuItem[] = [
   { id: 'team', text: '团队', link: '/team' },
   { id: 'blogs', text: '博客', link: '/blogs' },
   { id: 'links', text: '动态', link: '/morelinks' },
+  { id: 'message', text: '留言板', link: '/message' },
   { id: 'contact', text: '联系我们', link: '/contact' },
 ]
 

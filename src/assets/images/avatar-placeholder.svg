@@ -1,0 +1,17 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆圈 -->
+  <circle cx="60" cy="60" r="58" fill="white" stroke="#E2E8F0" stroke-width="2"/>
+  
+  <!-- 头像图案 -->
+  <circle cx="60" cy="45" r="20" fill="#E2E8F0"/>
+  <path d="M60 75C43.4315 75 30 88.4315 30 105C30 105 43.4315 110 60 110C76.5685 110 90 105 90 105C90 88.4315 76.5685 75 60 75Z" fill="#E2E8F0"/>
+  
+  <!-- 装饰性渐变 -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="30" y1="30" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4285F4" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#34A853" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="url(#paint0_linear)"/>
+</svg> 

@@ -55,6 +55,15 @@ const router = createRouter({
           },
         },
         {
+          path: '/message',
+          name: 'Message',
+          component: () => import('@/views/Message/index.vue'),
+          meta: {
+            title: '留言板',
+            keepAlive: true,
+          },
+        },
+        {
           path: '/contact',
           name: 'Contact',
           component: () => import('@/views/Contact/index.vue'),

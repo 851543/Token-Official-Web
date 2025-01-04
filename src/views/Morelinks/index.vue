@@ -102,19 +102,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.container-main {
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
-    url('@/assets/images/after-landing.svg') center center fixed;
-  background-size: cover;
-}
-
-.dark .container-main {
-  background:
-    linear-gradient(rgba(32, 32, 32, 0.9), rgba(32, 32, 32, 0.9)),
-    url('@/assets/images/after-landing-dark.svg') center center fixed;
-  background-size: cover;
-}
 .course-main {
   margin: auto auto;
   text-align: center;
