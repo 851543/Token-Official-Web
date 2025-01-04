@@ -1,5 +1,5 @@
 import notify from './src/notify.mjs';
-export { notificationEmits, notificationProps, notificationTypes } from './src/notification.mjs';
+export { notificationEmits, notificationProps, notificationTypes } from './src/notification2.mjs';
 import { withInstallFunction } from '../../utils/vue/install.mjs';
 
 const ElNotification = withInstallFunction(notify, "$notify");

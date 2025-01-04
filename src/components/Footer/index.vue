@@ -103,4 +103,9 @@ const visitCount = ref(107059)
     gap: 5px;
   }
 }
+
+.dark .footer {
+  background: #202020;
+}
+
 </style>

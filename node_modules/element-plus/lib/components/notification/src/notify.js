@@ -3,8 +3,8 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var vue = require('vue');
-var notification = require('./notification2.js');
-var notification$1 = require('./notification.js');
+var notification = require('./notification.js');
+var notification$1 = require('./notification2.js');
 var core = require('@vueuse/core');
 var shared = require('@vue/shared');
 var types = require('../../../utils/types.js');

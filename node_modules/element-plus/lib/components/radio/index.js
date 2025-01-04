@@ -4,9 +4,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var radio$1 = require('./src/radio2.js');
 var radioButton$1 = require('./src/radio-button2.js');
-var radioGroup$1 = require('./src/radio-group2.js');
+var radioGroup$1 = require('./src/radio-group.js');
 var radio = require('./src/radio.js');
-var radioGroup = require('./src/radio-group.js');
+var radioGroup = require('./src/radio-group2.js');
 var radioButton = require('./src/radio-button.js');
 var constants = require('./src/constants.js');
 var install = require('../../utils/vue/install.js');

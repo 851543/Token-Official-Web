@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import type { MenuItem } from '@/types/navbar'
 import { useScroll } from '@/composables/useScroll'
 import { useRoute } from 'vue-router'
+import { useThemeStore } from '@/stores/theme'
 
 interface ExtendedHTMLElement extends HTMLElement {
   clickOutsideEvent?: (event: Event) => void
@@ -24,7 +25,8 @@ const vClickOutside = {
   },
 }
 
-const isDark = ref(localStorage.getItem('theme') === 'dark')
+const themeStore = useThemeStore()
+const isDark = computed(() => themeStore.isDark)
 const isMenuVisible = ref(false)
 const navbarRef = ref<HTMLElement | null>(null)
 const activeItem = ref('')
@@ -39,7 +41,7 @@ const route = useRoute()
 onMounted(() => {
   setNavbar(navbarRef.value)
   setActiveItem(route.path)
-  document.documentElement.classList.toggle('dark', isDark.value)
+  themeStore.initTheme()
 })
 
 watch(() => route.path, (newPath) => {
@@ -65,9 +67,7 @@ const setActiveItem = (path: string) => {
 }
 
 const toggleTheme = () => {
-  isDark.value = !isDark.value
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-  document.documentElement.classList.toggle('dark', isDark.value)
+  themeStore.toggleTheme()
 }
 
 const toggleLangMenu = () => {
