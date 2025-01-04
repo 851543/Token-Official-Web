@@ -78,7 +78,7 @@ onMounted(() => {
       我们正在积极开展活动，同时通过开发高质量项目为开源做出贡献。
     </p>
     <div data-aos="fade-up" class="buttons">
-      <router-link to="/Morelinks">
+      <router-link to="/morelinks">
         <div class="button-maker" id="projects-button">
           <div class="barlow-thin button-text">项目展示</div>
         </div>
