@@ -35,127 +35,136 @@ onMounted(() => {
 })
 </script>
 <template>
-  <div class="blogs-container">
-    <!-- 头部区域 -->
-    <div class="hero-section">
-      <h1 class="page-title">{{ $t('blogs.title') }}</h1>
-      <p class="page-description">
-        {{ $t('blogs.description') }}
-      </p>
-    </div>
-
-    <!-- 热门分类 -->
-    <section class="categories-section">
-      <h2 class="section-title">{{ $t('blogs.categories') }}</h2>
-      <div class="categories-grid">
-        <div class="category-card" v-for="category in categories" :key="category.id">
-          <div class="category-icon" :style="{ background: category.gradient }">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path :d="category.icon"/>
-            </svg>
-          </div>
-          <div class="category-content">
-            <h3>{{ category.title }}</h3>
-            <p class="category-count">{{ category.count }} {{ $t('blogs.articles') }}</p>
-            <p class="category-desc">{{ category.description }}</p>
-          </div>
-        </div>
+  <div class="blogs-wrapper">
+    <div class="blogs-container">
+      <!-- 头部区域 -->
+      <div class="hero-section">
+        <h1 class="page-title">{{ $t('blogs.title') }}</h1>
+        <p class="page-description">
+          {{ $t('blogs.description') }}
+        </p>
       </div>
-    </section>
 
-    <!-- 精选文章 -->
-    <section class="featured-section">
-      <h2 class="section-title">{{ $t('blogs.featured') }}</h2>
-      <div class="featured-grid">
-        <article class="featured-card" v-for="article in featuredArticles" :key="article.id">
-          <div class="article-image">
-            <div class="svg-icon">
+      <!-- 热门分类 -->
+      <section class="categories-section">
+        <h2 class="section-title">{{ $t('blogs.categories') }}</h2>
+        <div class="categories-grid">
+          <div class="category-card" v-for="category in categories" :key="category.id">
+            <div class="category-icon" :style="{ background: category.gradient }">
               <svg viewBox="0 0 24 24" fill="currentColor">
-                <path :d="article.icon"/>
+                <path :d="category.icon"/>
               </svg>
             </div>
-            <div class="article-meta">
-              <div class="article-author">{{ article.author }}</div>
-              <div class="article-date" style="margin-top: 10px;">{{ article.date }}</div>
-            </div>
-          </div>
-          <div class="article-content">
-            <div class="article-tags">
-              <span class="tag" v-for="tag in article.tags" :key="tag">{{ tag }}</span>
-            </div>
-            <h3>{{ article.title }}</h3>
-            <p>{{ article.excerpt }}</p>
-            <router-link :to="`/blog/${article.id}`" class="read-more">
-              {{ $t('blogs.readMore') }}
-              <svg viewBox="0 0 24 24">
-                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-              </svg>
-            </router-link>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- 技术专题 -->
-    <section class="topics-section">
-      <h2 class="section-title">{{ $t('blogs.topics') }}</h2>
-      <div class="topics-grid">
-        <div class="topic-card" v-for="topic in techTopics" :key="topic.id">
-          <div class="topic-header" :style="{ background: topic.gradient }">
-            <div class="topic-icon">{{ topic.icon }}</div>
-            <h3>{{ topic.title }}</h3>
-          </div>
-          <div class="topic-content">
-            <p class="topic-desc">{{ topic.description }}</p>
-            <ul class="topic-articles">
-              <li v-for="article in topic.articles" :key="article.id">
-                <router-link :to="`/blog/${article.id}`">{{ article.title }}</router-link>
-                <span class="article-date">{{ article.date }}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 作者专栏 -->
-    <section class="authors-section">
-      <h2 class="section-title">{{ $t('blogs.authors') }}</h2>
-      <div class="authors-grid">
-        <div class="author-card" v-for="author in authors" :key="author.id">
-          <div class="author-avatar">
-            <img :src="author.avatar" :alt="author.name" class="avatar-img">
-          </div>
-          <div class="author-info">
-            <h3>{{ author.name }}</h3>
-            <p class="author-title">{{ author.title }}</p>
-            <p class="author-desc">{{ author.description }}</p>
-            <div class="author-stats">
-              <div class="stat">
-                <span class="stat-number">{{ author.articles }}</span>
-                <span class="stat-label">{{ $t('blogs.articleCount') }}</span>
-              </div>
-              <div class="stat">
-                <span class="stat-number">{{ author.views }}k</span>
-                <span class="stat-label">{{  $t('blogs.viewCount') }}</span>
-              </div>
+            <div class="category-content">
+              <h3>{{ category.title }}</h3>
+              <p class="category-count">{{ category.count }} {{ $t('blogs.articles') }}</p>
+              <p class="category-desc">{{ category.description }}</p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- 精选文章 -->
+      <section class="featured-section">
+        <h2 class="section-title">{{ $t('blogs.featured') }}</h2>
+        <div class="featured-grid">
+          <article class="featured-card" v-for="article in featuredArticles" :key="article.id">
+            <div class="article-image">
+              <div class="svg-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path :d="article.icon"/>
+                </svg>
+              </div>
+              <div class="article-meta">
+                <div class="article-author">{{ article.author }}</div>
+                <div class="article-date" style="margin-top: 10px;">{{ article.date }}</div>
+              </div>
+            </div>
+            <div class="article-content">
+              <div class="article-tags">
+                <span class="tag" v-for="tag in article.tags" :key="tag">{{ tag }}</span>
+              </div>
+              <h3>{{ article.title }}</h3>
+              <p>{{ article.excerpt }}</p>
+              <router-link :to="`/blog/${article.id}`" class="read-more">
+                {{ $t('blogs.readMore') }}
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                </svg>
+              </router-link>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 技术专题 -->
+      <section class="topics-section">
+        <h2 class="section-title">{{ $t('blogs.topics') }}</h2>
+        <div class="topics-grid">
+          <div class="topic-card" v-for="topic in techTopics" :key="topic.id">
+            <div class="topic-header" :style="{ background: topic.gradient }">
+              <div class="topic-icon">{{ topic.icon }}</div>
+              <h3>{{ topic.title }}</h3>
+            </div>
+            <div class="topic-content">
+              <p class="topic-desc">{{ topic.description }}</p>
+              <ul class="topic-articles">
+                <li v-for="article in topic.articles" :key="article.id">
+                  <router-link :to="`/blog/${article.id}`">{{ article.title }}</router-link>
+                  <span class="article-date">{{ article.date }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 作者专栏 -->
+      <section class="authors-section">
+        <h2 class="section-title">{{ $t('blogs.authors') }}</h2>
+        <div class="authors-grid">
+          <div class="author-card" v-for="author in authors" :key="author.id">
+            <div class="author-avatar">
+              <img :src="author.avatar" :alt="author.name" class="avatar-img">
+            </div>
+            <div class="author-info">
+              <h3>{{ author.name }}</h3>
+              <p class="author-title">{{ author.title }}</p>
+              <p class="author-desc">{{ author.description }}</p>
+              <div class="author-stats">
+                <div class="stat">
+                  <span class="stat-number">{{ author.articles }}</span>
+                  <span class="stat-label">{{ $t('blogs.articleCount') }}</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-number">{{ author.views }}k</span>
+                  <span class="stat-label">{{  $t('blogs.viewCount') }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
 <style scoped>
-/* 调整整体容器和模块间距 */
+.dark .blogs-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #141414;
+}
+
 .blogs-container {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 120px 60px;
+  padding: 40px 20px;
 }
 
-/* 调整每个主要区块的间距 */
+/* 调整整体容器和模块间距 */
 .hero-section {
   text-align: center;
   margin: 0 auto 160px;  /* 增加底部间距 */
@@ -1052,5 +1061,102 @@ onMounted(() => {
 .dark .tag {
   background: rgba(99, 102, 241, 0.15);
   border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* 暗色模式补充 */
+.dark .category-content h3,
+.dark .article-content h3,
+.dark .author-info h3,
+.dark .timeline-content h3 {
+  color: #E2E8F0;
+}
+
+.dark .category-desc,
+.dark .article-content p,
+.dark .author-desc,
+.dark .timeline-content p,
+.dark .stat-label {
+  color: #A0AEC0;
+}
+
+/* 暗色模式卡片样式 */
+.dark .category-card,
+.dark .featured-card,
+.dark .author-card,
+.dark .topic-card {
+  background: rgba(31, 31, 31, 0.9);
+  border-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.dark .category-card:hover,
+.dark .featured-card:hover,
+.dark .author-card:hover,
+.dark .topic-card:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* 暗色模式标题样式 */
+.dark .section-title {
+  color: #E2E8F0;
+}
+
+/* 暗色模式标签样式 */
+.dark .tag {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #A5B4FC;
+}
+
+.dark .tag:hover {
+  background: rgba(99, 102, 241, 0.25);
+}
+
+/* 暗色模式统计数字样式 */
+.dark .stat-number {
+  color: #818CF8;
+}
+
+/* 暗色模式文章图片区域 */
+.dark .article-image {
+  background: linear-gradient(135deg, #4F46E5, #6366F1);
+}
+
+/* 暗色模式作者头像背景 */
+.dark .author-avatar {
+  background: #2D3748;
+}
+
+/* 暗色模式链接颜色 */
+.dark .topic-articles a {
+  color: #E2E8F0;
+}
+
+.dark .topic-articles a:hover {
+  color: #818CF8;
+}
+
+/* 暗色模式渐变背景 */
+.dark .hero-section::before {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(129, 140, 248, 0.1));
+}
+
+/* 暗色模式分隔线 */
+.dark .categories-section::after,
+.dark .featured-section::after,
+.dark .topics-section::after,
+.dark .authors-section::after {
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(129, 140, 248, 0.1),
+    transparent
+  );
+}
+
+/* 暗色模式背景色 */
+.dark .blogs-container {
+  background: transparent;
 }
 </style>

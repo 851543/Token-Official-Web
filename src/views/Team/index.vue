@@ -187,6 +187,8 @@ onMounted(() => {
 }
 
 .container-main {
+  padding: 60px 0;
+  min-height: auto;
   background:
     linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
     url('@/assets/images/after-landing.svg') center center fixed;
@@ -195,34 +197,37 @@ onMounted(() => {
 
 .dark .container-main {
   background:
-    linear-gradient(rgba(32, 32, 32, 0.9), rgba(32, 32, 32, 0.9)),
+    linear-gradient(rgba(20, 20, 20, 0.95), rgba(20, 20, 20, 0.95)),
     url('@/assets/images/after-landing-dark.svg') center center fixed;
   background-size: cover;
 }
 
-.navbar-dsc-logo{
-    display: inline-block;
+.container-main-last {
+  margin-bottom: 40px;
 }
 
-.icons{
-    max-height: 350px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    transition: all .6s ease;
+.holded-container {
+  padding: 40px 20px;
+}
+
+.icons {
+  max-height: 350px;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  transition: all .6s ease;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  align-items: center;
+  justify-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .icons-expanded{
     transition: all .6s ease;
     max-height: unset;
 }
-
-.icons{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    align-items: center;
-    justify-items: center;
-}
-
 
 .circle-icon-holder {
   min-height: 300px;

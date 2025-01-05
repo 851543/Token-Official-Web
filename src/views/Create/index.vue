@@ -5,6 +5,17 @@ import type { Section, Partner, Feature } from '@/types/create'
 import { useLangStore } from '@/stores/lang'
 const scrollProgress = ref(0)
 const videoRef = ref<HTMLVideoElement | null>(null)
+const isVideoLoading = ref(true)
+
+// 视频加载处理
+const handleVideoLoad = () => {
+  isVideoLoading.value = false
+}
+
+const handleVideoError = () => {
+  isVideoLoading.value = false
+  console.error('Video failed to load')
+}
 
 // 添加打开QQ好友请求的方法
 const openQQFriend = () => {
@@ -70,7 +81,7 @@ const switchImage = () => {
 // 添加滚动处理函数
 const handleSectionScroll = () => {
   const windowHeight = window.innerHeight
-  
+
   sectionRefs.value.forEach((section, index) => {
     const rect = section.getBoundingClientRect()
     if (rect.top <= windowHeight * 0.5 && rect.bottom >= windowHeight * 0.5) {
@@ -86,22 +97,25 @@ const sectionRefs = ref<HTMLElement[]>([])
 import { watch } from 'vue'
 
 // 监听语言变化
-watch(() => langStore.currentLang, () => {
-  fetchData()
-})
+watch(
+  () => langStore.currentLang,
+  () => {
+    fetchData()
+  },
+)
 
 // 生命周期钩子
 onMounted(async () => {
   // 添加事件监听器
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('scroll', handleSectionScroll)
-  
+
   // 获取数据
   await fetchData()
-  
+
   // 设置图片切换定时器
   setInterval(switchImage, 3000)
-  
+
   // 处理合作伙伴滚动
   const marquee = document.querySelector('.partner-marquee')
   if (marquee) {
@@ -121,43 +135,44 @@ onUnmounted(() => {
       <!-- 标题部分 -->
       <div class="hero" :style="{ opacity: 1 - scrollProgress * 1.5 }">
         <h1 data-aos="fade-up">
-          {{ $t('create.hero.title') }} &nbsp;<span class="highlight">✓</span>
-          <br>{{ $t('create.hero.subtitle') }}. <span class="accent">Token.</span>
+          {{ $t('create.hero.title') }} &nbsp;<span class="highlight">✓</span> <br />{{
+            $t('create.hero.subtitle')
+          }}. <span class="accent">Token.</span>
         </h1>
-        
+
         <p data-aos="fade-up" class="subtitle">
           {{ $t('create.hero.description') }}
         </p>
-        
-        <button data-aos="fade-up" class="btn" @click="openQQFriend">{{ $t('create.hero.startButton') }}</button>
+
+        <button data-aos="fade-up" class="btn" @click="openQQFriend">
+          {{ $t('create.hero.startButton') }}
+        </button>
       </div>
 
       <!-- 视频部分 -->
-      <div class="video-wrapper" :style="{
-        transform: `translateY(${-scrollProgress * 50}px)`
-      }">
-        <video 
-          ref="videoRef" 
-          src="@/assets/video/hero-cover.mp4"
-          muted
-          playsinline
-          loop
-        />
-        
+      <div
+        class="video-wrapper"
+        :style="{
+          transform: `translateY(${-scrollProgress * 50}px)`,
+        }"
+        :class="{ 'loading': isVideoLoading }"
+      >
+        <video ref="videoRef" src="@/assets/video/hero-cover.mp4" muted playsinline loop @loadeddata="handleVideoLoad" @error="handleVideoError" />
+
         <!-- 添加机器人头像，放在视频后面 -->
         <div class="robot-avatar">
           <svg viewBox="0 0 200 200" class="robot-head">
             <!-- 机器人头部 - 深蓝紫色背景 -->
             <circle cx="100" cy="100" r="90" fill="#6366F1" />
-            
+
             <!-- 机器人眼睛 - 白色外圈 -->
             <circle cx="65" cy="85" r="25" fill="#fff" />
             <circle cx="135" cy="85" r="25" fill="#fff" />
-            
+
             <!-- 机器人眼睛 - 蓝色瞳孔 -->
             <circle cx="65" cy="85" r="15" fill="#06B6D4" />
             <circle cx="135" cy="85" r="15" fill="#06B6D4" />
-            
+
             <!-- 机器人嘴巴 - 白色微笑 -->
             <path d="M70 130 Q100 160 130 130" stroke="#fff" stroke-width="8" fill="none" />
           </svg>
@@ -168,10 +183,10 @@ onUnmounted(() => {
     <!-- 添加合作伙伴部分 -->
     <div class="partners-section">
       <h2 data-aos="fade-up" class="partners-title">
-        {{ $t('create.partners.title') }}<br>
+        {{ $t('create.partners.title') }}<br />
         {{ $t('create.partners.subtitle') }}
       </h2>
-      
+
       <div class="partners-container">
         <div class="partner-track">
           <div class="partner-marquee">
@@ -182,7 +197,7 @@ onUnmounted(() => {
                 :src="partner.src"
                 :alt="partner.alt"
                 class="partner-logo"
-              >
+              />
             </div>
           </div>
         </div>
@@ -196,19 +211,20 @@ onUnmounted(() => {
     <!-- 新功能区域 -->
     <div class="features-section">
       <div class="feature-icons">
-        <div 
-          v-for="feature in features" 
-          :key="feature.title" 
-          class="icon-item" 
-          data-aos="fade-up"
-        >
-          <div class="icon" :class="`icon-${feature.icon}`" :style="{
-            background: feature.background,
-            color: feature.color
-          }">
+        <div v-for="feature in features" :key="feature.title" class="icon-item" data-aos="fade-up">
+          <div
+            class="icon"
+            :class="`icon-${feature.icon}`"
+            :style="{
+              background: feature.background,
+              color: feature.color,
+            }"
+          >
             <svg viewBox="0 0 24 24" class="icon-svg">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-              <path d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/>
+              <path
+                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+              />
+              <path d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z" />
             </svg>
           </div>
           <span>{{ feature.title }}</span>
@@ -225,53 +241,91 @@ onUnmounted(() => {
     <div class="slide-sections">
       <!-- 左侧内容区域 -->
       <div class="slide-content">
-        <div 
-          v-for="(section, index) in sections" 
+        <div
+          v-for="(section, index) in sections"
           :key="index"
-          :ref="el => { if (el) sectionRefs[index] = el as HTMLElement }"
+          :ref="
+            (el) => {
+              if (el) sectionRefs[index] = el as HTMLElement
+            }
+          "
           class="slide-section"
           data-aos="fade-up"
         >
           <div class="text-content" :class="{ 'is-active': currentSection === index }">
             <div class="title-wrapper">
-              <h2 class="main-title" :class="{ 
-                'title-create': section.title === sections[0].title,
-                'title-manage': section.title === sections[1].title
-              }">
-                {{ section.title === sections[0].title ? $t('create.sections.create.title') : $t('create.sections.manage.title') }}
-                <span :class="{'cursor': section.title === sections[1].title}"></span>
+              <h2
+                class="main-title"
+                :class="{
+                  'title-create': section.title === sections[0].title,
+                  'title-manage': section.title === sections[1].title,
+                }"
+              >
+                {{
+                  section.title === sections[0].title
+                    ? $t('create.sections.create.title')
+                    : $t('create.sections.manage.title')
+                }}
+                <span :class="{ cursor: section.title === sections[1].title }"></span>
               </h2>
-              <h3 class="sub-title" :class="{
-                'subtitle-create': section.title === sections[0].title,
-                'subtitle-manage': section.title === sections[1].title
-              }">
-                {{ section.title === sections[0].title ? $t('create.sections.create.subtitle[0]') : $t('create.sections.manage.subtitle[0]') }}<br>
-                {{ section.title === sections[0].title ? $t('create.sections.create.subtitle[1]') : $t('create.sections.manage.subtitle[1]') }}
+              <h3
+                class="sub-title"
+                :class="{
+                  'subtitle-create': section.title === sections[0].title,
+                  'subtitle-manage': section.title === sections[1].title,
+                }"
+              >
+                {{
+                  section.title === sections[0].title
+                    ? $t('create.sections.create.subtitle[0]')
+                    : $t('create.sections.manage.subtitle[0]')
+                }}<br />
+                {{
+                  section.title === sections[0].title
+                    ? $t('create.sections.create.subtitle[1]')
+                    : $t('create.sections.manage.subtitle[1]')
+                }}
               </h3>
             </div>
             <p class="description">
-              {{ section.title === sections[0].title ? $t('create.sections.create.description') : $t('create.sections.manage.description') }}
+              {{
+                section.title === sections[0].title
+                  ? $t('create.sections.create.description')
+                  : $t('create.sections.manage.description')
+              }}
             </p>
           </div>
         </div>
       </div>
 
       <!-- 右侧固定图片区域 -->
-        <div class="sticky-wrapper">
+      <div class="sticky-wrapper">
         <div class="image-container">
-          <div 
-            v-for="(section, index) in sections" 
+          <div
+            v-for="(section, index) in sections"
             :key="index"
             class="image-wrapper"
             :class="{ 'is-active': currentSection === index }"
           >
-            <img 
-              :src="section.image" 
-              :alt="section.title"
-              class="section-image"
-            >
+            <img :src="section.image" :alt="section.title" class="section-image" />
           </div>
         </div>
+      </div>
+    </div>
+    <!-- 在 slide-sections 后添加新的部分 -->
+    <div class="ai-partner-section">
+      <div class="ai-content">
+        <div class="ai-title" data-aos="fade-up">
+          <span class="ai-highlight">Token</span> {{ $t('create.aiPartner.title') }}<br />
+          {{ $t('create.aiPartner.subtitle') }}
+        </div>
+        <div class="ai-subtitle" data-aos="fade-up">
+          {{ $t('create.aiPartner.description1') }}<br />
+          {{ $t('create.aiPartner.description2') }}
+        </div>
+        <button class="learn-more-btn" data-aos="fade-up" @click="openQQFriend">
+          {{ $t('create.aiPartner.startButton') }} <span class="arrow">+</span>
+        </button>
       </div>
     </div>
   </div>
@@ -281,6 +335,10 @@ onUnmounted(() => {
 .container {
   min-height: 150vh;
   padding: 20px;
+}
+
+.dark .container {
+  background: #141414;
 }
 
 .content {
@@ -349,8 +407,14 @@ h1 {
   border-radius: 16px;
   overflow: hidden;
   margin: 48px auto 0;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-  transition: transform 0.3s;
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+  background: var(--card-bg);
+}
+
+.dark .video-wrapper {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 video {
@@ -358,29 +422,96 @@ video {
   height: auto;
   object-fit: cover;
   border-radius: 12px;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
 }
 
-/* 暗色模式 */
+.dark video {
+  opacity: 0.8;
+  filter: brightness(0.85) contrast(1.1);
+}
+
+.video-wrapper:hover video {
+  opacity: 1;
+}
+
+.dark .video-wrapper:hover video {
+  filter: brightness(0.95) contrast(1.05);
+}
+
+/* 添加视频控件的深色模式样式 */
+.dark video::-webkit-media-controls {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dark video::-webkit-media-controls-panel {
+  background-color: rgba(20, 20, 20, 0.7);
+}
+
+.dark video::-webkit-media-controls-play-button,
+.dark video::-webkit-media-controls-timeline,
+.dark video::-webkit-media-controls-current-time-display,
+.dark video::-webkit-media-controls-time-remaining-display,
+.dark video::-webkit-media-controls-mute-button,
+.dark video::-webkit-media-controls-toggle-closed-captions-button,
+.dark video::-webkit-media-controls-volume-slider {
+  color: #ffffff;
+}
+
+/* 视频加载动画 */
+.video-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--card-bg);
+  border-top-color: var(--highlight-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.video-wrapper.loading::before {
+  opacity: 1;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* 视频悬停效果 */
+.video-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* 添加CSS变量 */
 :root {
-  --bg-gradient: rgba(255,255,255,0.9);
-  --bg-image: url('/src/assets/images/after-landing.svg');
+  --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
 .dark {
-  --bg-gradient: rgba(32,32,32,0.9);
-  --bg-image: url('/src/assets/images/after-landing-dark.svg');
+  --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .container {
-  background: linear-gradient(var(--bg-gradient), var(--bg-gradient)),
-              var(--bg-image) center center fixed;
+  background:
+    linear-gradient(var(--bg-gradient), var(--bg-gradient)),
+    var(--bg-image) center center fixed;
   background-size: cover;
 }
 
 .partners-section {
   padding: 80px 0;
   text-align: center;
-  background: #fff;
+  background: var(--card-bg);
+  position: relative;
 }
 
 .partners-title {
@@ -388,12 +519,12 @@ video {
   font-weight: 700;
   line-height: 1.3;
   margin-bottom: 60px;
-  color: #1a1a1a;
+  color: var(--text-color);
 }
 
 .partners-subtitle {
   font-size: 18px;
-  color: #666;
+  color: var(--text-secondary);
   margin-top: 40px;
   max-width: 600px;
   margin-left: auto;
@@ -405,6 +536,7 @@ video {
   overflow: hidden;
   padding: 40px 0;
   position: relative;
+  background: var(--card-bg);
 }
 
 .partner-track {
@@ -426,19 +558,21 @@ video {
 
 .partner-track::before {
   left: 0;
-  background: linear-gradient(to right, 
-    rgb(255, 255, 255) 0%,
-    rgba(255, 255, 255, 0.9) 20%,
-    rgba(255, 255, 255, 0) 100%
+  background: linear-gradient(
+    to right,
+    var(--card-bg) 0%,
+    rgba(var(--card-bg-rgb), 0.9) 20%,
+    rgba(var(--card-bg-rgb), 0) 100%
   );
 }
 
 .partner-track::after {
   right: 0;
-  background: linear-gradient(to left, 
-    rgb(255, 255, 255) 0%,
-    rgba(255, 255, 255, 0.9) 20%,
-    rgba(255, 255, 255, 0) 100%
+  background: linear-gradient(
+    to left,
+    var(--card-bg) 0%,
+    rgba(var(--card-bg-rgb), 0.9) 20%,
+    rgba(var(--card-bg-rgb), 0) 100%
   );
 }
 
@@ -458,12 +592,21 @@ video {
   height: 40px;
   opacity: 0.7;
   transition: all 0.3s ease;
+  filter: var(--logo-filter);
+}
+
+.dark .partner-logo {
+  filter: brightness(0.8) invert(1);
 }
 
 .partner-logo:hover {
   opacity: 1;
   transform: translateY(-2px);
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  filter: var(--logo-filter-hover);
+}
+
+.dark .partner-logo:hover {
+  filter: brightness(1) invert(1);
 }
 
 .partner-track:hover .partner-logo {
@@ -501,12 +644,40 @@ video {
 
 .partners-container::before {
   left: 15%;
-  background: linear-gradient(to right, #fff, transparent);
+  background: linear-gradient(to right, var(--card-bg), transparent);
 }
 
 .partners-container::after {
   right: 15%;
-  background: linear-gradient(to left, #fff, transparent);
+  background: linear-gradient(to left, var(--card-bg), transparent);
+}
+
+/* 深色模式下的特殊处理 */
+.dark .partners-section {
+  background: var(--card-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .partners-container::before {
+  background: linear-gradient(to right, var(--card-bg), rgba(26, 26, 26, 0));
+}
+
+.dark .partners-container::after {
+  background: linear-gradient(to left, var(--card-bg), rgba(26, 26, 26, 0));
+}
+
+/* 添加CSS变量 */
+:root {
+  --card-bg-rgb: 255, 255, 255;
+  --logo-filter: none;
+  --logo-filter-hover: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.dark {
+  --card-bg-rgb: 26, 26, 26;
+  --logo-filter: brightness(0.8) invert(1);
+  --logo-filter-hover: brightness(1) invert(1) drop-shadow(0 4px 6px rgba(255, 255, 255, 0.1));
 }
 
 .features-section {
@@ -556,17 +727,17 @@ video {
 /* 图标颜色和背景 */
 .icon-note {
   background: rgba(64, 158, 255, 0.1);
-  color: #409EFF;
+  color: #409eff;
 }
 
 .icon-knowledge {
   background: rgba(103, 194, 58, 0.1);
-  color: #67C23A;
+  color: #67c23a;
 }
 
 .icon-tools {
   background: rgba(230, 162, 60, 0.1);
-  color: #E6A23C;
+  color: #e6a23c;
 }
 
 .icon-team {
@@ -576,7 +747,7 @@ video {
 
 .icon-ai {
   background: rgba(245, 108, 108, 0.1);
-  color: #F56C6C;
+  color: #f56c6c;
 }
 
 /* 悬停效果 */
@@ -621,6 +792,10 @@ video {
   color: #333;
   margin-bottom: 16px;
   line-height: 1.3;
+}
+
+.dark .feature-content h2 {
+  color: #ffffff;
 }
 
 .feature-content p {
@@ -686,6 +861,10 @@ video {
   font-family: 'Segoe UI', sans-serif;
 }
 
+.dark .main-title {
+  color: #ffffff;
+}
+
 .sub-title {
   font-size: 64px;
   font-weight: 700;
@@ -693,6 +872,10 @@ video {
   line-height: 1.1;
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
+}
+
+.dark .sub-title {
+  color: #ffffff;
 }
 
 .highlight {
@@ -743,7 +926,7 @@ video {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
 .slider-image {
@@ -765,7 +948,8 @@ video {
 }
 
 @keyframes blink {
-  from, to {
+  from,
+  to {
     opacity: 1;
   }
   50% {
@@ -935,7 +1119,8 @@ video {
 }
 
 @keyframes blink {
-  from, to {
+  from,
+  to {
     opacity: 1;
   }
   50% {
@@ -1000,6 +1185,10 @@ video {
   overflow: hidden;
 }
 
+.dark .image-container {
+  background: #141414;
+}
+
 .image-wrapper {
   position: absolute;
   top: 0;
@@ -1057,6 +1246,10 @@ video {
   text-align: center;
 }
 
+.dark .ai-partner-section {
+  background: #141414;
+}
+
 .ai-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -1068,6 +1261,10 @@ video {
   line-height: 1.2;
   margin-bottom: 24px;
   color: #1a1a1a;
+}
+
+.dark .ai-title {
+  color: #ffffff;
 }
 
 .ai-highlight {
@@ -1199,7 +1396,7 @@ video {
   .title-manage {
     font-size: 48px;
   }
-  
+
   .subtitle-manage {
     font-size: 42px;
   }
@@ -1224,12 +1421,12 @@ video {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
     transform: translateY(-6px);
   }
 }
-
 </style>

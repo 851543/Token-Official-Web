@@ -112,6 +112,13 @@ export default defineMessages({
         description: '强大的团队协作功能，让知识管理更加便捷。',
       },
     },
+    aiPartner: {
+      title: '团队',
+      subtitle: '让创作更轻松，让知识更有价值',
+      description1: '智能创作辅助，知识管理专家',
+      description2: '让每一次创作都充满可能',
+      startButton: '开始体验',
+    },
   },
   message: {
     title: '留言板',

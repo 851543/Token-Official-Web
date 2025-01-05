@@ -106,8 +106,8 @@ const visitCount = ref(107059)
   }
 }
 
-.dark .footer {
-  background: #202020;
+.dark .footer{
+  background: #141414;
 }
 
 </style>

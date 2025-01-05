@@ -337,207 +337,213 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="message-board">
-    <!-- 头部区域 -->
-    <div class="header" data-aos="fade-up">
-      <h1 class="barlow-extralight" :data-text="$t('message.title')">{{ $t('message.title') }}</h1>
-      <p class="barlow-medium">{{ $t('message.description') }}</p>
-    </div>
-
-    <!-- 统计卡片 -->
-    <div class="stats-section" data-aos="fade-up">
-      <div class="stats-cards">
-        <div class="stat-card">
-          <div class="stat-number">{{ messageStats.total }}</div>
-          <div class="stat-label">{{ $t('message.stats.total') }}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">{{ messageStats.today }}</div>
-          <div class="stat-label">{{ $t('message.stats.today') }}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">{{ messageStats.week }}</div>
-          <div class="stat-label">{{ $t('message.stats.week') }}</div>
-        </div>
+  <div class="dark-mode-wrapper">
+    <div class="message-board">
+      <!-- 头部区域 -->
+      <div class="header" data-aos="fade-up">
+        <h1 class="barlow-extralight" :data-text="$t('message.title')">{{ $t('message.title') }}</h1>
+        <p class="barlow-medium">{{ $t('message.description') }}</p>
       </div>
-    </div>
 
-    <div class="main-content">
-      <!-- 左侧边栏 -->
-      <div class="sidebar" data-aos="fade-right">
-        <!-- 用户信息卡片 -->
-        <div class="sidebar-section user-section">
-          <template v-if="userInfo.isLoggedIn">
-            <div class="user-card">
-              <img :src="userInfo.avatar" alt="avatar" class="user-avatar" />
-              <div class="user-info">
-                <h3>{{ userInfo.name }}</h3>
-                <span class="platform-badge" :class="userInfo.platform">
-                  {{ userInfo.platform === 'qq' ? 'QQ' : $t('message.wechat') }}{{ $t('message.login') }}
-                </span>
-              </div>
-              <button class="logout-btn" @click="handleLogout">{{ $t('message.logout') }}</button>
-            </div>
-          </template>
-          <template v-else>
-            <div class="login-prompt">
-              <img src="@/assets/images/avatar-placeholder.svg" alt="avatar" class="user-avatar" />
-              <p>{{ $t('message.loginPrompt') }}</p>
-              <div class="login-buttons">
-                <button class="login-btn qq" @click="handleLogin('qq')">
-                  <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12.003 2c-2.265 0-6.29 1.364-6.29 7.325v1.195S3.55 14.96 3.55 17.474c0 .665.17 1.025.281 1.025.114 0 .902-.484 1.748-2.072 0 0-.18 2.197 1.904 3.967 0 0-1.77.495-1.77 1.182 0 .686 4.078.43 6.29.43 2.213 0 6.29.256 6.29-.43 0-.687-1.77-1.182-1.77-1.182 2.085-1.77 1.905-3.967 1.905-3.967.845 1.588 1.634 2.072 1.746 2.072.111 0 .283-.36.283-1.025 0-2.514-2.166-6.954-2.166-6.954V9.325C18.29 3.364 14.268 2 12.003 2z"/>
-                  </svg>
-                  {{ $t('message.qqLogin') }}
-                </button>
-                <button class="login-btn wechat" @click="handleLogin('wechat')">
-                  <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.49.49 0 0 1-.011-.259.508.508 0 0 1 .189-.295c1.524-1.125 2.517-2.847 2.517-4.769 0-3.355-3.087-6.064-6.877-5.974zm-2.755 3.536c.534 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.435-.982.97-.982zm4.844 0c.534 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.435-.982.969-.982z"/>
-                  </svg>
-                  {{ $t('message.wechatLogin') }}
-                </button>
-              </div>
-            </div>
-          </template>
-        </div>
-
-        <div class="sidebar-section">
-          <h3>{{ $t('message.hotTags') }}</h3>
-          <div class="tags-cloud">
-            <span 
-              v-for="tag in hotTags" 
-              :key="tag.name"
-              class="tag"
-              :class="{ active: selectedTag === tag.name }"
-              @click="handleTagClick(tag.name)"
-            >
-              #{{ tag.name }}
-              <small>{{ tag.count }}</small>
-            </span>
+      <!-- 统计卡片 -->
+      <div class="stats-section" data-aos="fade-up">
+        <div class="stats-cards">
+          <div class="stat-card">
+            <div class="stat-number">{{ messageStats.total }}</div>
+            <div class="stat-label">{{ $t('message.stats.total') }}</div>
           </div>
-        </div>
-        <div class="sidebar-section">
-          <h3>{{ $t('message.filter') }}</h3>
-          <div class="filter-buttons">
-            <button 
-              :class="['filter-btn', { active: filterType === 'all' }]"
-              @click="filterType = 'all'"
-            >
-              {{ $t('message.filterAll') }}
-            </button>
-            <button 
-              :class="['filter-btn', { active: filterType === 'official' }]"
-              @click="filterType = 'official'"
-            >
-              {{ $t('message.filterOfficial') }}
-            </button>
+          <div class="stat-card">
+            <div class="stat-number">{{ messageStats.today }}</div>
+            <div class="stat-label">{{ $t('message.stats.today') }}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">{{ messageStats.week }}</div>
+            <div class="stat-label">{{ $t('message.stats.week') }}</div>
           </div>
         </div>
       </div>
 
-      <!-- 主要内容区 -->
-      <div class="content-main">
-        <!-- 留言表单 -->
-        <div class="message-form" data-aos="fade-up">
-          <textarea
-            v-model="newMessage.content"
-            :placeholder="userInfo.isLoggedIn ? $t('message.placeholder') : $t('message.loginFirst')"
-            class="textarea-field"
-            :disabled="!userInfo.isLoggedIn"
-          ></textarea>
-          <div class="tag-selector" v-if="userInfo.isLoggedIn">
-            <span class="tag-label">{{ $t('message.selectTag') }}：</span>
-            <div class="tag-options">
-              <button
-                v-for="tag in hotTags"
-                :key="tag.name"
-                :class="['tag-option', { active: newMessage.tag === tag.name }]"
-                @click="newMessage.tag = newMessage.tag === tag.name ? '' : tag.name"
-              >
-                #{{ tag.name }}
-              </button>
-            </div>
-          </div>
-          <div class="form-footer">
-            <div class="form-tips">
-              <span class="tip">{{ $t('message.tips') }}</span>
-            </div>
-            <button 
-              @click="submitMessage" 
-              class="submit-button"
-              :class="{ 'disabled': !userInfo.isLoggedIn }"
-            >
-              <i class="icon">✉️</i>
-              {{ userInfo.isLoggedIn ? $t('message.submit') : $t('message.loginFirst') }}
-            </button>
-          </div>
-        </div>
-
-        <!-- 留言列表 -->
-        <div class="messages-container">
-          <div
-            v-for="message in filterMessages()"
-            :key="message.id"
-            class="message-card"
-            data-aos="fade-up"
-          >
-            <div class="message-header">
-              <div class="user-info">
-                <img :src="message.avatar" alt="avatar" class="avatar" />
-                <div class="message-info">
-                  <div class="name-badge">
-                    <h3>{{ message.name }}</h3>
-                    <span v-if="message.isOfficial" class="official-badge">{{ $t('message.official') }}</span>
-                    <span 
-                      v-else-if="message.platform" 
-                      class="platform-badge"
-                      :class="message.platform"
-                    >
-                      {{ message.platform === 'qq' ? 'QQ' : $t('message.wechat') }}{{ $t('message.user') }}
-                    </span>
-                  </div>
-                  <span class="date">{{ message.date }}</span>
+      <div class="main-content">
+        <!-- 左侧边栏 -->
+        <div class="sidebar" data-aos="fade-right">
+          <!-- 用户信息卡片 -->
+          <div class="sidebar-section user-section">
+            <template v-if="userInfo.isLoggedIn">
+              <div class="user-card">
+                <img :src="userInfo.avatar" alt="avatar" class="user-avatar" />
+                <div class="user-info">
+                  <h3>{{ userInfo.name }}</h3>
+                  <span class="platform-badge" :class="userInfo.platform">
+                    {{ userInfo.platform === 'qq' ? 'QQ' : $t('message.wechat') }}{{ $t('message.login') }}
+                  </span>
+                </div>
+                <button class="logout-btn" @click="handleLogout">{{ $t('message.logout') }}</button>
+              </div>
+            </template>
+            <template v-else>
+              <div class="login-prompt">
+                <img src="@/assets/images/avatar-placeholder.svg" alt="avatar" class="user-avatar" />
+                <p>{{ $t('message.loginPrompt') }}</p>
+                <div class="login-buttons">
+                  <button class="login-btn qq" @click="handleLogin('qq')">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12.003 2c-2.265 0-6.29 1.364-6.29 7.325v1.195S3.55 14.96 3.55 17.474c0 .665.17 1.025.281 1.025.114 0 .902-.484 1.748-2.072 0 0-.18 2.197 1.904 3.967 0 0-1.77.495-1.77 1.182 0 .686 4.078.43 6.29.43 2.213 0 6.29.256 6.29-.43 0-.687-1.77-1.182-1.77-1.182 2.085-1.77 1.905-3.967 1.905-3.967.845 1.588 1.634 2.072 1.746 2.072.111 0 .283-.36.283-1.025 0-2.514-2.166-6.954-2.166-6.954V9.325C18.29 3.364 14.268 2 12.003 2z"/>
+                    </svg>
+                    {{ $t('message.qqLogin') }}
+                  </button>
+                  <button class="login-btn wechat" @click="handleLogin('wechat')">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.49.49 0 0 1-.011-.259.508.508 0 0 1 .189-.295c1.524-1.125 2.517-2.847 2.517-4.769 0-3.355-3.087-6.064-6.877-5.974zm-2.755 3.536c.534 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.435-.982.97-.982zm4.844 0c.534 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.435-.982.969-.982z"/>
+                    </svg>
+                    {{ $t('message.wechatLogin') }}
+                  </button>
                 </div>
               </div>
-              <button 
-                class="like-button"
-                @click="likeMessage(message)"
+            </template>
+          </div>
+
+          <div class="sidebar-section">
+            <h3>{{ $t('message.hotTags') }}</h3>
+            <div class="tags-cloud">
+              <span 
+                v-for="tag in hotTags" 
+                :key="tag.name"
+                class="tag"
+                :class="{ active: selectedTag === tag.name }"
+                @click="handleTagClick(tag.name)"
               >
-                <i class="icon">❤️</i>
-                <span>{{ message.likes }}</span>
+                #{{ tag.name }}
+                <small>{{ tag.count }}</small>
+              </span>
+            </div>
+          </div>
+          <div class="sidebar-section">
+            <h3>{{ $t('message.filter') }}</h3>
+            <div class="filter-buttons">
+              <button 
+                :class="['filter-btn', { active: filterType === 'all' }]"
+                @click="filterType = 'all'"
+              >
+                {{ $t('message.filterAll') }}
+              </button>
+              <button 
+                :class="['filter-btn', { active: filterType === 'official' }]"
+                @click="filterType = 'official'"
+              >
+                {{ $t('message.filterOfficial') }}
               </button>
             </div>
-            <p class="message-content">{{ message.content }}</p>
-            <div class="message-tags" v-if="message.tag">
-              <span class="message-tag">#{{ message.tag }}</span>
+          </div>
+        </div>
+
+        <!-- 主要内容区 -->
+        <div class="content-main">
+          <!-- 留言表单 -->
+          <div class="message-form" data-aos="fade-up">
+            <textarea
+              v-model="newMessage.content"
+              :placeholder="userInfo.isLoggedIn ? $t('message.placeholder') : $t('message.loginFirst')"
+              class="textarea-field"
+              :disabled="!userInfo.isLoggedIn"
+            ></textarea>
+            <div class="tag-selector" v-if="userInfo.isLoggedIn">
+              <span class="tag-label">{{ $t('message.selectTag') }}：</span>
+              <div class="tag-options">
+                <button
+                  v-for="tag in hotTags"
+                  :key="tag.name"
+                  :class="['tag-option', { active: newMessage.tag === tag.name }]"
+                  @click="newMessage.tag = newMessage.tag === tag.name ? '' : tag.name"
+                >
+                  #{{ tag.name }}
+                </button>
+              </div>
+            </div>
+            <div class="form-footer">
+              <div class="form-tips">
+                <span class="tip">{{ $t('message.tips') }}</span>
+              </div>
+              <button 
+                @click="submitMessage" 
+                class="submit-button"
+                :class="{ 'disabled': !userInfo.isLoggedIn }"
+              >
+                <i class="icon">✉️</i>
+                {{ userInfo.isLoggedIn ? $t('message.submit') : $t('message.loginFirst') }}
+              </button>
+            </div>
+          </div>
+
+          <!-- 留言列表 -->
+          <div class="messages-container">
+            <div
+              v-for="message in filterMessages()"
+              :key="message.id"
+              class="message-card"
+              data-aos="fade-up"
+            >
+              <div class="message-header">
+                <div class="user-info">
+                  <img :src="message.avatar" alt="avatar" class="avatar" />
+                  <div class="message-info">
+                    <div class="name-badge">
+                      <h3>{{ message.name }}</h3>
+                      <span v-if="message.isOfficial" class="official-badge">{{ $t('message.official') }}</span>
+                      <span 
+                        v-else-if="message.platform" 
+                        class="platform-badge"
+                        :class="message.platform"
+                      >
+                        {{ message.platform === 'qq' ? 'QQ' : $t('message.wechat') }}{{ $t('message.user') }}
+                      </span>
+                    </div>
+                    <span class="date">{{ message.date }}</span>
+                  </div>
+                </div>
+                <button 
+                  class="like-button"
+                  @click="likeMessage(message)"
+                >
+                  <i class="icon">❤️</i>
+                  <span>{{ message.likes }}</span>
+                </button>
+              </div>
+              <p class="message-content">{{ message.content }}</p>
+              <div class="message-tags" v-if="message.tag">
+                <span class="message-tag">#{{ message.tag }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- 登录模态框 -->
-    <div v-if="showLoginModal" class="login-modal">
-      <div class="modal-content">
-        <h2>{{ $t('message.loginTitle') }}</h2>
-        <p>{{ $t('message.loginDesc') }}</p>
-        <div class="login-options">
-          <button class="login-btn qq" @click="handleLogin('qq')">
-            <i class="icon">QQ</i>
-            {{ $t('message.qqLogin') }}
-          </button>
-          <button class="login-btn wechat" @click="handleLogin('wechat')">
-            <i class="icon">WeChat</i>
-            {{ $t('message.wechatLogin') }}
-          </button>
+      <!-- 登录模态框 -->
+      <div v-if="showLoginModal" class="login-modal">
+        <div class="modal-content">
+          <h2>{{ $t('message.loginTitle') }}</h2>
+          <p>{{ $t('message.loginDesc') }}</p>
+          <div class="login-options">
+            <button class="login-btn qq" @click="handleLogin('qq')">
+              <i class="icon">QQ</i>
+              {{ $t('message.qqLogin') }}
+            </button>
+            <button class="login-btn wechat" @click="handleLogin('wechat')">
+              <i class="icon">WeChat</i>
+              {{ $t('message.wechatLogin') }}
+            </button>
+          </div>
+          <button class="close-btn" @click="showLoginModal = false">{{ $t('common.cancel') }}</button>
         </div>
-        <button class="close-btn" @click="showLoginModal = false">{{ $t('common.cancel') }}</button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.dark .dark-mode-wrapper {
+  background-color: #141414;
+}
+
 .message-board {
   max-width: 1200px;
   margin: 0 auto;
@@ -1394,5 +1400,265 @@ onMounted(() => {
 .tag.active small {
   background: rgba(255, 255, 255, 0.2);
   color: white;
+}
+/* Dark mode styles */
+.dark .message-board {
+  color: #e2e8f0;
+}
+
+.dark .header h1 {
+  opacity: 0.9;
+}
+
+.dark .header p {
+  opacity: 0.7;
+}
+
+.dark .stat-card {
+  background: rgba(26, 32, 44, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .stat-number {
+  opacity: 0.9;
+}
+
+.dark .stat-label {
+  opacity: 0.7;
+}
+
+.dark .sidebar-section,
+.dark .message-form,
+.dark .message-card {
+  background: rgba(26, 32, 44, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .message-content {
+  color: #e2e8f0;
+}
+
+.dark .message-info h3 {
+  color: #e2e8f0;
+}
+
+.dark .date {
+  color: #a0aec0;
+}
+
+.dark .input-field,
+.dark .textarea-field {
+  background: rgba(26, 32, 44, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+.dark .input-field:focus,
+.dark .textarea-field:focus {
+  background: rgba(26, 32, 44, 0.6);
+  border-color: #4285f4;
+}
+
+.dark .form-tips {
+  color: #a0aec0;
+}
+
+.dark .tag {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .filter-btn {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .user-card {
+  background: rgba(26, 32, 44, 0.4);
+}
+
+.dark .user-info h3 {
+  color: #e2e8f0;
+}
+
+.dark .login-prompt p {
+  color: #a0aec0;
+}
+
+.dark .tag-label {
+  color: #a0aec0;
+}
+
+.dark .tag-option {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .message-tag {
+  background: rgba(66, 133, 244, 0.1);
+}
+
+.dark .textarea-field:disabled {
+  background: rgba(26, 32, 44, 0.2);
+  color: #a0aec0;
+}
+
+.dark .like-button {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .modal-content {
+  background: #1a202c;
+  color: #e2e8f0;
+}
+
+.dark .modal-content h2 {
+  color: #e2e8f0;
+}
+
+.dark .modal-content p {
+  color: #a0aec0;
+}
+
+.dark .close-btn {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #a0aec0;
+}
+
+.dark .close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode-wrapper {
+  min-height: 100vh;
+}
+
+.dark .message-board {
+  color: #e2e8f0;
+}
+
+.dark .header h1 {
+  opacity: 0.9;
+}
+
+.dark .header p {
+  opacity: 0.7;
+}
+
+.dark .stat-card {
+  background: rgba(26, 32, 44, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .stat-number {
+  opacity: 0.9;
+}
+
+.dark .stat-label {
+  opacity: 0.7;
+}
+
+.dark .sidebar-section,
+.dark .message-form,
+.dark .message-card {
+  background: rgba(26, 32, 44, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .message-content {
+  color: #e2e8f0;
+}
+
+.dark .message-info h3 {
+  color: #e2e8f0;
+}
+
+.dark .date {
+  color: #a0aec0;
+}
+
+.dark .input-field,
+.dark .textarea-field {
+  background: rgba(26, 32, 44, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+.dark .input-field:focus,
+.dark .textarea-field:focus {
+  background: rgba(26, 32, 44, 0.6);
+  border-color: #4285f4;
+}
+
+.dark .form-tips {
+  color: #a0aec0;
+}
+
+.dark .tag {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .filter-btn {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .user-card {
+  background: rgba(26, 32, 44, 0.4);
+}
+
+.dark .user-info h3 {
+  color: #e2e8f0;
+}
+
+.dark .login-prompt p {
+  color: #a0aec0;
+}
+
+.dark .tag-label {
+  color: #a0aec0;
+}
+
+.dark .tag-option {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .message-tag {
+  background: rgba(66, 133, 244, 0.1);
+}
+
+.dark .textarea-field:disabled {
+  background: rgba(26, 32, 44, 0.2);
+  color: #a0aec0;
+}
+
+.dark .like-button {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .modal-content {
+  background: #1a202c;
+  color: #e2e8f0;
+}
+
+.dark .modal-content h2 {
+  color: #e2e8f0;
+}
+
+.dark .modal-content p {
+  color: #a0aec0;
+}
+
+.dark .close-btn {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #a0aec0;
+}
+
+.dark .close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 </style> 

@@ -112,6 +112,13 @@ export default defineMessages({
         description: 'Powerful team collaboration features make knowledge management more convenient.',
       },
     },
+    aiPartner: {
+      title: 'Team',
+      subtitle: 'Make Creation Easier, Make Knowledge More Valuable',
+      description1: 'AI Creation Assistant, Knowledge Management Expert',
+      description2: 'Make Every Creation Full of Possibilities',
+      startButton: 'Get Started',
+    },
   },
   message: {
     title: 'Message Board',
