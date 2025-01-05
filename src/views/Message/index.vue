@@ -1,18 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { Message, Tag, Stats } from '@/types/message'
-import { getMessageData, addMessage, deleteMessage } from '@/api/message'
+import type { Message, Tag, Stats, UserInfo } from '@/types/message'
+import { getMessageData, addMessage, deleteMessage, verifyOfficialAccount } from '@/api/message'
+import { useUserStore } from '@/stores/user'
 
 const { t: $t } = useI18n()
-
-interface UserInfo {
-  isLoggedIn: boolean
-  name: string
-  avatar: string
-  platform: 'qq' | 'wechat' | undefined
-  openid?: string
-}
 
 // QQ登录配置
 const QQ_APP_ID = '102074048'
@@ -22,14 +15,8 @@ const QQ_REDIRECT_URI = encodeURIComponent(window.location.origin + '/message')
 const WECHAT_APP_ID = '你的微信应用ID' // 需要替换为实际的微信应用ID
 const WECHAT_REDIRECT_URI = encodeURIComponent(window.location.origin + '/message')
 
-// 用户登录状态
-const userInfo = ref<UserInfo>({
-  isLoggedIn: false,
-  name: '',
-  avatar: '',
-  platform: undefined,
-  openid: '', // 添加openid字段
-})
+const userStore = useUserStore()
+const userInfo = computed(() => userStore.userInfo)
 
 // 初始化QQ登录SDK
 const initQQLogin = () => {
@@ -50,20 +37,16 @@ const handleQQLogin = () => {
 // 获取QQ用户信息
 const getQQUserInfo = async (access_token: string, openid: string) => {
   try {
-    // 调用QQ API获取用户信息
     const response = await fetch(`https://graph.qq.com/user/get_user_info?access_token=${access_token}&oauth_consumer_key=${QQ_APP_ID}&openid=${openid}`)
     const data = await response.json()
     
     if (data.ret === 0) {
-      userInfo.value = {
-        isLoggedIn: true,
-        name: data.nickname,
-        avatar: data.figureurl_qq_2 || data.figureurl_qq_1, // 优先使用大图
-        platform: 'qq',
+      userStore.loginWithQQ({
+        nickname: data.nickname,
+        figureurl_qq_2: data.figureurl_qq_2 || data.figureurl_qq_1,
         openid: openid
-      }
+      })
       showLoginModal.value = false
-      localStorage.setItem('userInfo', JSON.stringify(userInfo.value))
     } else {
       console.error('获取用户信息失败:', data)
     }
@@ -122,15 +105,12 @@ const getWechatUserInfo = async (code: string) => {
     const data = await response.json()
     
     if (data.success) {
-      userInfo.value = {
-        isLoggedIn: true,
-        name: data.nickname,
-        avatar: data.headimgurl,
-        platform: 'wechat',
+      userStore.loginWithWechat({
+        nickname: data.nickname,
+        headimgurl: data.headimgurl,
         openid: data.openid
-      }
+      })
       showLoginModal.value = false
-      localStorage.setItem('userInfo', JSON.stringify(userInfo.value))
     } else {
       console.error('获取微信用户信息失败:', data)
     }
@@ -153,20 +133,14 @@ const handleWechatCallback = () => {
 const checkLoginStatus = () => {
   const savedUserInfo = localStorage.getItem('userInfo')
   if (savedUserInfo) {
-    userInfo.value = JSON.parse(savedUserInfo)
+    const parsedUserInfo = JSON.parse(savedUserInfo)
+    userStore.setUserInfo(parsedUserInfo)
   }
 }
 
 // 退出登录
 const handleLogout = () => {
-  userInfo.value = {
-    isLoggedIn: false,
-    name: '',
-    avatar: '',
-    platform: undefined,
-    openid: ''
-  }
-  localStorage.removeItem('userInfo')
+  userStore.logout()
 }
 
 // 留言数据
@@ -199,20 +173,20 @@ const submitMessage = async () => {
   
   if (!newMessage.value.content) return
   
-  const message: Message = {
-    id: Date.now(),
+  const message: Omit<Message, 'id'> = {
+    userId: userInfo.value.openid || '',
     name: userInfo.value.name,
     content: newMessage.value.content,
     date: new Date().toISOString().split('T')[0],
     avatar: userInfo.value.avatar,
     likes: 0,
     platform: userInfo.value.platform,
-    openid: userInfo.value.openid,
+    isOfficial: userInfo.value.isOfficial,
     tag: newMessage.value.tag
   }
   
   try {
-    await addMessage(message)
+    await addMessage(message, userInfo.value.openid || '')
     // 重新加载数据以获取更新后的统计信息
     await loadData()
     // 重置表单
@@ -224,20 +198,50 @@ const submitMessage = async () => {
 }
 
 // 删除留言
-const handleDeleteMessage = async (id: number) => {
+const handleDeleteMessage = async (message: Message) => {
+  // 检查是否是用户自己的留言或官方账号
+  if (!userInfo.value.isLoggedIn || (message.userId !== userInfo.value.openid && !userInfo.value.isOfficial)) {
+    console.error('无权删除此留言')
+    return
+  }
+
   try {
-    await deleteMessage(id)
-    // 重新加载数据
-    await loadData()
+    const success = await deleteMessage(message.id)
+    if (success) {
+      // 重新加载数据
+      await loadData()
+    } else {
+      console.error('删除留言失败')
+    }
   } catch (error) {
     console.error('删除留言失败:', error)
   }
 }
 
+// 官方账号登录函数
+const handleOfficialLogin = async (username: string, password: string) => {
+  try {
+    const result = await userStore.loginAsOfficial(username, password)
+    if (result.success) {
+      showLoginModal.value = false
+    }
+    return result
+  } catch (error) {
+    console.error('登录失败:', error)
+    return {
+      success: false,
+      message: '登录失败，请检查账号密码'
+    }
+  }
+}
+
+// 将handleOfficialLogin添加到window对象上，使其全局可用
+(window as any).handleOfficialLogin = handleOfficialLogin
+
 onMounted(async () => {
+  userStore.initUserState()
   initQQLogin()
   initWechatLogin()
-  checkLoginStatus()
   
   // 加载留言板数据
   await loadData()
@@ -305,35 +309,6 @@ const likeMessage = (message: any) => {
   message.likes++
 }
 
-// 模拟登录函数
-const mockLogin = (type: 'qq' | 'wechat' = 'qq') => {
-  const mockUserInfo = {
-    qq: {
-      isLoggedIn: true,
-      name: '测试用户',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=mock-qq',
-      platform: 'qq' as const,
-      openid: 'mock-qq-' + Date.now()
-    },
-    wechat: {
-      isLoggedIn: true,
-      name: '测试用户',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=mock-wechat',
-      platform: 'wechat' as const,
-      openid: 'mock-wechat-' + Date.now()
-    }
-  }
-
-  userInfo.value = mockUserInfo[type]
-  localStorage.setItem('userInfo', JSON.stringify(userInfo.value))
-  showLoginModal.value = false
-  
-  console.log(`模拟${type === 'qq' ? 'QQ' : '微信'}登录成功`, userInfo.value)
-}
-
-onMounted(() => {
-    mockLogin()
-})
 </script>
 
 <template>
@@ -500,17 +475,28 @@ onMounted(() => {
                     <span class="date">{{ message.date }}</span>
                   </div>
                 </div>
-                <button 
-                  class="like-button"
-                  @click="likeMessage(message)"
-                >
-                  <i class="icon">❤️</i>
-                  <span>{{ message.likes }}</span>
-                </button>
+                <div class="message-actions">
+                  <button 
+                    class="like-button"
+                    @click="likeMessage(message)"
+                  >
+                    <i class="icon">❤️</i>
+                    <span>{{ message.likes }}</span>
+                  </button>
+                </div>
               </div>
               <p class="message-content">{{ message.content }}</p>
-              <div class="message-tags" v-if="message.tag">
-                <span class="message-tag">#{{ message.tag }}</span>
+              <div class="message-footer">
+                <div class="message-tags" v-if="message.tag">
+                  <span class="message-tag">#{{ message.tag }}</span>
+                </div>
+                <button 
+                  v-if="userInfo.isLoggedIn && (message.userId === userInfo.openid || userInfo.isOfficial)"
+                  class="delete-button"
+                  @click="handleDeleteMessage(message)"
+                >
+                  {{ $t('message.delete') }}
+                </button>
               </div>
             </div>
           </div>
@@ -945,6 +931,12 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+}
+
+.message-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .user-info {
@@ -1660,5 +1652,75 @@ onMounted(() => {
 
 .dark .close-btn:hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+.delete-button {
+  padding: 4px 12px;
+  border-radius: 4px;
+  background: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.delete-button:hover {
+  background: rgba(244, 67, 54, 0.2);
+  transform: translateY(-1px);
+}
+
+.dark .delete-button {
+  background: rgba(244, 67, 54, 0.05);
+  border-color: rgba(244, 67, 54, 0.1);
+  color: #ff5252;
+}
+
+.dark .delete-button:hover {
+  background: rgba(244, 67, 54, 0.1);
+}
+
+.message-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(66, 133, 244, 0.1);
+}
+
+.message-tags {
+  display: flex;
+  gap: 8px;
+}
+
+.delete-button {
+  padding: 4px 12px;
+  border-radius: 4px;
+  background: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.delete-button:hover {
+  background: rgba(244, 67, 54, 0.2);
+  transform: translateY(-1px);
+}
+
+.dark .message-footer {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .delete-button {
+  background: rgba(244, 67, 54, 0.05);
+  border-color: rgba(244, 67, 54, 0.1);
+  color: #ff5252;
+}
+
+.dark .delete-button:hover {
+  background: rgba(244, 67, 54, 0.1);
 }
 </style> 

@@ -2,34 +2,86 @@
   "messages": [
     {
       "id": 1,
+      "userId": "official_001",
       "name": "Token团队",
       "content": "欢迎来到Token留言板！",
-      "date": "2024-01-20",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
-      "likes": 5,
+      "date": "2024-01-01",
+      "avatar": "/src/assets/images/logo.png",
+      "likes": 0,
+      "platform": null,
       "isOfficial": true,
       "tag": "公告"
     },
     {
       "id": 2,
-      "name": "访客",
-      "content": "期待Token的未来发展！",
-      "date": "2024-01-20",
+      "userId": "example_user",
+      "name": "示例用户",
+      "content": "Token项目非常棒！希望能有更多的教程和资源。",
+      "date": "2024-01-02",
       "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
-      "likes": 3,
+      "likes": 5,
+      "platform": "qq",
+      "isOfficial": false,
       "tag": "建议"
+    },
+    {
+      "id": 3,
+      "userId": "official_001",
+      "name": "Token团队",
+      "content": "感谢支持！我们会继续努力提供更好的学习资源。",
+      "date": "2024-01-02",
+      "avatar": "/src/assets/images/logo.png",
+      "likes": 3,
+      "platform": null,
+      "isOfficial": true,
+      "tag": "公告"
+    },
+    {
+      "id": 4,
+      "userId": "user123",
+      "name": "学习者",
+      "content": "请问Token项目的学习路线是怎样的？",
+      "date": "2024-01-03",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
+      "likes": 2,
+      "platform": "wechat",
+      "isOfficial": false,
+      "tag": "问题"
+    },
+    {
+      "id": 5,
+      "userId": "official_001",
+      "name": "Token团队",
+      "content": "我们建议从基础开始，循序渐进。可以先看看我们的入门教程。",
+      "date": "2024-01-03",
+      "avatar": "/src/assets/images/logo.png",
+      "likes": 4,
+      "platform": null,
+      "isOfficial": true,
+      "tag": "公告"
     }
   ],
   "tags": [
-    { "name": "建议", "count": 45 },
-    { "name": "反馈", "count": 32 },
-    { "name": "提问", "count": 28 },
-    { "name": "分享", "count": 25 },
-    { "name": "交流", "count": 20 }
+    {
+      "name": "公告",
+      "count": 3
+    },
+    {
+      "name": "建议",
+      "count": 1
+    },
+    {
+      "name": "问题",
+      "count": 1
+    },
+    {
+      "name": "其他",
+      "count": 0
+    }
   ],
   "stats": {
-    "total": 156,
-    "today": 12,
-    "week": 89
+    "total": 5,
+    "today": 2,
+    "week": 5
   }
 } 

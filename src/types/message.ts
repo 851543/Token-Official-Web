@@ -1,13 +1,13 @@
 export interface Message {
   id: number
+  userId: string
   name: string
   content: string
   date: string
   avatar: string
   likes: number
+  platform: 'qq' | 'wechat' | null
   isOfficial?: boolean
-  platform?: 'qq' | 'wechat'
-  openid?: string
   tag?: string
 }
 
@@ -26,4 +26,15 @@ export interface MessageData {
   messages: Message[]
   tags: Tag[]
   stats: Stats
+}
+
+export interface UserInfo {
+  id: string
+  name: string
+  avatar: string
+  platform: 'qq' | 'wechat' | null
+  openid?: string
+  isOfficial?: boolean
+  messageId?: number | null
+  lastMessageTime?: string | null
 } 

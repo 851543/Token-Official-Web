@@ -1,4 +1,3 @@
-import type { I18nSchema } from '@/types/i18n'
 import { defineMessages } from '@/types/i18n'
 
 export default defineMessages({
@@ -122,34 +121,32 @@ export default defineMessages({
   },
   message: {
     title: 'Message Board',
-    description: 'Welcome to share your thoughts and suggestions here',
-    placeholder: 'Write your message...',
-    loginFirst: 'Please login to leave a message',
-    submit: 'Send Message',
-    success: 'Message sent successfully',
-    error: 'Failed to send message',
-    empty: 'Message cannot be empty',
-    hotTags: 'Hot Tags',
-    filter: 'Message Filter',
-    filterAll: 'All Messages',
-    filterOfficial: 'Official Replies',
-    selectTag: 'Select Tag',
-    tips: 'Kind words bring good karma, harsh words hurt hearts',
-    official: 'Official',
-    user: 'User',
-    login: 'Login',
-    logout: 'Logout',
-    loginPrompt: 'Login to interact',
-    loginTitle: 'Please Login',
-    loginDesc: 'Login to participate in the discussion',
-    qqLogin: 'QQ Login',
-    wechatLogin: 'WeChat Login',
-    wechat: 'WeChat',
+    description: 'Welcome to share your thoughts and suggestions',
     stats: {
       total: 'Total Messages',
       today: 'New Today',
       week: 'Active This Week'
-    }
+    },
+    loginPrompt: 'Please login to leave a message',
+    loginTitle: 'User Login',
+    loginDesc: 'Please select login method',
+    qqLogin: 'Login with QQ',
+    wechatLogin: 'Login with WeChat',
+    official: 'Official',
+    user: 'User',
+    wechat: 'WeChat',
+    wechatUser: 'WeChat User',
+    submit: 'Send Message',
+    placeholder: 'Write your message...',
+    loginFirst: 'Please login first',
+    selectTag: 'Select Tag',
+    tips: 'Kind words bring good karma',
+    delete: 'Delete',
+    filterAll: 'All Messages',
+    filterOfficial: 'Official Replies',
+    hotTags: 'Hot Tags',
+    filter: 'Filter',
+    error: 'Operation failed'
   },
   contact: {
     title: 'Contact Us',

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { PiniaPluginContext } from 'pinia'
 
 export const useThemeStore = defineStore('theme', 
   () => {
@@ -25,5 +24,6 @@ export const useThemeStore = defineStore('theme',
       toggleTheme,
       initTheme
     }
-  }
-)
+  }, {
+    persist: true,
+  }) 
