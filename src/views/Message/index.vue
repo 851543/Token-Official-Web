@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { Message, Tag, Stats } from '@/types/message'
 import { getMessageData, addMessage, deleteMessage } from '@/api/message'
+
+const { t: $t } = useI18n()
 
 interface UserInfo {
   isLoggedIn: boolean
@@ -216,7 +219,7 @@ const submitMessage = async () => {
     newMessage.value.content = ''
     newMessage.value.tag = ''
   } catch (error) {
-    console.error('发送留言失败:', error)
+    console.error($t('message.error'), error)
   }
 }
 
@@ -337,8 +340,8 @@ onMounted(() => {
   <div class="message-board">
     <!-- 头部区域 -->
     <div class="header" data-aos="fade-up">
-      <h1 class="barlow-extralight" data-text="留言板">留言板</h1>
-      <p class="barlow-medium">欢迎在这里留下你的想法和建议</p>
+      <h1 class="barlow-extralight" :data-text="$t('message.title')">{{ $t('message.title') }}</h1>
+      <p class="barlow-medium">{{ $t('message.description') }}</p>
     </div>
 
     <!-- 统计卡片 -->
@@ -346,15 +349,15 @@ onMounted(() => {
       <div class="stats-cards">
         <div class="stat-card">
           <div class="stat-number">{{ messageStats.total }}</div>
-          <div class="stat-label">总留言</div>
+          <div class="stat-label">{{ $t('message.stats.total') }}</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">{{ messageStats.today }}</div>
-          <div class="stat-label">今日新增</div>
+          <div class="stat-label">{{ $t('message.stats.today') }}</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">{{ messageStats.week }}</div>
-          <div class="stat-label">本周活跃</div>
+          <div class="stat-label">{{ $t('message.stats.week') }}</div>
         </div>
       </div>
     </div>
@@ -370,28 +373,28 @@ onMounted(() => {
               <div class="user-info">
                 <h3>{{ userInfo.name }}</h3>
                 <span class="platform-badge" :class="userInfo.platform">
-                  {{ userInfo.platform === 'qq' ? 'QQ' : '微信' }}登录
+                  {{ userInfo.platform === 'qq' ? 'QQ' : $t('message.wechat') }}{{ $t('message.login') }}
                 </span>
               </div>
-              <button class="logout-btn" @click="handleLogout">退出登录</button>
+              <button class="logout-btn" @click="handleLogout">{{ $t('message.logout') }}</button>
             </div>
           </template>
           <template v-else>
             <div class="login-prompt">
               <img src="@/assets/images/avatar-placeholder.svg" alt="avatar" class="user-avatar" />
-              <p>登录后参与互动</p>
+              <p>{{ $t('message.loginPrompt') }}</p>
               <div class="login-buttons">
                 <button class="login-btn qq" @click="handleLogin('qq')">
                   <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12.003 2c-2.265 0-6.29 1.364-6.29 7.325v1.195S3.55 14.96 3.55 17.474c0 .665.17 1.025.281 1.025.114 0 .902-.484 1.748-2.072 0 0-.18 2.197 1.904 3.967 0 0-1.77.495-1.77 1.182 0 .686 4.078.43 6.29.43 2.213 0 6.29.256 6.29-.43 0-.687-1.77-1.182-1.77-1.182 2.085-1.77 1.905-3.967 1.905-3.967.845 1.588 1.634 2.072 1.746 2.072.111 0 .283-.36.283-1.025 0-2.514-2.166-6.954-2.166-6.954V9.325C18.29 3.364 14.268 2 12.003 2z"/>
                   </svg>
-                  QQ登录
+                  {{ $t('message.qqLogin') }}
                 </button>
                 <button class="login-btn wechat" @click="handleLogin('wechat')">
                   <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.49.49 0 0 1-.011-.259.508.508 0 0 1 .189-.295c1.524-1.125 2.517-2.847 2.517-4.769 0-3.355-3.087-6.064-6.877-5.974zm-2.755 3.536c.534 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.435-.982.97-.982zm4.844 0c.534 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.435-.982.969-.982z"/>
                   </svg>
-                  微信登录
+                  {{ $t('message.wechatLogin') }}
                 </button>
               </div>
             </div>
@@ -399,7 +402,7 @@ onMounted(() => {
         </div>
 
         <div class="sidebar-section">
-          <h3>热门标签</h3>
+          <h3>{{ $t('message.hotTags') }}</h3>
           <div class="tags-cloud">
             <span 
               v-for="tag in hotTags" 
@@ -414,19 +417,19 @@ onMounted(() => {
           </div>
         </div>
         <div class="sidebar-section">
-          <h3>留言筛选</h3>
+          <h3>{{ $t('message.filter') }}</h3>
           <div class="filter-buttons">
             <button 
               :class="['filter-btn', { active: filterType === 'all' }]"
               @click="filterType = 'all'"
             >
-              全部留言
+              {{ $t('message.filterAll') }}
             </button>
             <button 
               :class="['filter-btn', { active: filterType === 'official' }]"
               @click="filterType = 'official'"
             >
-              官方回复
+              {{ $t('message.filterOfficial') }}
             </button>
           </div>
         </div>
@@ -438,12 +441,12 @@ onMounted(() => {
         <div class="message-form" data-aos="fade-up">
           <textarea
             v-model="newMessage.content"
-            :placeholder="userInfo.isLoggedIn ? '写下你的留言...' : '请先登录后发表留言'"
+            :placeholder="userInfo.isLoggedIn ? $t('message.placeholder') : $t('message.loginFirst')"
             class="textarea-field"
             :disabled="!userInfo.isLoggedIn"
           ></textarea>
           <div class="tag-selector" v-if="userInfo.isLoggedIn">
-            <span class="tag-label">选择标签：</span>
+            <span class="tag-label">{{ $t('message.selectTag') }}：</span>
             <div class="tag-options">
               <button
                 v-for="tag in hotTags"
@@ -457,7 +460,7 @@ onMounted(() => {
           </div>
           <div class="form-footer">
             <div class="form-tips">
-              <span class="tip">善语结善缘，恶言伤人心</span>
+              <span class="tip">{{ $t('message.tips') }}</span>
             </div>
             <button 
               @click="submitMessage" 
@@ -465,7 +468,7 @@ onMounted(() => {
               :class="{ 'disabled': !userInfo.isLoggedIn }"
             >
               <i class="icon">✉️</i>
-              {{ userInfo.isLoggedIn ? '发送留言' : '请先登录' }}
+              {{ userInfo.isLoggedIn ? $t('message.submit') : $t('message.loginFirst') }}
             </button>
           </div>
         </div>
@@ -484,13 +487,13 @@ onMounted(() => {
                 <div class="message-info">
                   <div class="name-badge">
                     <h3>{{ message.name }}</h3>
-                    <span v-if="message.isOfficial" class="official-badge">官方</span>
+                    <span v-if="message.isOfficial" class="official-badge">{{ $t('message.official') }}</span>
                     <span 
                       v-else-if="message.platform" 
                       class="platform-badge"
                       :class="message.platform"
                     >
-                      {{ message.platform === 'qq' ? 'QQ' : '微信' }}用户
+                      {{ message.platform === 'qq' ? 'QQ' : $t('message.wechat') }}{{ $t('message.user') }}
                     </span>
                   </div>
                   <span class="date">{{ message.date }}</span>
@@ -516,19 +519,19 @@ onMounted(() => {
     <!-- 登录模态框 -->
     <div v-if="showLoginModal" class="login-modal">
       <div class="modal-content">
-        <h2>请登录</h2>
-        <p>登录后即可参与互动</p>
+        <h2>{{ $t('message.loginTitle') }}</h2>
+        <p>{{ $t('message.loginDesc') }}</p>
         <div class="login-options">
           <button class="login-btn qq" @click="handleLogin('qq')">
             <i class="icon">QQ</i>
-            QQ登录
+            {{ $t('message.qqLogin') }}
           </button>
           <button class="login-btn wechat" @click="handleLogin('wechat')">
             <i class="icon">WeChat</i>
-            微信登录
+            {{ $t('message.wechatLogin') }}
           </button>
         </div>
-        <button class="close-btn" @click="showLoginModal = false">关闭</button>
+        <button class="close-btn" @click="showLoginModal = false">{{ $t('common.cancel') }}</button>
       </div>
     </div>
   </div>

@@ -114,21 +114,164 @@ export default defineMessages({
     },
   },
   message: {
-    placeholder: '请输入您的留言',
-    submit: '提交',
+    title: '留言板',
+    description: '欢迎在这里留下你的想法和建议',
+    placeholder: '写下你的留言...',
+    loginFirst: '请先登录后发表留言',
+    submit: '发送留言',
     success: '留言成功',
-    error: '留言失败',
+    error: '发送留言失败',
     empty: '留言内容不能为空',
+    hotTags: '热门标签',
+    filter: '留言筛选',
+    filterAll: '全部留言',
+    filterOfficial: '官方回复',
+    selectTag: '选择标签',
+    tips: '善语结善缘，恶言伤人心',
+    official: '官方',
+    user: '用户',
+    login: '登录',
+    logout: '退出登录',
+    loginPrompt: '登录后参与互动',
+    loginTitle: '请登录',
+    loginDesc: '登录后即可参与互动',
+    qqLogin: 'QQ登录',
+    wechatLogin: '微信登录',
+    wechat: '微信',
+    stats: {
+      total: '总留言',
+      today: '今日新增',
+      week: '本周活跃'
+    }
   },
   contact: {
     title: '联系我们',
-    description: '有任何问题或建议，欢迎随时联系我们',
-    form: {
-      name: '姓名',
-      email: '邮箱',
-      message: '留言内容',
-      submit: '发送消息',
+    description: '我们是Token团队，致力于打造下一代智能创作平台',
+    description2: '用科技赋能创作者',
+    whyUs: {
+      title: '为什么选择 Token',
+      ai: {
+        title: 'AI 智能创作',
+        desc: '强大的 AI 模型助力，让创作更轻松高效'
+      },
+      knowledge: {
+        title: '知识管理',
+        desc: '科学的知识体系构建，高效的信息组织方式'
+      },
+      support: {
+        title: '专业支持',
+        desc: '7×24小时技术支持，解决您的任何问题'
+      }
     },
+    process: {
+      title: '服务流程',
+      steps: {
+        submit: {
+          title: '提交需求',
+          desc: '填写表单或通过邮件提交您的具体需求'
+        },
+        evaluate: {
+          title: '需求评估',
+          desc: '专业团队评估并制定解决方案'
+        },
+        confirm: {
+          title: '方案确认',
+          desc: '与您确认具体实施方案和时间节点'
+        },
+        start: {
+          title: '开始服务',
+          desc: '正式启动服务并持续跟进反馈'
+        }
+      }
+    },
+    highlights: {
+      title: '我们的优势',
+      response: {
+        title: '快速响应',
+        number: '2小时',
+        desc: '平均响应时间'
+      },
+      innovation: {
+        title: '创新方案',
+        number: '200+',
+        desc: '成功案例'
+      },
+      team: {
+        title: '专业团队',
+        number: '50+',
+        desc: '技术专家'
+      },
+      satisfaction: {
+        title: '客户满意度',
+        number: '98%',
+        desc: '好评率'
+      }
+    },
+    form: {
+      title: '发送消息',
+      name: '姓名',
+      namePlaceholder: '请输入您的姓名',
+      email: '邮箱',
+      emailPlaceholder: '请输入您的邮箱',
+      type: '咨询类型',
+      typePlaceholder: '请选择咨询类型',
+      typeOptions: {
+        business: '商务合作',
+        technical: '技术支持',
+        other: '其他问题'
+      },
+      message: '留言内容',
+      messagePlaceholder: '请详细描述您的需求',
+      submit: '发送消息',
+      sending: '发送中'
+    },
+    contact: {
+      business: {
+        title: '商务合作',
+        email: '851543@qq.com',
+        phone: '+86 131-2355-6625'
+      },
+      technical: {
+        title: '技术支持',
+        email: '851543@qq.com',
+        support: '7×24小时在线支持'
+      },
+      social: {
+        title: '社交媒体'
+      },
+      workingHours: {
+        title: '工作时间',
+        weekdays: '周一至周五：10:00 - 17:00',
+        weekends: '周末及节假日：在线值班'
+      },
+      emergency: {
+        title: '紧急联系',
+        phone: '24小时紧急热线：+86 131-2355-6625',
+        note: '仅用于紧急技术支持'
+      }
+    },
+    offices: {
+      title: '全国办公室',
+      nanning: {
+        title: '广西南宁总部',
+        address: '广西农业职业技术大学',
+        hours: '周一至周五 10:00-17:00'
+      },
+      yulin: {
+        title: '广西玉林分部',
+        address: '北流市玉州区高科技园区',
+        hours: '周一至周五 10:00-17:00'
+      },
+      beihai: {
+        title: '广西北海分部',
+        address: '北海市南山区科技园',
+        hours: '周一至周五 10:00-17:00'
+      }
+    },
+    notification: {
+      success: '消息已发送成功！我们会尽快回复您。',
+      error: '发送失败，请稍后重试或通过其他方式联系我们。'
+    }
   },
   blogs: {
     title: '博客文章',

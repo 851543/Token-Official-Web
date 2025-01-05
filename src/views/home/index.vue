@@ -74,7 +74,7 @@ onMounted(() => {
   <div class="container-main holded-container" id="updates-scroll">
     <h1 data-aos="fade-up" class="barlow-medium text-center">{{ $t('nav.moreLinks') }}</h1>
     <p data-aos="fade-up" class="barlow-extralight text-center extra-break">
-      {{ $t('home.description') }}
+      {{ $t('moreLinks.subtitle') }}
     </p>
     <div data-aos="fade-up" class="buttons">
       <router-link to="/morelinks">

@@ -114,21 +114,164 @@ export default defineMessages({
     },
   },
   message: {
-    placeholder: 'Please enter your message',
-    submit: 'Submit',
+    title: 'Message Board',
+    description: 'Welcome to share your thoughts and suggestions here',
+    placeholder: 'Write your message...',
+    loginFirst: 'Please login to leave a message',
+    submit: 'Send Message',
     success: 'Message sent successfully',
     error: 'Failed to send message',
     empty: 'Message cannot be empty',
+    hotTags: 'Hot Tags',
+    filter: 'Message Filter',
+    filterAll: 'All Messages',
+    filterOfficial: 'Official Replies',
+    selectTag: 'Select Tag',
+    tips: 'Kind words bring good karma, harsh words hurt hearts',
+    official: 'Official',
+    user: 'User',
+    login: 'Login',
+    logout: 'Logout',
+    loginPrompt: 'Login to interact',
+    loginTitle: 'Please Login',
+    loginDesc: 'Login to participate in the discussion',
+    qqLogin: 'QQ Login',
+    wechatLogin: 'WeChat Login',
+    wechat: 'WeChat',
+    stats: {
+      total: 'Total Messages',
+      today: 'New Today',
+      week: 'Active This Week'
+    }
   },
   contact: {
     title: 'Contact Us',
-    description: 'Feel free to contact us with any questions or suggestions',
-    form: {
-      name: 'Name',
-      email: 'Email',
-      message: 'Message',
-      submit: 'Send Message',
+    description: 'We are the Token team, dedicated to building the next generation AI creation platform',
+    description2: 'Empowering creators with technology',
+    whyUs: {
+      title: 'Why Choose Token',
+      ai: {
+        title: 'AI Creation',
+        desc: 'Powerful AI models to make creation easier and more efficient'
+      },
+      knowledge: {
+        title: 'Knowledge Management',
+        desc: 'Scientific knowledge system construction and efficient information organization'
+      },
+      support: {
+        title: 'Professional Support',
+        desc: '24/7 technical support to solve any of your problems'
+      }
     },
+    process: {
+      title: 'Service Process',
+      steps: {
+        submit: {
+          title: 'Submit Requirements',
+          desc: 'Submit your specific requirements via form or email'
+        },
+        evaluate: {
+          title: 'Requirement Assessment',
+          desc: 'Professional team evaluates and develops solutions'
+        },
+        confirm: {
+          title: 'Solution Confirmation',
+          desc: 'Confirm specific implementation plan and timeline with you'
+        },
+        start: {
+          title: 'Start Service',
+          desc: 'Officially launch service and follow up continuously'
+        }
+      }
+    },
+    highlights: {
+      title: 'Our Advantages',
+      response: {
+        title: 'Quick Response',
+        number: '2 Hours',
+        desc: 'Average response time'
+      },
+      innovation: {
+        title: 'Innovative Solutions',
+        number: '200+',
+        desc: 'Success cases'
+      },
+      team: {
+        title: 'Professional Team',
+        number: '50+',
+        desc: 'Technical experts'
+      },
+      satisfaction: {
+        title: 'Customer Satisfaction',
+        number: '98%',
+        desc: 'Positive feedback'
+      }
+    },
+    form: {
+      title: 'Send Message',
+      name: 'Name',
+      namePlaceholder: 'Please enter your name',
+      email: 'Email',
+      emailPlaceholder: 'Please enter your email',
+      type: 'Inquiry Type',
+      typePlaceholder: 'Please select inquiry type',
+      typeOptions: {
+        business: 'Business Cooperation',
+        technical: 'Technical Support',
+        other: 'Other Issues'
+      },
+      message: 'Message',
+      messagePlaceholder: 'Please describe your requirements in detail',
+      submit: 'Send Message',
+      sending: 'Sending'
+    },
+    contact: {
+      business: {
+        title: 'Business Cooperation',
+        email: '851543@qq.com',
+        phone: '+86 131-2355-6625'
+      },
+      technical: {
+        title: 'Technical Support',
+        email: '851543@qq.com',
+        support: '24/7 Online Support'
+      },
+      social: {
+        title: 'Social Media'
+      },
+      workingHours: {
+        title: 'Working Hours',
+        weekdays: 'Monday to Friday: 10:00 - 17:00',
+        weekends: 'Weekends & Holidays: Online Support'
+      },
+      emergency: {
+        title: 'Emergency Contact',
+        phone: '24/7 Emergency Hotline: +86 131-2355-6625',
+        note: 'For emergency technical support only'
+      }
+    },
+    offices: {
+      title: 'National Offices',
+      nanning: {
+        title: 'Guangxi Nanning HQ',
+        address: 'Guangxi Agricultural Vocational and Technical University',
+        hours: 'Mon-Fri 10:00-17:00'
+      },
+      yulin: {
+        title: 'Guangxi Yulin Branch',
+        address: 'High-tech Park, Yuzhou District, Beiliu City',
+        hours: 'Mon-Fri 10:00-17:00'
+      },
+      beihai: {
+        title: 'Guangxi Beihai Branch',
+        address: 'Science Park, Nanshan District, Beihai',
+        hours: 'Mon-Fri 10:00-17:00'
+      }
+    },
+    notification: {
+      success: 'Message sent successfully! We will reply to you as soon as possible.',
+      error: 'Failed to send, please try again later or contact us through other means.'
+    }
   },
   blogs: {
     title: 'Blog Posts',
@@ -160,6 +303,21 @@ export default defineMessages({
     minutes: 'minutes',
     authorProfile: 'Author Profile',
     moreFromAuthor: 'More from Author',
+  },
+  moreLinks: {
+    title: 'Our Updates',
+    subtitle: 'Java Python Full-stack Embedded Technology Stack Development Projects',
+    aiEra: 'AI Era',
+    courses: {
+      golang: {
+        title: 'Go Language',
+        viewOnGithub: 'View on Github',
+      },
+      machineLearning: {
+        title: 'Machine Learning',
+        viewOnGithub: 'View on Github',
+      },
+    },
   },
   footer: {
     copyright: 'Copyright © 2024 - {year} Token. All Rights Reserved',

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { getCreateData } from '@/api/create'
-import { useLangStore } from '@/stores/lang'
 import type { Section, Partner, Feature } from '@/types/create'
-
+import { useLangStore } from '@/stores/lang'
 const scrollProgress = ref(0)
 const videoRef = ref<HTMLVideoElement | null>(null)
-const langStore = useLangStore()
 
 // 添加打开QQ好友请求的方法
 const openQQFriend = () => {
   window.open('tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=851543')
 }
+
+const langStore = useLangStore()
 
 // 添加响应式数据
 const sections = ref<Section[]>([])
@@ -31,11 +31,6 @@ const fetchData = async () => {
     console.error('Failed to fetch trend data:', error)
   }
 }
-
-// 监听语言变化
-watch(() => langStore.currentLang, () => {
-  fetchData()
-})
 
 // 添加这个函数到 script setup 中
 const isElementInViewport = (el: HTMLElement) => {
@@ -87,6 +82,13 @@ const handleSectionScroll = () => {
 const currentImageIndex = ref(0)
 const currentSection = ref(0)
 const sectionRefs = ref<HTMLElement[]>([])
+
+import { watch } from 'vue'
+
+// 监听语言变化
+watch(() => langStore.currentLang, () => {
+  fetchData()
+})
 
 // 生命周期钩子
 onMounted(async () => {
@@ -255,13 +257,20 @@ onUnmounted(() => {
       </div>
 
       <!-- 右侧固定图片区域 -->
-      <div class="sticky-wrapper">
+        <div class="sticky-wrapper">
         <div class="image-container">
-          <img 
-            :src="images[currentImageIndex]" 
-            alt="Feature Image"
-            class="feature-image"
+          <div 
+            v-for="(section, index) in sections" 
+            :key="index"
+            class="image-wrapper"
+            :class="{ 'is-active': currentSection === index }"
           >
+            <img 
+              :src="section.image" 
+              :alt="section.title"
+              class="section-image"
+            >
+          </div>
         </div>
       </div>
     </div>

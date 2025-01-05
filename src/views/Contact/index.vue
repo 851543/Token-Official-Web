@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import axios from 'axios'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 // 定义表单数据
 const form = reactive({
@@ -43,10 +46,10 @@ const submitForm = async () => {
         reply_to: form.email,
         type:
           form.type === 'business'
-            ? '商务合作'
+            ? t('contact.form.typeOptions.business')
             : form.type === 'technical'
-              ? '技术支持'
-              : '其他问题',
+              ? t('contact.form.typeOptions.technical')
+              : t('contact.form.typeOptions.other'),
       },
     }
 
@@ -54,7 +57,7 @@ const submitForm = async () => {
     const response = await axios.post('https://api.emailjs.com/api/v1.0/email/send', emailData)
 
     if (response.status === 200) {
-      showToast('消息已发送成功！我们会尽快回复您。')
+      showToast(t('contact.notification.success'))
       // 清空表单
       form.name = ''
       form.email = ''
@@ -63,7 +66,7 @@ const submitForm = async () => {
     }
   } catch (error) {
     console.error('Error:', error)
-    showToast('发送失败，请稍后重试或通过其他方式联系我们。', 'error')
+    showToast(t('contact.notification.error'), 'error')
   } finally {
     // 恢复按钮状态
     isLoading.value = false
@@ -74,16 +77,16 @@ const submitForm = async () => {
 <template>
   <div class="contact-container">
     <div class="hero-section">
-      <h1 class="page-title">联系我们</h1>
+      <h1 class="page-title">{{ $t('contact.title') }}</h1>
       <p class="page-description">
-        我们是Token团队，致力于打造下一代智能创作平台
+        {{ $t('contact.description') }}
         <span class="highlight">·</span>
-        用科技赋能创作者
+        {{ $t('contact.description2') }}
       </p>
     </div>
 
     <section class="why-us-section">
-      <h2 class="section-title">为什么选择 Token</h2>
+      <h2 class="section-title">{{ $t('contact.whyUs.title') }}</h2>
       <div class="card-grid">
         <div class="feature-card">
           <div class="card-icon ai-icon">
@@ -93,8 +96,8 @@ const submitForm = async () => {
               />
             </svg>
           </div>
-          <h3>AI 智能创作</h3>
-          <p>强大的 AI 模型助力，让创作更轻松高效</p>
+          <h3>{{ $t('contact.whyUs.ai.title') }}</h3>
+          <p>{{ $t('contact.whyUs.ai.desc') }}</p>
         </div>
         <div class="feature-card">
           <div class="card-icon knowledge-icon">
@@ -104,8 +107,8 @@ const submitForm = async () => {
               />
             </svg>
           </div>
-          <h3>知识管理</h3>
-          <p>科学的知识体系构建，高效的信息组织方式</p>
+          <h3>{{ $t('contact.whyUs.knowledge.title') }}</h3>
+          <p>{{ $t('contact.whyUs.knowledge.desc') }}</p>
         </div>
         <div class="feature-card">
           <div class="card-icon support-icon">
@@ -115,74 +118,74 @@ const submitForm = async () => {
               />
             </svg>
           </div>
-          <h3>专业支持</h3>
-          <p>7×24小时技术支持，解决您的任何问题</p>
+          <h3>{{ $t('contact.whyUs.support.title') }}</h3>
+          <p>{{ $t('contact.whyUs.support.desc') }}</p>
         </div>
       </div>
     </section>
 
     <section class="process-section">
-      <h2 class="section-title">服务流程</h2>
+      <h2 class="section-title">{{ $t('contact.process.title') }}</h2>
       <div class="process-steps">
         <div class="step">
           <div class="step-number">01</div>
-          <h3>提交需求</h3>
-          <p>填写表单或通过邮件提交您的具体需求</p>
+          <h3>{{ $t('contact.process.steps.submit.title') }}</h3>
+          <p>{{ $t('contact.process.steps.submit.desc') }}</p>
         </div>
         <div class="step">
           <div class="step-number">02</div>
-          <h3>需求评估</h3>
-          <p>专业团队评估并制定解决方案</p>
+          <h3>{{ $t('contact.process.steps.evaluate.title') }}</h3>
+          <p>{{ $t('contact.process.steps.evaluate.desc') }}</p>
         </div>
         <div class="step">
           <div class="step-number">03</div>
-          <h3>方案确认</h3>
-          <p>与您确认具体实施方案和时间节点</p>
+          <h3>{{ $t('contact.process.steps.confirm.title') }}</h3>
+          <p>{{ $t('contact.process.steps.confirm.desc') }}</p>
         </div>
         <div class="step">
           <div class="step-number">04</div>
-          <h3>开始服务</h3>
-          <p>正式启动服务并持续跟进反馈</p>
+          <h3>{{ $t('contact.process.steps.start.title') }}</h3>
+          <p>{{ $t('contact.process.steps.start.desc') }}</p>
         </div>
       </div>
     </section>
 
     <section class="highlights-section">
-      <h2 class="section-title">我们的优势</h2>
+      <h2 class="section-title">{{ $t('contact.highlights.title') }}</h2>
       <div class="highlights-grid">
         <div class="highlight-card">
           <div class="highlight-icon">🚀</div>
           <div class="highlight-content">
-            <h3>快速响应</h3>
-            <p class="highlight-number">2小时</p>
-            <p class="highlight-desc">平均响应时间</p>
+            <h3>{{ $t('contact.highlights.response.title') }}</h3>
+            <p class="highlight-number">{{ $t('contact.highlights.response.number') }}</p>
+            <p class="highlight-desc">{{ $t('contact.highlights.response.desc') }}</p>
           </div>
         </div>
 
         <div class="highlight-card">
           <div class="highlight-icon">💡</div>
           <div class="highlight-content">
-            <h3>创新方案</h3>
-            <p class="highlight-number">200+</p>
-            <p class="highlight-desc">成功案例</p>
+            <h3>{{ $t('contact.highlights.innovation.title') }}</h3>
+            <p class="highlight-number">{{ $t('contact.highlights.innovation.number') }}</p>
+            <p class="highlight-desc">{{ $t('contact.highlights.innovation.desc') }}</p>
           </div>
         </div>
 
         <div class="highlight-card">
           <div class="highlight-icon">👥</div>
           <div class="highlight-content">
-            <h3>专业团队</h3>
-            <p class="highlight-number">50+</p>
-            <p class="highlight-desc">技术专家</p>
+            <h3>{{ $t('contact.highlights.team.title') }}</h3>
+            <p class="highlight-number">{{ $t('contact.highlights.team.number') }}</p>
+            <p class="highlight-desc">{{ $t('contact.highlights.team.desc') }}</p>
           </div>
         </div>
 
         <div class="highlight-card">
           <div class="highlight-icon">🌟</div>
           <div class="highlight-content">
-            <h3>客户满意度</h3>
-            <p class="highlight-number">98%</p>
-            <p class="highlight-desc">好评率</p>
+            <h3>{{ $t('contact.highlights.satisfaction.title') }}</h3>
+            <p class="highlight-number">{{ $t('contact.highlights.satisfaction.number') }}</p>
+            <p class="highlight-desc">{{ $t('contact.highlights.satisfaction.desc') }}</p>
           </div>
         </div>
       </div>
@@ -192,14 +195,14 @@ const submitForm = async () => {
       <div class="contact-grid">
         <div class="contact-info">
           <div class="info-group">
-            <h3>商务合作</h3>
+            <h3>{{ $t('contact.contact.business.title') }}</h3>
             <div class="info-item">
               <svg viewBox="0 0 24 24" class="info-icon">
                 <path
                   d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
                 />
               </svg>
-              <span>851543@qq.com</span>
+              <span>{{ $t('contact.contact.business.email') }}</span>
             </div>
             <div class="info-item">
               <svg viewBox="0 0 24 24" class="info-icon">
@@ -207,19 +210,19 @@ const submitForm = async () => {
                   d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
                 />
               </svg>
-              <span>+86 131-2355-6625</span>
+              <span>{{ $t('contact.contact.business.phone') }}</span>
             </div>
           </div>
 
           <div class="info-group">
-            <h3>技术支持</h3>
+            <h3>{{ $t('contact.contact.technical.title') }}</h3>
             <div class="info-item">
               <svg viewBox="0 0 24 24" class="info-icon">
                 <path
                   d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
                 />
               </svg>
-              <span>851543@qq.com</span>
+              <span>{{ $t('contact.contact.technical.email') }}</span>
             </div>
             <div class="info-item">
               <svg viewBox="0 0 24 24" class="info-icon">
@@ -227,12 +230,12 @@ const submitForm = async () => {
                   d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-5.373-9-12-9z"
                 />
               </svg>
-              <span>7×24小时在线支持</span>
+              <span>{{ $t('contact.contact.technical.support') }}</span>
             </div>
           </div>
 
           <div class="info-group">
-            <h3>社交媒体</h3>
+            <h3>{{ $t('contact.contact.social.title') }}</h3>
             <div class="social-links">
               <a href="https://github.com/851543" target="_blank" class="social-link">
                 <svg viewBox="0 0 24 24" class="social-icon">
@@ -270,7 +273,7 @@ const submitForm = async () => {
           </div>
 
           <div class="info-group">
-            <h3>工作时间</h3>
+            <h3>{{ $t('contact.contact.workingHours.title') }}</h3>
             <div class="info-item">
               <svg viewBox="0 0 24 24" class="info-icon">
                 <path
@@ -278,14 +281,14 @@ const submitForm = async () => {
                 />
               </svg>
               <div class="working-hours">
-                <p>周一至周五：10:00 - 17:00</p>
-                <p>周末及节假日：在线值班</p>
+                <p>{{ $t('contact.contact.workingHours.weekdays') }}</p>
+                <p>{{ $t('contact.contact.workingHours.weekends') }}</p>
               </div>
             </div>
           </div>
 
           <div class="info-group">
-            <h3>紧急联系</h3>
+            <h3>{{ $t('contact.contact.emergency.title') }}</h3>
             <div class="info-item emergency">
               <svg viewBox="0 0 24 24" class="info-icon">
                 <path
@@ -293,54 +296,54 @@ const submitForm = async () => {
                 />
               </svg>
               <div class="emergency-info">
-                <p>24小时紧急热线：+86 131-2355-6625</p>
-                <small>仅用于紧急技术支持</small>
+                <p>{{ $t('contact.contact.emergency.phone') }}</p>
+                <small>{{ $t('contact.contact.emergency.note') }}</small>
               </div>
             </div>
           </div>
         </div>
 
         <div class="contact-form">
-          <h2>发送消息</h2>
+          <h2>{{ $t('contact.form.title') }}</h2>
           <form @submit.prevent="submitForm">
             <div class="form-group">
-              <label for="name">姓名</label>
+              <label for="name">{{ $t('contact.form.name') }}</label>
               <input
                 type="text"
                 id="name"
                 v-model="form.name"
-                placeholder="请输入您的姓名"
+                :placeholder="$t('contact.form.namePlaceholder')"
                 required
               />
             </div>
 
             <div class="form-group">
-              <label for="email">邮箱</label>
+              <label for="email">{{ $t('contact.form.email') }}</label>
               <input
                 type="email"
                 id="email"
                 v-model="form.email"
-                placeholder="请输入您的邮箱"
+                :placeholder="$t('contact.form.emailPlaceholder')"
                 required
               />
             </div>
 
             <div class="form-group">
-              <label for="type">咨询类型</label>
+              <label for="type">{{ $t('contact.form.type') }}</label>
               <select id="type" v-model="form.type" required>
-                <option value="">请选择咨询类型</option>
-                <option value="business">商务合作</option>
-                <option value="technical">技术支持</option>
-                <option value="other">其他问题</option>
+                <option value="">{{ $t('contact.form.typePlaceholder') }}</option>
+                <option value="business">{{ $t('contact.form.typeOptions.business') }}</option>
+                <option value="technical">{{ $t('contact.form.typeOptions.technical') }}</option>
+                <option value="other">{{ $t('contact.form.typeOptions.other') }}</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="message">留言内容</label>
+              <label for="message">{{ $t('contact.form.message') }}</label>
               <textarea
                 id="message"
                 v-model="form.message"
-                placeholder="请详细描述您的需求"
+                :placeholder="$t('contact.form.messagePlaceholder')"
                 required
               ></textarea>
             </div>
@@ -348,10 +351,10 @@ const submitForm = async () => {
             <button type="submit" class="submit-btn" :disabled="isLoading">
               <template v-if="isLoading">
                 <span class="loading-spinner"></span>
-                <span>发送中</span>
+                <span>{{ $t('contact.form.sending') }}</span>
               </template>
               <template v-else>
-                <span>发送消息</span>
+                <span>{{ $t('contact.form.submit') }}</span>
                 <svg viewBox="0 0 24 24" class="send-icon">
                   <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
                 </svg>
@@ -363,25 +366,25 @@ const submitForm = async () => {
     </section>
 
     <section class="office-section">
-      <h2 class="section-title">全国办公室</h2>
+      <h2 class="section-title">{{ $t('contact.offices.title') }}</h2>
       <div class="office-grid">
         <div class="office-card">
           <div class="office-icon">📍</div>
-          <h3>广西南宁总部</h3>
-          <p>广西农业职业技术大学</p>
-          <p>周一至周五 10:00-17:00</p>
+          <h3>{{ $t('contact.offices.nanning.title') }}</h3>
+          <p>{{ $t('contact.offices.nanning.address') }}</p>
+          <p>{{ $t('contact.offices.nanning.hours') }}</p>
         </div>
         <div class="office-card">
           <div class="office-icon">📍</div>
-          <h3>广西玉林分部</h3>
-          <p>北流市玉州区高科技园区</p>
-          <p>周一至周五 10:00-17:00</p>
+          <h3>{{ $t('contact.offices.yulin.title') }}</h3>
+          <p>{{ $t('contact.offices.yulin.address') }}</p>
+          <p>{{ $t('contact.offices.yulin.hours') }}</p>
         </div>
         <div class="office-card">
           <div class="office-icon">📍</div>
-          <h3>广西北海分部</h3>
-          <p>北海市南山区科技园</p>
-          <p>周一至周五 10:00-17:00</p>
+          <h3>{{ $t('contact.offices.beihai.title') }}</h3>
+          <p>{{ $t('contact.offices.beihai.address') }}</p>
+          <p>{{ $t('contact.offices.beihai.hours') }}</p>
         </div>
       </div>
     </section>
