@@ -202,10 +202,6 @@ onMounted(() => {
   background-size: cover;
 }
 
-.container-main-last {
-  margin-bottom: 40px;
-}
-
 .holded-container {
   padding: 40px 20px;
 }
@@ -214,29 +210,32 @@ onMounted(() => {
   max-height: 350px;
   overflow: hidden;
   margin: 0 auto 20px;
-  transition: all .6s ease;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  align-items: center;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: start;
   justify-items: center;
-  gap: 30px;
+  gap: 20px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1500px;
+  padding: 0 20px;
 }
 
-.icons-expanded{
-    transition: all .6s ease;
-    max-height: unset;
+.icons-expanded {
+  max-height: 2000px;
+  transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .circle-icon-holder {
+  width: 100%;
+  max-width: 250px;
   min-height: 300px;
   height: 350px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
   transition: all 0.3s ease;
 }
 
@@ -551,6 +550,31 @@ onMounted(() => {
   
   .container-main h1 {
     font-size: 2rem;
+  }
+}
+
+/* 响应式布局调整 */
+@media (max-width: 1400px) {
+  .icons {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .icons {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .icons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .icons {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 

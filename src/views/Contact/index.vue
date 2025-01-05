@@ -75,319 +75,321 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <div class="contact-container">
-    <div class="hero-section">
-      <h1 class="page-title">{{ $t('contact.title') }}</h1>
-      <p class="page-description">
-        {{ $t('contact.description') }}
-        <span class="highlight">·</span>
-        {{ $t('contact.description2') }}
-      </p>
+  <div class="contact-wrapper">
+    <div class="contact-container">
+      <div class="hero-section">
+        <h1 class="page-title">{{ $t('contact.title') }}</h1>
+        <p class="page-description">
+          {{ $t('contact.description') }}
+          <span class="highlight">·</span>
+          {{ $t('contact.description2') }}
+        </p>
+      </div>
+
+      <section class="why-us-section">
+        <h2 class="section-title">{{ $t('contact.whyUs.title') }}</h2>
+        <div class="card-grid">
+          <div class="feature-card">
+            <div class="card-icon ai-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                />
+              </svg>
+            </div>
+            <h3>{{ $t('contact.whyUs.ai.title') }}</h3>
+            <p>{{ $t('contact.whyUs.ai.desc') }}</p>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon knowledge-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"
+                />
+              </svg>
+            </div>
+            <h3>{{ $t('contact.whyUs.knowledge.title') }}</h3>
+            <p>{{ $t('contact.whyUs.knowledge.desc') }}</p>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon support-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+                />
+              </svg>
+            </div>
+            <h3>{{ $t('contact.whyUs.support.title') }}</h3>
+            <p>{{ $t('contact.whyUs.support.desc') }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="process-section">
+        <h2 class="section-title">{{ $t('contact.process.title') }}</h2>
+        <div class="process-steps">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>{{ $t('contact.process.steps.submit.title') }}</h3>
+            <p>{{ $t('contact.process.steps.submit.desc') }}</p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>{{ $t('contact.process.steps.evaluate.title') }}</h3>
+            <p>{{ $t('contact.process.steps.evaluate.desc') }}</p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>{{ $t('contact.process.steps.confirm.title') }}</h3>
+            <p>{{ $t('contact.process.steps.confirm.desc') }}</p>
+          </div>
+          <div class="step">
+            <div class="step-number">04</div>
+            <h3>{{ $t('contact.process.steps.start.title') }}</h3>
+            <p>{{ $t('contact.process.steps.start.desc') }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="highlights-section">
+        <h2 class="section-title">{{ $t('contact.highlights.title') }}</h2>
+        <div class="highlights-grid">
+          <div class="highlight-card">
+            <div class="highlight-icon">🚀</div>
+            <div class="highlight-content">
+              <h3>{{ $t('contact.highlights.response.title') }}</h3>
+              <p class="highlight-number">{{ $t('contact.highlights.response.number') }}</p>
+              <p class="highlight-desc">{{ $t('contact.highlights.response.desc') }}</p>
+            </div>
+          </div>
+
+          <div class="highlight-card">
+            <div class="highlight-icon">💡</div>
+            <div class="highlight-content">
+              <h3>{{ $t('contact.highlights.innovation.title') }}</h3>
+              <p class="highlight-number">{{ $t('contact.highlights.innovation.number') }}</p>
+              <p class="highlight-desc">{{ $t('contact.highlights.innovation.desc') }}</p>
+            </div>
+          </div>
+
+          <div class="highlight-card">
+            <div class="highlight-icon">👥</div>
+            <div class="highlight-content">
+              <h3>{{ $t('contact.highlights.team.title') }}</h3>
+              <p class="highlight-number">{{ $t('contact.highlights.team.number') }}</p>
+              <p class="highlight-desc">{{ $t('contact.highlights.team.desc') }}</p>
+            </div>
+          </div>
+
+          <div class="highlight-card">
+            <div class="highlight-icon">🌟</div>
+            <div class="highlight-content">
+              <h3>{{ $t('contact.highlights.satisfaction.title') }}</h3>
+              <p class="highlight-number">{{ $t('contact.highlights.satisfaction.number') }}</p>
+              <p class="highlight-desc">{{ $t('contact.highlights.satisfaction.desc') }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="info-group">
+              <h3>{{ $t('contact.contact.business.title') }}</h3>
+              <div class="info-item">
+                <svg viewBox="0 0 24 24" class="info-icon">
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                  />
+                </svg>
+                <span>{{ $t('contact.contact.business.email') }}</span>
+              </div>
+              <div class="info-item">
+                <svg viewBox="0 0 24 24" class="info-icon">
+                  <path
+                    d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
+                  />
+                </svg>
+                <span>{{ $t('contact.contact.business.phone') }}</span>
+              </div>
+            </div>
+
+            <div class="info-group">
+              <h3>{{ $t('contact.contact.technical.title') }}</h3>
+              <div class="info-item">
+                <svg viewBox="0 0 24 24" class="info-icon">
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                  />
+                </svg>
+                <span>{{ $t('contact.contact.technical.email') }}</span>
+              </div>
+              <div class="info-item">
+                <svg viewBox="0 0 24 24" class="info-icon">
+                  <path
+                    d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-5.373-9-12-9z"
+                  />
+                </svg>
+                <span>{{ $t('contact.contact.technical.support') }}</span>
+              </div>
+            </div>
+
+            <div class="info-group">
+              <h3>{{ $t('contact.contact.social.title') }}</h3>
+              <div class="social-links">
+                <a href="https://github.com/851543" target="_blank" class="social-link">
+                  <svg viewBox="0 0 24 24" class="social-icon">
+                    <path
+                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.222 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                    />
+                  </svg>
+                  GitHub
+                </a>
+                <a href="javascript:void(0)" class="social-link">
+                  <svg viewBox="0 0 24 24" class="social-icon">
+                    <path
+                      d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"
+                    />
+                  </svg>
+                  Discord
+                </a>
+                <a href="javascript:void(0)" class="social-link">
+                  <svg viewBox="0 0 24 24" class="social-icon">
+                    <path
+                      d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"
+                    />
+                  </svg>
+                  Twitter
+                </a>
+                <a href="javascript:void(0)" class="social-link">
+                  <svg viewBox="0 0 24 24" class="social-icon">
+                    <path
+                      d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"
+                    />
+                  </svg>
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+
+            <div class="info-group">
+              <h3>{{ $t('contact.contact.workingHours.title') }}</h3>
+              <div class="info-item">
+                <svg viewBox="0 0 24 24" class="info-icon">
+                  <path
+                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"
+                  />
+                </svg>
+                <div class="working-hours">
+                  <p>{{ $t('contact.contact.workingHours.weekdays') }}</p>
+                  <p>{{ $t('contact.contact.workingHours.weekends') }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-group">
+              <h3>{{ $t('contact.contact.emergency.title') }}</h3>
+              <div class="info-item emergency">
+                <svg viewBox="0 0 24 24" class="info-icon">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                  />
+                </svg>
+                <div class="emergency-info">
+                  <p>{{ $t('contact.contact.emergency.phone') }}</p>
+                  <small>{{ $t('contact.contact.emergency.note') }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <h2>{{ $t('contact.form.title') }}</h2>
+            <form @submit.prevent="submitForm">
+              <div class="form-group">
+                <label for="name">{{ $t('contact.form.name') }}</label>
+                <input
+                  type="text"
+                  id="name"
+                  v-model="form.name"
+                  :placeholder="$t('contact.form.namePlaceholder')"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">{{ $t('contact.form.email') }}</label>
+                <input
+                  type="email"
+                  id="email"
+                  v-model="form.email"
+                  :placeholder="$t('contact.form.emailPlaceholder')"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="type">{{ $t('contact.form.type') }}</label>
+                <select id="type" v-model="form.type" required>
+                  <option value="">{{ $t('contact.form.typePlaceholder') }}</option>
+                  <option value="business">{{ $t('contact.form.typeOptions.business') }}</option>
+                  <option value="technical">{{ $t('contact.form.typeOptions.technical') }}</option>
+                  <option value="other">{{ $t('contact.form.typeOptions.other') }}</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">{{ $t('contact.form.message') }}</label>
+                <textarea
+                  id="message"
+                  v-model="form.message"
+                  :placeholder="$t('contact.form.messagePlaceholder')"
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn" :disabled="isLoading">
+                <template v-if="isLoading">
+                  <span class="loading-spinner"></span>
+                  <span>{{ $t('contact.form.sending') }}</span>
+                </template>
+                <template v-else>
+                  <span>{{ $t('contact.form.submit') }}</span>
+                  <svg viewBox="0 0 24 24" class="send-icon">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                  </svg>
+                </template>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-title">{{ $t('contact.offices.title') }}</h2>
+        <div class="office-grid">
+          <div class="office-card">
+            <div class="office-icon">📍</div>
+            <h3>{{ $t('contact.offices.nanning.title') }}</h3>
+            <p>{{ $t('contact.offices.nanning.address') }}</p>
+            <p>{{ $t('contact.offices.nanning.hours') }}</p>
+          </div>
+          <div class="office-card">
+            <div class="office-icon">📍</div>
+            <h3>{{ $t('contact.offices.yulin.title') }}</h3>
+            <p>{{ $t('contact.offices.yulin.address') }}</p>
+            <p>{{ $t('contact.offices.yulin.hours') }}</p>
+          </div>
+          <div class="office-card">
+            <div class="office-icon">📍</div>
+            <h3>{{ $t('contact.offices.beihai.title') }}</h3>
+            <p>{{ $t('contact.offices.beihai.address') }}</p>
+            <p>{{ $t('contact.offices.beihai.hours') }}</p>
+          </div>
+        </div>
+      </section>
     </div>
-
-    <section class="why-us-section">
-      <h2 class="section-title">{{ $t('contact.whyUs.title') }}</h2>
-      <div class="card-grid">
-        <div class="feature-card">
-          <div class="card-icon ai-icon">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-              />
-            </svg>
-          </div>
-          <h3>{{ $t('contact.whyUs.ai.title') }}</h3>
-          <p>{{ $t('contact.whyUs.ai.desc') }}</p>
-        </div>
-        <div class="feature-card">
-          <div class="card-icon knowledge-icon">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"
-              />
-            </svg>
-          </div>
-          <h3>{{ $t('contact.whyUs.knowledge.title') }}</h3>
-          <p>{{ $t('contact.whyUs.knowledge.desc') }}</p>
-        </div>
-        <div class="feature-card">
-          <div class="card-icon support-icon">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
-              />
-            </svg>
-          </div>
-          <h3>{{ $t('contact.whyUs.support.title') }}</h3>
-          <p>{{ $t('contact.whyUs.support.desc') }}</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="process-section">
-      <h2 class="section-title">{{ $t('contact.process.title') }}</h2>
-      <div class="process-steps">
-        <div class="step">
-          <div class="step-number">01</div>
-          <h3>{{ $t('contact.process.steps.submit.title') }}</h3>
-          <p>{{ $t('contact.process.steps.submit.desc') }}</p>
-        </div>
-        <div class="step">
-          <div class="step-number">02</div>
-          <h3>{{ $t('contact.process.steps.evaluate.title') }}</h3>
-          <p>{{ $t('contact.process.steps.evaluate.desc') }}</p>
-        </div>
-        <div class="step">
-          <div class="step-number">03</div>
-          <h3>{{ $t('contact.process.steps.confirm.title') }}</h3>
-          <p>{{ $t('contact.process.steps.confirm.desc') }}</p>
-        </div>
-        <div class="step">
-          <div class="step-number">04</div>
-          <h3>{{ $t('contact.process.steps.start.title') }}</h3>
-          <p>{{ $t('contact.process.steps.start.desc') }}</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="highlights-section">
-      <h2 class="section-title">{{ $t('contact.highlights.title') }}</h2>
-      <div class="highlights-grid">
-        <div class="highlight-card">
-          <div class="highlight-icon">🚀</div>
-          <div class="highlight-content">
-            <h3>{{ $t('contact.highlights.response.title') }}</h3>
-            <p class="highlight-number">{{ $t('contact.highlights.response.number') }}</p>
-            <p class="highlight-desc">{{ $t('contact.highlights.response.desc') }}</p>
-          </div>
-        </div>
-
-        <div class="highlight-card">
-          <div class="highlight-icon">💡</div>
-          <div class="highlight-content">
-            <h3>{{ $t('contact.highlights.innovation.title') }}</h3>
-            <p class="highlight-number">{{ $t('contact.highlights.innovation.number') }}</p>
-            <p class="highlight-desc">{{ $t('contact.highlights.innovation.desc') }}</p>
-          </div>
-        </div>
-
-        <div class="highlight-card">
-          <div class="highlight-icon">👥</div>
-          <div class="highlight-content">
-            <h3>{{ $t('contact.highlights.team.title') }}</h3>
-            <p class="highlight-number">{{ $t('contact.highlights.team.number') }}</p>
-            <p class="highlight-desc">{{ $t('contact.highlights.team.desc') }}</p>
-          </div>
-        </div>
-
-        <div class="highlight-card">
-          <div class="highlight-icon">🌟</div>
-          <div class="highlight-content">
-            <h3>{{ $t('contact.highlights.satisfaction.title') }}</h3>
-            <p class="highlight-number">{{ $t('contact.highlights.satisfaction.number') }}</p>
-            <p class="highlight-desc">{{ $t('contact.highlights.satisfaction.desc') }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact-section">
-      <div class="contact-grid">
-        <div class="contact-info">
-          <div class="info-group">
-            <h3>{{ $t('contact.contact.business.title') }}</h3>
-            <div class="info-item">
-              <svg viewBox="0 0 24 24" class="info-icon">
-                <path
-                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
-                />
-              </svg>
-              <span>{{ $t('contact.contact.business.email') }}</span>
-            </div>
-            <div class="info-item">
-              <svg viewBox="0 0 24 24" class="info-icon">
-                <path
-                  d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
-                />
-              </svg>
-              <span>{{ $t('contact.contact.business.phone') }}</span>
-            </div>
-          </div>
-
-          <div class="info-group">
-            <h3>{{ $t('contact.contact.technical.title') }}</h3>
-            <div class="info-item">
-              <svg viewBox="0 0 24 24" class="info-icon">
-                <path
-                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
-                />
-              </svg>
-              <span>{{ $t('contact.contact.technical.email') }}</span>
-            </div>
-            <div class="info-item">
-              <svg viewBox="0 0 24 24" class="info-icon">
-                <path
-                  d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-5.373-9-12-9z"
-                />
-              </svg>
-              <span>{{ $t('contact.contact.technical.support') }}</span>
-            </div>
-          </div>
-
-          <div class="info-group">
-            <h3>{{ $t('contact.contact.social.title') }}</h3>
-            <div class="social-links">
-              <a href="https://github.com/851543" target="_blank" class="social-link">
-                <svg viewBox="0 0 24 24" class="social-icon">
-                  <path
-                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.222 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                  />
-                </svg>
-                GitHub
-              </a>
-              <a href="javascript:void(0)" class="social-link">
-                <svg viewBox="0 0 24 24" class="social-icon">
-                  <path
-                    d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"
-                  />
-                </svg>
-                Discord
-              </a>
-              <a href="javascript:void(0)" class="social-link">
-                <svg viewBox="0 0 24 24" class="social-icon">
-                  <path
-                    d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"
-                  />
-                </svg>
-                Twitter
-              </a>
-              <a href="javascript:void(0)" class="social-link">
-                <svg viewBox="0 0 24 24" class="social-icon">
-                  <path
-                    d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"
-                  />
-                </svg>
-                LinkedIn
-              </a>
-            </div>
-          </div>
-
-          <div class="info-group">
-            <h3>{{ $t('contact.contact.workingHours.title') }}</h3>
-            <div class="info-item">
-              <svg viewBox="0 0 24 24" class="info-icon">
-                <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"
-                />
-              </svg>
-              <div class="working-hours">
-                <p>{{ $t('contact.contact.workingHours.weekdays') }}</p>
-                <p>{{ $t('contact.contact.workingHours.weekends') }}</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="info-group">
-            <h3>{{ $t('contact.contact.emergency.title') }}</h3>
-            <div class="info-item emergency">
-              <svg viewBox="0 0 24 24" class="info-icon">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
-                />
-              </svg>
-              <div class="emergency-info">
-                <p>{{ $t('contact.contact.emergency.phone') }}</p>
-                <small>{{ $t('contact.contact.emergency.note') }}</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="contact-form">
-          <h2>{{ $t('contact.form.title') }}</h2>
-          <form @submit.prevent="submitForm">
-            <div class="form-group">
-              <label for="name">{{ $t('contact.form.name') }}</label>
-              <input
-                type="text"
-                id="name"
-                v-model="form.name"
-                :placeholder="$t('contact.form.namePlaceholder')"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="email">{{ $t('contact.form.email') }}</label>
-              <input
-                type="email"
-                id="email"
-                v-model="form.email"
-                :placeholder="$t('contact.form.emailPlaceholder')"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="type">{{ $t('contact.form.type') }}</label>
-              <select id="type" v-model="form.type" required>
-                <option value="">{{ $t('contact.form.typePlaceholder') }}</option>
-                <option value="business">{{ $t('contact.form.typeOptions.business') }}</option>
-                <option value="technical">{{ $t('contact.form.typeOptions.technical') }}</option>
-                <option value="other">{{ $t('contact.form.typeOptions.other') }}</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="message">{{ $t('contact.form.message') }}</label>
-              <textarea
-                id="message"
-                v-model="form.message"
-                :placeholder="$t('contact.form.messagePlaceholder')"
-                required
-              ></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn" :disabled="isLoading">
-              <template v-if="isLoading">
-                <span class="loading-spinner"></span>
-                <span>{{ $t('contact.form.sending') }}</span>
-              </template>
-              <template v-else>
-                <span>{{ $t('contact.form.submit') }}</span>
-                <svg viewBox="0 0 24 24" class="send-icon">
-                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                </svg>
-              </template>
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section class="office-section">
-      <h2 class="section-title">{{ $t('contact.offices.title') }}</h2>
-      <div class="office-grid">
-        <div class="office-card">
-          <div class="office-icon">📍</div>
-          <h3>{{ $t('contact.offices.nanning.title') }}</h3>
-          <p>{{ $t('contact.offices.nanning.address') }}</p>
-          <p>{{ $t('contact.offices.nanning.hours') }}</p>
-        </div>
-        <div class="office-card">
-          <div class="office-icon">📍</div>
-          <h3>{{ $t('contact.offices.yulin.title') }}</h3>
-          <p>{{ $t('contact.offices.yulin.address') }}</p>
-          <p>{{ $t('contact.offices.yulin.hours') }}</p>
-        </div>
-        <div class="office-card">
-          <div class="office-icon">📍</div>
-          <h3>{{ $t('contact.offices.beihai.title') }}</h3>
-          <p>{{ $t('contact.offices.beihai.address') }}</p>
-          <p>{{ $t('contact.offices.beihai.hours') }}</p>
-        </div>
-      </div>
-    </section>
   </div>
   <Transition name="slide">
     <div
@@ -404,6 +406,22 @@ const submitForm = async () => {
 </template>
 
 <style scoped>
+/* 全屏包装盒子 */
+.contact-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  transition: background-color 0.3s ease;
+}
+
+/* 黑夜模式 */
+.dark .contact-wrapper {
+  background: #121212;
+  color: #fff;
+}
+
 /* 整体容器样式 */
 .contact-container {
   max-width: 1600px;
