@@ -232,12 +232,10 @@ export default defineMessages({
     contact: {
       business: {
         title: 'Business Cooperation',
-        email: '851543@qq.com',
         phone: '+86 131-2355-6625'
       },
       technical: {
         title: 'Technical Support',
-        email: '851543@qq.com',
         support: '24/7 Online Support'
       },
       social: {

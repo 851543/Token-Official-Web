@@ -5,7 +5,7 @@ import axios from 'axios'
  */
 const request = axios.create({
   //基础路径
-  baseURL: 'http://localhost:85/', // VITE基础路径
+  baseURL: '/', // 使用相对路径，让 Nginx 处理代理
   timeout: 5000 //超时的时间
 })
 

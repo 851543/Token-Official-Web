@@ -352,11 +352,15 @@ function calculateScrollProgress() {
 
 // 组件挂载后的初始化
 onMounted(async () => {
-  // 加载Live2D核心库
-  await import('@/assets/live2d/dist/live2d.min.js')
-  // 加载模型
-  window.loadlive2d('live2d', 'src/assets/live2d/model1.json')
-  
+
+  // 加载Live2D小部件
+  const script = document.createElement('script');
+  script.src = '/src/assets/live2d/dist/autoload.js';
+  script.defer = true;
+
+  // 添加脚本到页面
+  document.head.appendChild(script);
+
   // 获取提示框DOM引用
   tipsRef.value = document.getElementById('waifu-tips')
   

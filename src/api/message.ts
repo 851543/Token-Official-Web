@@ -12,7 +12,7 @@ export const getMessageData = async () => {
 export const getUserInfo = async (platform: string, openid: string) => {
   const response = await request.get('/src/data/accounts.json')
   const accounts = response.data
-  const user = accounts.users.find(u => u.platform === platform && u.openid === openid)
+  const user = accounts.users.find((u: UserInfo) => u.platform === platform && u.openid === openid)
   return user
 }
 
@@ -33,7 +33,7 @@ export const addUser = async (userData: Partial<UserInfo>) => {
 export const updateUser = async (platform: string, openid: string, updates: Partial<UserInfo>) => {
   const response = await request.get('/src/data/accounts.json')
   const accounts = response.data
-  const userIndex = accounts.users.findIndex(u => u.platform === platform && u.openid === openid)
+  const userIndex = accounts.users.findIndex((u: UserInfo) => u.platform === platform && u.openid === openid)
   if (userIndex !== -1) {
     accounts.users[userIndex] = { ...accounts.users[userIndex], ...updates }
     await request.post('/src/data/accounts.json', accounts)
@@ -49,7 +49,7 @@ export const addMessage = async (message: Omit<Message, 'id'>, userId: string) =
   const data = response.data
 
   // 检查用户是否已有留言
-  const existingMessage = data.messages.find(m => m.userId === userId)
+  const existingMessage = data.messages.find((m: Message) => m.userId === userId)
   if (existingMessage) {
     // 如果有，先删除旧留言
     await deleteMessage(existingMessage.id)
@@ -68,7 +68,7 @@ export const addMessage = async (message: Omit<Message, 'id'>, userId: string) =
 
   // 更新标签计数
   if (message.tag) {
-    const tagIndex = data.tags.findIndex(t => t.name === message.tag)
+    const tagIndex = data.tags.findIndex((t: { name: string; count: number }) => t.name === message.tag)
     if (tagIndex !== -1) {
       data.tags[tagIndex].count++
     }
@@ -88,7 +88,7 @@ export const deleteMessage = async (messageId: number) => {
   try {
     const response = await request.get('/src/data/message.json')
     const data = response.data
-    const index = data.messages.findIndex(m => m.id === messageId)
+    const index = data.messages.findIndex((m: Message) => m.id === messageId)
     
     if (index !== -1) {
       const message = data.messages[index]
@@ -96,7 +96,7 @@ export const deleteMessage = async (messageId: number) => {
       
       // 更新标签计数
       if (message.tag) {
-        const tagIndex = data.tags.findIndex(t => t.name === message.tag)
+        const tagIndex = data.tags.findIndex((t: { name: string; count: number }) => t.name === message.tag)
         if (tagIndex !== -1 && data.tags[tagIndex].count > 0) {
           data.tags[tagIndex].count--
         }
@@ -138,14 +138,14 @@ export const verifyOfficialAccount = async (username: string, password: string) 
 export const getUserMessage = async (userId: string) => {
   const response = await request.get('/src/data/message.json')
   const data = response.data
-  return data.messages.find(m => m.userId === userId) || null
+  return data.messages.find((m: Message) => m.userId === userId) || null
 }
 
 // 点赞留言
 export const likeMessage = async (messageId: number) => {
   const response = await request.get('/src/data/message.json')
   const data = response.data
-  const message = data.messages.find(m => m.id === messageId)
+  const message = data.messages.find((m: Message) => m.id === messageId)
   
   if (message) {
     message.likes++

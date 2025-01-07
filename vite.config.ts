@@ -1,30 +1,77 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, Plugin } from 'vite'
 import path from 'path'
 import createVitePlugins from './vite/plugins'
+import fs from 'fs-extra'
+
+// 创建复制静态资源的插件
+function copyAssetsPlugin(): Plugin {
+  return {
+    name: 'vite-plugin-copy-assets',
+    async writeBundle() {
+      try {
+        // 确保目标目录存在
+        await fs.ensureDir('dist/src/assets/live2d')
+        await fs.ensureDir('dist/src/assets/live2d/dist')
+        await fs.ensureDir('dist/src/assets/live2d/motions')
+        await fs.ensureDir('dist/src/assets/live2d/model.1024')
+        await fs.ensureDir('dist/src/data')
+        await fs.ensureDir('dist/src/assets/images')
+        
+        // 复制 live2d 相关资源到正确的位置
+        if (fs.existsSync('src/assets/live2d')) {
+          console.log('Copying Live2D assets...')
+          await fs.copy('src/assets/live2d', 'dist/src/assets/live2d')
+        }
+
+        // 复制 data 目录下的 JSON 文件到正确的位置
+        if (fs.existsSync('src/data')) {
+          console.log('Copying data directory...')
+          await fs.copy('src/data', 'dist/src/data')
+        }
+
+        // 复制图片资源
+        if (fs.existsSync('src/assets/images')) {
+          console.log('Copying images...')
+          await fs.copy('src/assets/images', 'dist/src/assets/images')
+        }
+
+        // 复制必要的静态资源
+        const essentialFiles = [
+          'index.html',
+          'favicon.svg',
+          'logo.svg'
+        ]
+
+        for (const file of essentialFiles) {
+          if (fs.existsSync(`src/assets/${file}`)) {
+            await fs.copy(`src/assets/${file}`, `dist/assets/${file}`)
+          }
+        }
+      } catch (error) {
+        console.error('Error copying assets:', error)
+      }
+    }
+  }
+}
 
 // https://vite.dev/config/
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
   const { VITE_APP_ENV } = env
   return {
-    // 部署生产环境和开发环境下的URL。
-    // 默认情况下，vite 会假设你的应用是被部署在一个域名的根路径上
-    // 例如 https://www.ruoyi.vip/。如果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。例如，如果你的应用被部署在 https://www.ruoyi.vip/admin/，则设置 baseUrl 为 /admin/。
     base: VITE_APP_ENV === 'production' ? '/' : '/',
-    plugins: createVitePlugins(env, command === 'build'),
+    plugins: [
+      ...createVitePlugins(env, command === 'build'),
+      copyAssetsPlugin()
+    ],
     resolve: {
-      // https://cn.vitejs.dev/config/#resolve-alias
       alias: {
-        // 设置路径
         '~': path.resolve(__dirname, './'),
-        // 设置别名
         '@': path.resolve(__dirname, './src'),
         '@data': path.resolve(__dirname, './src/data')
       },
-      // https://cn.vitejs.dev/config/#resolve-extensions
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     },
-    // vite 相关配置
     server: {
       port: 85,
       host: true,
@@ -40,9 +87,12 @@ export default defineConfig(({ mode, command }) => {
           changeOrigin: true,
           secure: false
         }
-      }
+      },
+      fs: {
+        allow: ['..']
+      },
+      cors: true
     },
-    //fix:error:stdin>:7356:1: warning: "@charset" must be the first rule in the file
     css: {
       postcss: {
         plugins: [
@@ -59,8 +109,52 @@ export default defineConfig(({ mode, command }) => {
         ],
       },
     },
-    // 添加静态资源处理
     publicDir: 'public',
-    assetsInclude: ['**/*.jpg', '**/*.png', '**/*.svg', '**/*.json']
+    assetsInclude: [
+      '**/*.jpg', 
+      '**/*.png', 
+      '**/*.svg', 
+      '**/*.gif',
+      '**/*.ico',
+      '**/*.webp',
+      '**/*.json',
+      '**/*.moc',
+      '**/*.mtn',
+    ],
+    build: {
+      outDir: 'dist',
+      assetsDir: 'assets',
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html')
+        },
+        output: {
+          format: 'es',
+          assetFileNames: (assetInfo) => {
+            const name = assetInfo.name || '';
+            // 保持所有资源的原始路径结构
+            if (name.includes('src/')) {
+              return name;
+            }
+            return `assets/${name}`;
+          },
+          chunkFileNames: 'assets/[name].js',
+          entryFileNames: 'assets/[name].js'
+        }
+      },
+      emptyOutDir: true,
+      sourcemap: true,
+      assetsInlineLimit: 0,
+      minify: false,
+      target: 'es2015',
+      cssTarget: 'chrome80'
+    },
+    define: {
+      __VUE_I18N_FULL_INSTALL__: true,
+      __VUE_I18N_LEGACY_API__: false,
+      __INTLIFY_PROD_DEVTOOLS__: false,
+      // 注入环境变量
+      'import.meta.env': JSON.stringify(env)
+    }
   }
 })
