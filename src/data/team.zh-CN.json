@@ -2,7 +2,7 @@
     "board": [
         {
             "name": "阿俊",
-            "role": "团队负责人",
+            "role": "董事",
             "img": "/src/assets/images/board/ajun.png",
             "in": true,
             "links": {
@@ -20,32 +20,75 @@
         },
         {
             "name": "彭小文",
-            "role": "团队经理",
+            "role": "副董事",
             "img": "/src/assets/images/board/pe.png",
-            "in": true
+            "in": true,
+            "links": {
+                "github": {
+                    "url": "https://github.com/72-WenCheng",
+                    "icon": "/src/assets/images/team/github.svg",
+                    "alt": "GitHub"
+                }
+            }
         },
         {
             "name": "雨哥",
-            "role": "总监",
+            "role": "高管",
             "img": "/src/assets/images/board/yuge.png",
             "in": true
         },
         {
             "name": "伟东",
-            "role": "技术总监",
+            "role": "高管",
             "img": "/src/assets/images/board/weidong.png",
             "in": true
         },
         {
             "name": "朱总",
-            "role": "技术总监",
+            "role": "高管",
             "img": "/src/assets/images/board/zhubb.png",
             "in": true
         },
         {
             "name": "皓哥",
-            "role": "设计总监",
+            "role": "高管",
             "img": "/src/assets/images/board/haoge.png",
+            "in": true
+        },
+        {
+            "name": "田小琪",
+            "role": "高管",
+            "img": "/src/assets/images/board/tian.png",
+            "in": true
+        },
+        {
+            "name": "夹子",
+            "role": "高管",
+            "img": "/src/assets/images/board/qing.png",
+            "in": true
+        },
+        {
+            "name": "舞王",
+            "role": "顾问",
+            "img": "/src/assets/images/board/xu.png",
+            "in": true
+        },
+        {
+            "name": "阿伟",
+            "role": "高管",
+            "img": "/src/assets/images/board/pan.png",
+            "in": true
+        },
+        {
+            "name": "蟾屠",
+            "role": "高管",
+            "img": "/src/assets/images/board/tu.png",
+            "in": true
+        },
+        {
+            "name": "宽宽喵",
+            "role": "高管",
+            "img": "/src/assets/images/board/wu.png",
             "in": true
         }
     ],
@@ -60,14 +103,26 @@
                     "url": "https://github.com/851543",
                     "icon": "/src/assets/images/team/github.svg",
                     "alt": "GitHub"
+                },
+                "csdn": {
+                    "url": "https://blog.csdn.net/weixin_67623295?type=lately",
+                    "icon": "/src/assets/images/team/csdn.svg",
+                    "alt": "CSDN"
                 }
             }
         },
         {
             "name": "彭小文",
-            "role": "策划经理",
+            "role": "测试开发工程师",
             "img": "/src/assets/images/board/pe.png",
-            "in": true
+            "in": true,
+            "links": {
+                "github": {
+                    "url": "https://github.com/72-WenCheng",
+                    "icon": "/src/assets/images/team/github.svg",
+                    "alt": "GitHub"
+                }
+            }
         },
         {
             "name": "雨哥",
@@ -76,36 +131,60 @@
             "in": true
         },
         {
+            "name": "舞王",
+            "role": "技术顾问",
+            "img": "/src/assets/images/board/xu.png",
+            "in": true
+        },
+        {
             "name": "伟东",
-            "role": "全栈工程师",
+            "role": "前端开发工程师",
             "img": "/src/assets/images/board/weidong.png",
             "in": true
         },
         {
             "name": "朱总",
-            "role": "Java工程师",
+            "role": "大数据开发工程师",
             "img": "/src/assets/images/board/zhubb.png",
+            "in": true
+        },
+        {
+            "name": "阿伟",
+            "role": "嵌入式开发工程师",
+            "img": "/src/assets/images/board/pan.png",
+            "in": true
+        },
+        {
+            "name": "椿神",
+            "role": "游戏开发工程师",
+            "img": "/src/assets/images/board/tu.png",
+            "in": true
+        },
+        {
+            "name": "宽宽喵",
+            "role": "系统开发工程师",
+            "img": "/src/assets/images/board/wu.png",
             "in": true
         }
     ],
     "management": [
         {
-            "name": "彭小文",
+            "name": "夹子",
             "role": "运营总监",
-            "img": "/src/assets/images/board/pe.png",
+            "img": "/src/assets/images/board/qing.png",
             "in": true
         },
         {
             "name": "田小琪",
-            "role": "运营总监",
-            "img": "/src/assets/images/management/tian.png",
+            "role": "产品经理",
+            "img": "/src/assets/images/board/tian.png",
             "in": true
         }
     ],
     "design": [
         {
             "name": "皓哥",
-            "role": "设计总监",
+            "role": "UI设计师",
             "img": "/src/assets/images/board/haoge.png",
             "in": true
         }

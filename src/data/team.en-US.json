@@ -20,9 +20,16 @@
         },
         {
             "name": "Peng",
-            "role": "Team Manager",
+            "role": "Vice Leader",
             "img": "/src/assets/images/board/pe.png",
-            "in": true
+            "in": true,
+            "links": {
+                "github": {
+                    "url": "https://github.com/72-WenCheng",
+                    "icon": "/src/assets/images/team/github.svg",
+                    "alt": "GitHub"
+                }
+            }
         },
         {
             "name": "Yu",
@@ -32,20 +39,56 @@
         },
         {
             "name": "Wei Dong",
-            "role": "Technical Director",
+            "role": "Director",
             "img": "/src/assets/images/board/weidong.png",
             "in": true
         },
         {
             "name": "Zhu",
-            "role": "Technical Director",
+            "role": "Director",
             "img": "/src/assets/images/board/zhubb.png",
             "in": true
         },
         {
             "name": "Hao",
-            "role": "Design Director",
+            "role": "Director",
             "img": "/src/assets/images/board/haoge.png",
+            "in": true
+        },
+        {
+            "name": "Tian",
+            "role": "Director",
+            "img": "/src/assets/images/board/tian.png",
+            "in": true
+        },
+        {
+            "name": "Qing",
+            "role": "Director",
+            "img": "/src/assets/images/board/qing.png",
+            "in": true
+        },
+        {
+            "name": "Xu",
+            "role": "Advisor",
+            "img": "/src/assets/images/board/xu.png",
+            "in": true
+        },
+        {
+            "name": "Pan",
+            "role": "Director",
+            "img": "/src/assets/images/board/pan.png",
+            "in": true
+        },
+        {
+            "name": "Tu",
+            "role": "Director",
+            "img": "/src/assets/images/board/tu.png",
+            "in": true
+        },
+        {
+            "name": "Wu",
+            "role": "Director",
+            "img": "/src/assets/images/board/wu.png",
             "in": true
         }
     ],
@@ -60,14 +103,26 @@
                     "url": "https://github.com/851543",
                     "icon": "/src/assets/images/team/github.svg",
                     "alt": "GitHub"
+                },
+                "csdn": {
+                    "url": "https://blog.csdn.net/weixin_67623295?type=lately",
+                    "icon": "/src/assets/images/team/csdn.svg",
+                    "alt": "CSDN"
                 }
             }
         },
         {
             "name": "Peng",
-            "role": "Planning Manager",
+            "role": "Test Development Engineer",
             "img": "/src/assets/images/board/pe.png",
-            "in": true
+            "in": true,
+            "links": {
+                "github": {
+                    "url": "https://github.com/72-WenCheng",
+                    "icon": "/src/assets/images/team/github.svg",
+                    "alt": "GitHub"
+                }
+            }
         },
         {
             "name": "Yu",
@@ -76,36 +131,60 @@
             "in": true
         },
         {
+            "name": "Xu",
+            "role": "Technical Advisor",
+            "img": "/src/assets/images/board/xu.png",
+            "in": true
+        },
+        {
             "name": "Wei Dong",
-            "role": "Full Stack Engineer",
+            "role": "Frontend Engineer",
             "img": "/src/assets/images/board/weidong.png",
             "in": true
         },
         {
             "name": "Zhu",
-            "role": "Java Engineer",
+            "role": "Big Data Engineer",
             "img": "/src/assets/images/board/zhubb.png",
+            "in": true
+        },
+        {
+            "name": "Pan",
+            "role": "Embedded Engineer",
+            "img": "/src/assets/images/board/pan.png",
+            "in": true
+        },
+        {
+            "name": "Tu",
+            "role": "Game Developer",
+            "img": "/src/assets/images/board/tu.png",
+            "in": true
+        },
+        {
+            "name": "Wu",
+            "role": "System Engineer",
+            "img": "/src/assets/images/board/wu.png",
             "in": true
         }
     ],
     "management": [
         {
-            "name": "Peng",
+            "name": "Qing",
             "role": "Operations Director",
-            "img": "/src/assets/images/board/pe.png",
+            "img": "/src/assets/images/board/qing.png",
             "in": true
         },
         {
             "name": "Tian",
-            "role": "Operations Director",
-            "img": "/src/assets/images/management/tian.png",
+            "role": "Product Manager",
+            "img": "/src/assets/images/board/tian.png",
             "in": true
         }
     ],
     "design": [
         {
             "name": "Hao",
-            "role": "Design Director",
+            "role": "UI Designer",
             "img": "/src/assets/images/board/haoge.png",
             "in": true
         }
