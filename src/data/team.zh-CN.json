@@ -44,7 +44,7 @@
             "in": true
         },
         {
-            "name": "朱总",
+            "name": "朱哥",
             "role": "高管",
             "img": "/src/assets/images/board/zhubb.png",
             "in": true
@@ -143,7 +143,7 @@
             "in": true
         },
         {
-            "name": "朱总",
+            "name": "朱哥",
             "role": "大数据开发工程师",
             "img": "/src/assets/images/board/zhubb.png",
             "in": true
@@ -155,7 +155,7 @@
             "in": true
         },
         {
-            "name": "椿神",
+            "name": "蟾屠",
             "role": "游戏开发工程师",
             "img": "/src/assets/images/board/tu.png",
             "in": true
