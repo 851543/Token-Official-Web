@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="src/assets/images/test.png" alt="Token Logo" width="200"/>
+<img src="/public/favicon.svg" alt="Token Logo" width="200"/>
 
 [![Vue](https://img.shields.io/badge/Vue-3.x-brightgreen.svg)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
@@ -16,6 +16,14 @@
 
 [English](./README.en.md) · 简体中文 · [在线预览](https://Token-web.example.com) · [报告问题](https://github.com/851543/Token-Official-Web/issues)
 
+## 📸 项目预览
+
+<div style="display: flex; justify-content: center; margin-bottom: 20px;">
+  <img src="/public/test01.png" alt="首页预览" style="width: 30%; margin: 0 10px;" />
+  <img src="/public/test02.png" alt="功能展示" style="width: 30%; margin: 0 10px;" />
+  <img src="/public/test03.png" alt="团队展示" style="width: 30%; margin: 0 10px;" />
+</div>
+
 </div>
 
 ## ✨ 特性
@@ -24,18 +32,18 @@
   <tr>
     <td>🎨 现代化 UI</td>
     <td>📱 响应式设计</td>
-    <td>⚡️ 极速开发体验</td>
+    <td>🌍 国际化支持</td>
     <td>🔧 TypeScript</td>
   </tr>
   <tr>
     <td>📦 组件化开发</td>
     <td>🎉 动画效果</td>
-    <td>🔐 代码规范</td>
+    <td>💬 即时通讯</td>
     <td>📄 SVG 图标</td>
   </tr>
   <tr>
-    <td>🗃️ 状态管理</td>
-    <td>🌐 路由管理</td>
+    <td>🗃️ Pinia 状态管理</td>
+    <td>🌐 Vue Router</td>
     <td>🎯 性能优化</td>
     <td>📚 完整文档</td>
   </tr>
@@ -105,12 +113,18 @@ Token-official-web/
 ├── 📂 src/
 │   ├── 🎨 assets/     # 项目资源
 │   ├── 🧩 components/ # 通用组件
-│   │   ├── 🎯 NavBar/ # 导航栏
-│   │   └── 🎯 Footer/ # 页脚
 │   ├── 📱 views/      # 页面组件
+│   │   ├── 🏠 Home/   # 首页
+│   │   ├── 👥 Team/   # 团队展示
+│   │   ├── 📝 Blogs/  # 博客系统
+│   │   ├── 💬 Message/# 消息系统
+│   │   ├── 📞 Contact/# 联系我们
+│   │   └── 🔗 Link/   # 友情链接
+│   ├── 🌍 locales/    # 国际化配置
 │   ├── 🛣️ router/     # 路由配置
 │   ├── 📦 stores/     # 状态管理
-│   └── 🛠️ utils/      # 工具函数
+│   ├── 🛠️ utils/      # 工具函数
+│   └── 🎨 styles/     # 样式文件
 └── 📄 package.json    # 项目配置
 ```
 
@@ -121,16 +135,19 @@ Token-official-web/
     <td>
       <h3>🏠 首页展示</h3>
       <ul>
-        <li>团队介绍</li>
-        <li>项目展示</li>
-        <li>动态效果</li>
+        <li>团队介绍与愿景</li>
+        <li>项目作品集展示</li>
+        <li>Live2D 互动模型</li>
+        <li>响应式布局设计</li>
       </ul>
     </td>
     <td>
-      <h3>📺 视频模块</h3>
+      <h3>💬 消息系统</h3>
       <ul>
-        <li>视频集成</li>
-        <li>列表展示</li>
+        <li>实时消息通知</li>
+        <li>在线状态显示</li>
+        <li>消息历史记录</li>
+        <li>多媒体消息支持</li>
       </ul>
     </td>
   </tr>
@@ -138,15 +155,19 @@ Token-official-web/
     <td>
       <h3>👥 团队展示</h3>
       <ul>
-        <li>成员介绍</li>
-        <li>技能展示</li>
+        <li>成员个人简介</li>
+        <li>技能专长展示</li>
+        <li>项目经历分享</li>
+        <li>团队文化展现</li>
       </ul>
     </td>
     <td>
       <h3>📝 博客系统</h3>
       <ul>
-        <li>文章展示</li>
-        <li>分类管理</li>
+        <li>技术文章发布</li>
+        <li>多语言内容支持</li>
+        <li>评论互动系统</li>
+        <li>文章搜索功能</li>
       </ul>
     </td>
   </tr>

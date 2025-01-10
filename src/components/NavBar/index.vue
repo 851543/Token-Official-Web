@@ -74,6 +74,7 @@ const toggleMenu = () => {
 
 const setActiveItem = (path: string) => {
   activeItem.value = path
+  isMenuVisible.value = false
 }
 
 const toggleTheme = () => {
@@ -123,7 +124,7 @@ const selectLang = (lang: Language) => {
             v-if="item.link" 
             :to="item.link" 
             :class="{ 'active': activeItem === item.link }"
-            @click="setActiveItem(item.link)"
+            @click="() => setActiveItem(item.link)"
           >
             {{ item.text }}
           </router-link>
@@ -284,6 +285,18 @@ const selectLang = (lang: Language) => {
   align-items: center;
   gap: 20px;
   z-index: 1000;
+  @media (min-width: 992px) and (max-width: 1199px) {
+    display: none;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    display: none;
+  }
+  @media (max-width: 767px) {
+    display: none;
+  }
+  @media (max-width: 480px) {
+    display: none;
+  }
 }
 
 .dark-light-toggle {

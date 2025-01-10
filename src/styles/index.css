@@ -253,6 +253,9 @@ body {
 
 .navbar-scrolled .navbar-dsc-logo {
   display: inline-block;
+  @media (min-width: 1000px) and (max-width: 1050px) {
+    display: none;
+  }
 }
 .navbar-dsc-logo1 {
   height: 40px;

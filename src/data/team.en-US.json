@@ -2,7 +2,7 @@
     "board": [
         {
             "name": "A-Jun",
-            "role": "Team Leader",
+            "role": "Director",
             "img": "/src/assets/images/board/ajun.png",
             "in": true,
             "links": {
@@ -20,7 +20,7 @@
         },
         {
             "name": "Peng",
-            "role": "Vice Leader",
+            "role": "Vice Director",
             "img": "/src/assets/images/board/pe.png",
             "in": true,
             "links": {
