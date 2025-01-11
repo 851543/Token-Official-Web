@@ -1,7 +1,7 @@
 {
     "board": [
         {
-            "name": "A-Jun",
+            "name": "Ajun",
             "role": "Director",
             "img": "/src/assets/images/board/ajun.png",
             "in": true,
@@ -19,7 +19,7 @@
             }
         },
         {
-            "name": "Peng",
+            "name": "Peng Xiaowen",
             "role": "Vice Director",
             "img": "/src/assets/images/board/pe.png",
             "in": true,
@@ -32,69 +32,75 @@
             }
         },
         {
-            "name": "Yu",
-            "role": "Director",
+            "name": "Yu Ge",
+            "role": "Executive",
             "img": "/src/assets/images/board/yuge.png",
             "in": true
         },
         {
             "name": "Wei Dong",
-            "role": "Director",
+            "role": "Executive",
             "img": "/src/assets/images/board/weidong.png",
             "in": true
         },
         {
-            "name": "Zhu",
-            "role": "Director",
+            "name": "Zhu Ge",
+            "role": "Executive",
             "img": "/src/assets/images/board/zhubb.png",
             "in": true
         },
         {
-            "name": "Hao",
-            "role": "Director",
+            "name": "Hao Ge",
+            "role": "Executive",
             "img": "/src/assets/images/board/haoge.png",
             "in": true
         },
         {
-            "name": "Tian",
-            "role": "Director",
+            "name": "Tian Xiaoqi",
+            "role": "Executive",
             "img": "/src/assets/images/board/tian.png",
             "in": true
         },
         {
-            "name": "Qing",
-            "role": "Director",
+            "name": "Jiazi",
+            "role": "Executive",
             "img": "/src/assets/images/board/qing.png",
             "in": true
         },
         {
-            "name": "Xu",
+            "name": "Dance King",
             "role": "Advisor",
             "img": "/src/assets/images/board/xu.png",
             "in": true
         },
         {
-            "name": "Pan",
-            "role": "Director",
+            "name": "A Wei",
+            "role": "Executive",
             "img": "/src/assets/images/board/pan.png",
             "in": true
         },
         {
-            "name": "Tu",
-            "role": "Director",
+            "name": "Chan Tu",
+            "role": "Executive",
             "img": "/src/assets/images/board/tu.png",
             "in": true
         },
         {
-            "name": "Wu",
-            "role": "Director",
+            "name": "Kuan Kuan",
+            "role": "Executive",
             "img": "/src/assets/images/board/wu.png",
+            "in": true
+        },
+        {
+            "name": "Shi Xiaohe",
+            "role": "Department Manager",
+            "img": "/src/assets/images/board/shi.png",
             "in": true
         }
     ],
     "technical": [
         {
-            "name": "A-Jun",
+            "name": "Ajun",
             "role": "Project Manager",
             "img": "/src/assets/images/board/ajun.png",
             "in": true,
@@ -112,7 +118,7 @@
             }
         },
         {
-            "name": "Peng",
+            "name": "Peng Xiaowen",
             "role": "Test Development Engineer",
             "img": "/src/assets/images/board/pe.png",
             "in": true,
@@ -125,65 +131,71 @@
             }
         },
         {
-            "name": "Yu",
+            "name": "Yu Ge",
             "role": "Full Stack Engineer",
             "img": "/src/assets/images/board/yuge.png",
             "in": true
         },
         {
-            "name": "Xu",
+            "name": "Dance King",
             "role": "Technical Advisor",
             "img": "/src/assets/images/board/xu.png",
             "in": true
         },
         {
             "name": "Wei Dong",
-            "role": "Frontend Engineer",
+            "role": "Frontend Developer",
             "img": "/src/assets/images/board/weidong.png",
             "in": true
         },
         {
-            "name": "Zhu",
+            "name": "Zhu Ge",
             "role": "Big Data Engineer",
             "img": "/src/assets/images/board/zhubb.png",
             "in": true
         },
         {
-            "name": "Pan",
-            "role": "Embedded Engineer",
+            "name": "A Wei",
+            "role": "Embedded Systems Engineer",
             "img": "/src/assets/images/board/pan.png",
             "in": true
         },
         {
-            "name": "Tu",
+            "name": "Chan Tu",
             "role": "Game Developer",
             "img": "/src/assets/images/board/tu.png",
             "in": true
         },
         {
-            "name": "Wu",
-            "role": "System Engineer",
+            "name": "Kuan Kuan",
+            "role": "System Developer",
             "img": "/src/assets/images/board/wu.png",
             "in": true
         }
     ],
     "management": [
         {
-            "name": "Qing",
+            "name": "Jiazi",
             "role": "Operations Director",
             "img": "/src/assets/images/board/qing.png",
             "in": true
         },
         {
-            "name": "Tian",
+            "name": "Tian Xiaoqi",
             "role": "Product Manager",
             "img": "/src/assets/images/board/tian.png",
+            "in": true
+        },
+        {
+            "name": "Shi Xiaohe",
+            "role": "New Media Planning Director",
+            "img": "/src/assets/images/board/shi.png",
             "in": true
         }
     ],
     "design": [
         {
-            "name": "Hao",
+            "name": "Hao Ge",
             "role": "UI Designer",
             "img": "/src/assets/images/board/haoge.png",
             "in": true

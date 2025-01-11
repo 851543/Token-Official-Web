@@ -90,6 +90,12 @@
             "role": "高管",
             "img": "/src/assets/images/board/wu.png",
             "in": true
+        },
+        {
+            "name": "石小鹤",
+            "role": "部门经理",
+            "img": "/src/assets/images/board/shi.png",
+            "in": true
         }
     ],
     "technical": [
@@ -178,6 +184,12 @@
             "name": "田小琪",
             "role": "产品经理",
             "img": "/src/assets/images/board/tian.png",
+            "in": true
+        },
+        {
+            "name": "石小鹤",
+            "role": "新媒体策划总监",
+            "img": "/src/assets/images/board/shi.png",
             "in": true
         }
     ],
