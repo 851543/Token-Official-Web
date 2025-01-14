@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const currentYear = new Date().getFullYear()
+
+// 计算建站天数
+const startDate = new Date('2023-10-16')
+const today = new Date()
+const daysSinceCreation = Math.floor(
+  (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+)
+
+// 访问次数
+const visitCount = ref(7059)
+</script>
 <template>
   <div class="footer-container">
     <div class="gradient-border">
@@ -20,24 +37,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
-
-const { t } = useI18n()
-const currentYear = new Date().getFullYear()
-
-// 计算建站天数
-const startDate = new Date('2019-01-01')
-const today = new Date()
-const daysSinceCreation = Math.floor(
-  (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
-)
-
-// 访问次数
-const visitCount = ref(107059)
-</script>
 
 <style scoped>
 .footer {
