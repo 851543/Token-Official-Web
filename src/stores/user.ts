@@ -6,7 +6,7 @@ interface UserInfo {
   isLoggedIn: boolean
   name: string
   avatar: string
-  platform: 'qq' | 'wechat' | null
+  platform: 'qq' | null
   openid?: string
   isOfficial?: boolean
 }
@@ -45,17 +45,6 @@ export const useUserStore = defineStore('user', () => {
     })
   }
 
-  // 微信登录
-  const loginWithWechat = (wechatInfo: { nickname: string; headimgurl: string; openid: string }) => {
-    setUserInfo({
-      isLoggedIn: true,
-      name: wechatInfo.nickname,
-      avatar: wechatInfo.headimgurl,
-      platform: 'wechat',
-      openid: wechatInfo.openid
-    })
-  }
-
   // 官方登录
   const loginAsOfficial = async (username: string, password: string) => {
     try {
@@ -91,7 +80,6 @@ export const useUserStore = defineStore('user', () => {
     initUserState,
     setUserInfo,
     loginWithQQ,
-    loginWithWechat,
     loginAsOfficial,
     logout
   }

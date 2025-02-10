@@ -77,6 +77,16 @@ export default defineConfig(({ mode, command }) => {
       host: true,
       open: true,
       proxy: {
+        '/oauth2.0/me': {
+          target: 'https://graph.qq.com',
+          changeOrigin: true,
+          secure: false
+        },
+        '/user/get_user_info': {
+          target: 'https://graph.qq.com',
+          changeOrigin: true,
+          secure: false
+        },
         '/oauth': {
           target: 'https://aip.baidubce.com',
           changeOrigin: true,
@@ -86,6 +96,12 @@ export default defineConfig(({ mode, command }) => {
           target: 'https://aip.baidubce.com',
           changeOrigin: true,
           secure: false
+        },
+        '/proxy-token':{
+          target: 'http://localhost:8088',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/proxy-token/, '')  // 需要这行，因为后端接口没有 /proxy-token 前缀
         }
       },
       fs: {

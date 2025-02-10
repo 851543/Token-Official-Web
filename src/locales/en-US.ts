@@ -127,6 +127,8 @@ export default defineMessages({
       today: 'New Today',
       week: 'Active This Week'
     },
+    login:'Login',
+    logout: 'Logout',
     loginPrompt: 'Please login to leave a message',
     loginTitle: 'User Login',
     loginDesc: 'Please select login method',
@@ -140,6 +142,7 @@ export default defineMessages({
     placeholder: 'Write your message...',
     loginFirst: 'Please login first',
     selectTag: 'Select Tag',
+    selectTagRequired: 'Please select a tag',
     tips: 'Kind words bring good karma',
     delete: 'Delete',
     filterAll: 'All Messages',

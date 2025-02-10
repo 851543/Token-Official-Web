@@ -3,10 +3,14 @@ import axios from 'axios'
 /**
  * 创建axios实例
  */
-const request = axios.create({
+export const request = axios.create({
   //基础路径
-  baseURL: '/', // 使用相对路径，让 Nginx 处理代理
+  baseURL: import.meta.env.VITE_BASE || '', // 获取环境变量VITE_BASE的值作为baseURL
   timeout: 5000 //超时的时间
 })
 
-export default request
+export const requestLocal = axios.create({
+  //基础路径
+  baseURL: '', 
+  timeout: 5000 //超时的时间
+})

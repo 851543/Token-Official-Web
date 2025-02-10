@@ -2,18 +2,14 @@
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Message, Tag, Stats, UserInfo } from '@/types/message'
-import { getMessageData, addMessage, deleteMessage, verifyOfficialAccount } from '@/api/message'
+import { getMessageData, addMessage, deleteMessage, getUserInfo } from '@/api/message'
 import { useUserStore } from '@/stores/user'
 
 const { t: $t } = useI18n()
 
 // QQ登录配置
-const QQ_APP_ID = '102074048'
+const QQ_APP_ID = '102634617'
 const QQ_REDIRECT_URI = encodeURIComponent(window.location.origin + '/message')
-
-// 微信登录配置
-const WECHAT_APP_ID = '你的微信应用ID' // 需要替换为实际的微信应用ID
-const WECHAT_REDIRECT_URI = encodeURIComponent(window.location.origin + '/message')
 
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.userInfo)
@@ -37,9 +33,15 @@ const handleQQLogin = () => {
 // 获取QQ用户信息
 const getQQUserInfo = async (access_token: string, openid: string) => {
   try {
-    const response = await fetch(`https://graph.qq.com/user/get_user_info?access_token=${access_token}&oauth_consumer_key=${QQ_APP_ID}&openid=${openid}`)
-    const data = await response.json()
-    
+    const response = await fetch(`/user/get_user_info?access_token=${access_token}&oauth_consumer_key=${QQ_APP_ID}&openid=${openid}`)
+    const qqData = await response.json()
+    const jsonData = {
+      platform:'qq',
+      openid:openid,
+      user:qqData
+  }
+    const userData =  await getUserInfo(jsonData)
+    const data = userData.user
     if (data.ret === 0) {
       userStore.loginWithQQ({
         nickname: data.nickname,
@@ -63,78 +65,17 @@ const handleQQCallback = () => {
   
   if (access_token) {
     // 获取openid
-    fetch(`https://graph.qq.com/oauth2.0/me?access_token=${access_token}`)
-      .then(res => res.text())
+    fetch(`/oauth2.0/me?access_token=${access_token}`)
+    .then(res => res.text())
       .then(text => {
-        // 返回的是 callback( {"client_id":"YOUR_APPID","openid":"YOUR_OPENID"} );
-        const matches = text.match(/\{.*\}/)
-        if (matches) {
-          const data = JSON.parse(matches[0])
+        // 处理JSONP响应格式：callback( {"client_id":"xxx","openid":"xxx"} );
+        const matches = text.match(/callback\((.*?)\)/)
+        if (matches && matches[1]) {
+          const data = JSON.parse(matches[1])
           getQQUserInfo(access_token, data.openid)
         }
       })
       .catch(error => console.error('获取openid失败:', error))
-  }
-}
-
-// 初始化微信登录SDK
-const initWechatLogin = () => {
-  const script = document.createElement('script')
-  script.src = 'https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js'
-  document.head.appendChild(script)
-}
-
-// 处理微信登录
-const handleWechatLogin = () => {
-  // 跳转到微信登录页面
-  const loginUrl = `https://open.weixin.qq.com/connect/qrconnect?appid=${WECHAT_APP_ID}&redirect_uri=${WECHAT_REDIRECT_URI}&response_type=code&scope=snsapi_login&state=${Date.now()}#wechat_redirect`
-  window.location.href = loginUrl
-}
-
-// 获取微信用户信息
-const getWechatUserInfo = async (code: string) => {
-  try {
-    // 这里需要后端配合，通过code换取access_token和用户信息
-    const response = await fetch('/api/wechat/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ code })
-    })
-    const data = await response.json()
-    
-    if (data.success) {
-      userStore.loginWithWechat({
-        nickname: data.nickname,
-        headimgurl: data.headimgurl,
-        openid: data.openid
-      })
-      showLoginModal.value = false
-    } else {
-      console.error('获取微信用户信息失败:', data)
-    }
-  } catch (error) {
-    console.error('获取微信用户信息出错:', error)
-  }
-}
-
-// 处理微信登录回调
-const handleWechatCallback = () => {
-  const params = new URLSearchParams(window.location.search)
-  const code = params.get('code')
-  
-  if (code) {
-    getWechatUserInfo(code)
-  }
-}
-
-// 检查本地存储的登录状态
-const checkLoginStatus = () => {
-  const savedUserInfo = localStorage.getItem('userInfo')
-  if (savedUserInfo) {
-    const parsedUserInfo = JSON.parse(savedUserInfo)
-    userStore.setUserInfo(parsedUserInfo)
   }
 }
 
@@ -164,6 +105,11 @@ const loadData = async () => {
   }
 }
 
+// 登录模态框状态
+const showLoginModal = ref(false)
+const showTipModal = ref(false)  // 添加提示弹窗的状态
+const tipMessage = ref('')  // 添加提示消息的状态
+
 // 修改提交留言函数
 const submitMessage = async () => {
   if (!userInfo.value.isLoggedIn) {
@@ -172,6 +118,12 @@ const submitMessage = async () => {
   }
   
   if (!newMessage.value.content) return
+  
+  if (!newMessage.value.tag) {
+    tipMessage.value = $t('message.selectTagRequired')
+    showTipModal.value = true
+    return
+  }
   
   const message: Omit<Message, 'id'> = {
     userId: userInfo.value.openid || '',
@@ -241,7 +193,6 @@ const handleOfficialLogin = async (username: string, password: string) => {
 onMounted(async () => {
   userStore.initUserState()
   initQQLogin()
-  initWechatLogin()
   
   // 加载留言板数据
   await loadData()
@@ -250,23 +201,14 @@ onMounted(async () => {
   if (window.location.hash.includes('access_token')) {
     handleQQCallback()
   }
-  // 检查是否是微信登录回调
-  else if (window.location.search.includes('code=')) {
-    handleWechatCallback()
-  }
 })
 
 // 修改handleLogin函数
-const handleLogin = (platform: 'qq' | 'wechat') => {
+const handleLogin = (platform: 'qq') => {
   if (platform === 'qq') {
     handleQQLogin()
-  } else if (platform === 'wechat') {
-    handleWechatLogin()
   }
 }
-
-// 登录模态框状态
-const showLoginModal = ref(false)
 
 // 新留言表单
 const newMessage = ref({
@@ -309,6 +251,7 @@ const likeMessage = (message: any) => {
   message.likes++
 }
 
+
 </script>
 
 <template>
@@ -348,8 +291,8 @@ const likeMessage = (message: any) => {
                 <img :src="userInfo.avatar" alt="avatar" class="user-avatar" />
                 <div class="user-info">
                   <h3>{{ userInfo.name }}</h3>
-                  <span class="platform-badge" :class="userInfo.platform">
-                    {{ userInfo.platform === 'qq' ? 'QQ' : $t('message.wechat') }}{{ $t('message.login') }}
+                  <span :class="{'official-badge': userInfo.platform == null,'platform-badge qq': userInfo.platform == 'qq'}">
+                    {{ userInfo.platform === 'qq' ? 'QQ' : $t('message.official') }}{{ $t('message.login') }}
                   </span>
                 </div>
                 <button class="logout-btn" @click="handleLogout">{{ $t('message.logout') }}</button>
@@ -365,12 +308,6 @@ const likeMessage = (message: any) => {
                       <path d="M12.003 2c-2.265 0-6.29 1.364-6.29 7.325v1.195S3.55 14.96 3.55 17.474c0 .665.17 1.025.281 1.025.114 0 .902-.484 1.748-2.072 0 0-.18 2.197 1.904 3.967 0 0-1.77.495-1.77 1.182 0 .686 4.078.43 6.29.43 2.213 0 6.29.256 6.29-.43 0-.687-1.77-1.182-1.77-1.182 2.085-1.77 1.905-3.967 1.905-3.967.845 1.588 1.634 2.072 1.746 2.072.111 0 .283-.36.283-1.025 0-2.514-2.166-6.954-2.166-6.954V9.325C18.29 3.364 14.268 2 12.003 2z"/>
                     </svg>
                     {{ $t('message.qqLogin') }}
-                  </button>
-                  <button class="login-btn wechat" @click="handleLogin('wechat')">
-                    <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.49.49 0 0 1-.011-.259.508.508 0 0 1 .189-.295c1.524-1.125 2.517-2.847 2.517-4.769 0-3.355-3.087-6.064-6.877-5.974zm-2.755 3.536c.534 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.435-.982.97-.982zm4.844 0c.534 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.435-.982.969-.982z"/>
-                    </svg>
-                    {{ $t('message.wechatLogin') }}
                   </button>
                 </div>
               </div>
@@ -425,7 +362,7 @@ const likeMessage = (message: any) => {
               <span class="tag-label">{{ $t('message.selectTag') }}：</span>
               <div class="tag-options">
                 <button
-                  v-for="tag in hotTags"
+                  v-for="tag in hotTags.filter(tag => userInfo.isOfficial || tag.name !== '公告')"
                   :key="tag.name"
                   :class="['tag-option', { active: newMessage.tag === tag.name }]"
                   @click="newMessage.tag = newMessage.tag === tag.name ? '' : tag.name"
@@ -469,7 +406,7 @@ const likeMessage = (message: any) => {
                         class="platform-badge"
                         :class="message.platform"
                       >
-                        {{ message.platform === 'qq' ? 'QQ' : $t('message.wechat') }}{{ $t('message.user') }}
+                        {{ message.platform === 'qq' ? 'QQ' : $t('message.official') }}{{ $t('message.user') }}
                       </span>
                     </div>
                     <span class="date">{{ message.date }}</span>
@@ -510,15 +447,21 @@ const likeMessage = (message: any) => {
           <p>{{ $t('message.loginDesc') }}</p>
           <div class="login-options">
             <button class="login-btn qq" @click="handleLogin('qq')">
-              <i class="icon">QQ</i>
               {{ $t('message.qqLogin') }}
-            </button>
-            <button class="login-btn wechat" @click="handleLogin('wechat')">
-              <i class="icon">WeChat</i>
-              {{ $t('message.wechatLogin') }}
             </button>
           </div>
           <button class="close-btn" @click="showLoginModal = false">{{ $t('common.cancel') }}</button>
+        </div>
+      </div>
+
+      <!-- 提示弹窗 -->
+      <div v-if="showTipModal" class="tip-modal">
+        <div class="tip-content">
+          <div class="tip-icon">ℹ️</div>
+          <p class="tip-message">{{ tipMessage }}</p>
+          <button class="confirm-btn" @click="showTipModal = false">
+            {{ $t('common.confirm') }}
+          </button>
         </div>
       </div>
     </div>
@@ -1112,11 +1055,6 @@ const likeMessage = (message: any) => {
   color: white;
 }
 
-.platform-badge.wechat {
-  background: linear-gradient(120deg, #07C160, #11C267);
-  color: white;
-}
-
 .logout-btn {
   width: 100%;
   padding: 8px 16px;
@@ -1195,10 +1133,6 @@ const likeMessage = (message: any) => {
 
 .login-btn.qq {
   background: linear-gradient(120deg, #12B7F5, #1677FF);
-}
-
-.login-btn.wechat {
-  background: linear-gradient(120deg, #07C160, #11C267);
 }
 
 .login-btn:hover {
@@ -1326,10 +1260,6 @@ const likeMessage = (message: any) => {
   background: linear-gradient(120deg, #12B7F5, #1677FF);
 }
 
-.login-btn.wechat {
-  background: linear-gradient(120deg, #07C160, #11C267);
-}
-
 .login-btn:hover {
   transform: translateY(-2px);
 }
@@ -1394,138 +1324,6 @@ const likeMessage = (message: any) => {
   color: white;
 }
 /* Dark mode styles */
-.dark .message-board {
-  color: #e2e8f0;
-}
-
-.dark .header h1 {
-  opacity: 0.9;
-}
-
-.dark .header p {
-  opacity: 0.7;
-}
-
-.dark .stat-card {
-  background: rgba(26, 32, 44, 0.4);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .stat-number {
-  opacity: 0.9;
-}
-
-.dark .stat-label {
-  opacity: 0.7;
-}
-
-.dark .sidebar-section,
-.dark .message-form,
-.dark .message-card {
-  background: rgba(26, 32, 44, 0.4);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .message-content {
-  color: #e2e8f0;
-}
-
-.dark .message-info h3 {
-  color: #e2e8f0;
-}
-
-.dark .date {
-  color: #a0aec0;
-}
-
-.dark .input-field,
-.dark .textarea-field {
-  background: rgba(26, 32, 44, 0.4);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
-}
-
-.dark .input-field:focus,
-.dark .textarea-field:focus {
-  background: rgba(26, 32, 44, 0.6);
-  border-color: #4285f4;
-}
-
-.dark .form-tips {
-  color: #a0aec0;
-}
-
-.dark .tag {
-  background: rgba(66, 133, 244, 0.1);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .filter-btn {
-  background: rgba(66, 133, 244, 0.1);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .user-card {
-  background: rgba(26, 32, 44, 0.4);
-}
-
-.dark .user-info h3 {
-  color: #e2e8f0;
-}
-
-.dark .login-prompt p {
-  color: #a0aec0;
-}
-
-.dark .tag-label {
-  color: #a0aec0;
-}
-
-.dark .tag-option {
-  background: rgba(66, 133, 244, 0.1);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .message-tag {
-  background: rgba(66, 133, 244, 0.1);
-}
-
-.dark .textarea-field:disabled {
-  background: rgba(26, 32, 44, 0.2);
-  color: #a0aec0;
-}
-
-.dark .like-button {
-  background: rgba(66, 133, 244, 0.1);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.dark .modal-content {
-  background: #1a202c;
-  color: #e2e8f0;
-}
-
-.dark .modal-content h2 {
-  color: #e2e8f0;
-}
-
-.dark .modal-content p {
-  color: #a0aec0;
-}
-
-.dark .close-btn {
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #a0aec0;
-}
-
-.dark .close-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.dark-mode-wrapper {
-  min-height: 100vh;
-}
-
 .dark .message-board {
   color: #e2e8f0;
 }
@@ -1722,5 +1520,92 @@ const likeMessage = (message: any) => {
 
 .dark .delete-button:hover {
   background: rgba(244, 67, 54, 0.1);
+}
+
+/* 提示弹窗样式 */
+.tip-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.tip-content {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease;
+}
+
+.tip-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.tip-message {
+  color: #4a5568;
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.confirm-btn {
+  background: linear-gradient(120deg, #4285f4, #34a853);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 暗色模式样式 */
+.dark .tip-content {
+  background: #1a202c;
+}
+
+.dark .tip-message {
+  color: #e2e8f0;
+}
+
+.dark .confirm-btn {
+  background: linear-gradient(120deg, #4285f4, #34a853);
+  color: white;
 }
 </style> 

@@ -76,7 +76,7 @@ async function getAccessToken() {
 async function chatWithERNIE(message: string) {
   try {
     const accessToken = await getAccessToken()
-    const url = `https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-tiny-8k?access_token=${accessToken}`
+    const url = `/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-tiny-8k?access_token=${accessToken}`
     
     const response = await fetch(url, {
       method: 'POST',

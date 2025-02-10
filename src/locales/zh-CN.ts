@@ -128,6 +128,8 @@ export default defineMessages({
       today: '今日新增',
       week: '本周活跃'
     },
+    login:'登录',
+    logout: '退出登录',
     loginPrompt: '请登录后留言',
     loginTitle: '用户登录',
     loginDesc: '请选择登录方式',
@@ -141,6 +143,7 @@ export default defineMessages({
     placeholder: '写下您的留言...',
     loginFirst: '请先登录',
     selectTag: '选择标签',
+    selectTagRequired: '请选择一个标签',
     tips: '善语结善缘，恶语伤人心',
     delete: '删除',
     filterAll: '全部留言',
