@@ -14,7 +14,7 @@
 
 🚀 A modern website built with Vue 3 + TypeScript + Vite | A showcase platform for Token Team
 
-[简体中文](./README.md) · English · [Live Demo](https://Token-web.example.com) · [Report Bug](https://github.com/851543/Token-Official-Web/issues)
+[简体中文](./README.md) · English · [Live Demo](javapython.com) · [Report Bug](https://github.com/851543/Token-Official-Web/issues)
 
 ## 📸 Project Preview
 

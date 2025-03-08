@@ -14,7 +14,7 @@
 
 🚀 基于 Vue 3 + TypeScript + Vite 构建的现代化网站 | 为 Token 团队打造的展示平台
 
-[English](./README.en.md) · 简体中文 · [在线预览](https://Token-web.example.com) · [报告问题](https://github.com/851543/Token-Official-Web/issues)
+[English](./README.en.md) · 简体中文 · [在线预览](javapython.com) · [报告问题](https://github.com/851543/Token-Official-Web/issues)
 
 ## 📸 项目预览
 

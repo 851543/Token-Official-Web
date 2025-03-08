@@ -1,2 +1,40 @@
- # 本地环境变量
+# 本地环境变量
 .env
+.env.local
+.env.*.local
+
+# 依赖目录
+/node_modules
+/.pnp
+.pnp.js
+
+# 构建输出
+/dist
+/dist-ssr
+*.local
+
+# 编辑器目录和文件
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 日志文件
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 测试覆盖率
+/coverage
+
+# 系统文件
+.DS_Store
+Thumbs.db
