@@ -68,7 +68,7 @@
             "in": true
         },
         {
-            "name": "Dance King",
+            "name": "Dancing King",
             "role": "Advisor",
             "img": "/src/assets/images/board/xu.png",
             "in": true
@@ -95,6 +95,12 @@
             "name": "Shi Xiaohe",
             "role": "Department Manager",
             "img": "/src/assets/images/board/shi.png",
+            "in": true
+        },
+        {
+            "name": "Gu Daoyin",
+            "role": "Member",
+            "img": "/src/assets/images/board/nsb.png",
             "in": true
         }
     ],
@@ -137,7 +143,7 @@
             "in": true
         },
         {
-            "name": "Dance King",
+            "name": "Dancing King",
             "role": "Technical Advisor",
             "img": "/src/assets/images/board/xu.png",
             "in": true
@@ -170,6 +176,12 @@
             "name": "Kuan Kuan",
             "role": "System Developer",
             "img": "/src/assets/images/board/wu.png",
+            "in": true
+        },
+        {
+            "name": "Gu Daoyin",
+            "role": "Full Stack Engineer",
+            "img": "/src/assets/images/board/nsb.png",
             "in": true
         }
     ],

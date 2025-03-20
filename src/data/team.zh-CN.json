@@ -96,6 +96,12 @@
             "role": "部门经理",
             "img": "/src/assets/images/board/shi.png",
             "in": true
+        },
+        {
+            "name": "古道音",
+            "role": "成员",
+            "img": "/src/assets/images/board/nsb.png",
+            "in": true
         }
     ],
     "technical": [
@@ -170,6 +176,12 @@
             "name": "宽宽喵",
             "role": "系统开发工程师",
             "img": "/src/assets/images/board/wu.png",
+            "in": true
+        },
+        {
+            "name": "古道音",
+            "role": "全栈工程师",
+            "img": "/src/assets/images/board/nsb.png",
             "in": true
         }
     ],
